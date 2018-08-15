@@ -6,8 +6,8 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="time" jdbcType="DATETIME" property="time" />
+    <result column="time" jdbcType="DATE" property="time" />
     <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+    <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
 </mapper>

@@ -8,6 +8,6 @@
     <result column="info" jdbcType="VARCHAR" property="info" />
     <result column="downurl" jdbcType="VARCHAR" property="downUrl" />
     <result column="updateinfo" jdbcType="VARCHAR" property="updateInfo" />
-    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+    <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
 </mapper>

@@ -16,6 +16,6 @@
     <result column="imsi" jdbcType="VARCHAR" property="imsi" />
     <result column="sysversion" jdbcType="INTEGER" property="sysVersion" />
     <result column="channel" jdbcType="VARCHAR" property="channel" />
-    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+    <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
 </mapper>

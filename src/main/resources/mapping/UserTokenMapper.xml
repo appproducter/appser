@@ -7,6 +7,6 @@
     <result column="token" jdbcType="VARCHAR" property="token" />
     <result column="customerid" jdbcType="VARCHAR" property="customerId" />
     <result column="timeout" jdbcType="INTEGER" property="timeOut" />
-    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+    <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
 </mapper>

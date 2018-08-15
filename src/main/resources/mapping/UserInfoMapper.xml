@@ -16,7 +16,7 @@
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+    <result column="ctime" jdbcType="DATE" property="cTime" />
     <result column="up_time_calllog" jdbcType="BIGINT" property="upTimeCalllog" />
     <result column="up_time_sms" jdbcType="BIGINT" property="upTimeSms" />
     <result column="up_time_pim" jdbcType="BIGINT" property="upTimePim" />

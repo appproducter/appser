@@ -7,6 +7,6 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="apikey" jdbcType="VARCHAR" property="apiKey" />
     <result column="mgr_qua" jdbcType="INTEGER" property="mgrQua" />
-    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+    <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
 </mapper>

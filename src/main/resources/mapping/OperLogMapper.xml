@@ -6,6 +6,6 @@
     <result column="uid" jdbcType="VARCHAR" property="uId" />
     <result column="type" jdbcType="TINYINT" property="type" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="time" jdbcType="DATETIME" property="time" />
+    <result column="time" jdbcType="DATE" property="time" />
   </resultMap>
 </mapper>
