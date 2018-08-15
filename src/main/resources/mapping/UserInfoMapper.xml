@@ -21,4 +21,17 @@
     <result column="up_time_sms" jdbcType="BIGINT" property="upTimeSms" />
     <result column="up_time_pim" jdbcType="BIGINT" property="upTimePim" />
   </resultMap>
+  
+  <!-- 根据姓名查询用户 -->
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		SELECT 
+  			uid,password,idcard,mobile,gender,email,area,address,avatar,
+  			type,status,creator,ctime,up_time_calllog,up_time_sms,up_time_pim
+  		FROM
+  			user_info
+  		WHERE
+  		 	name = #{name}
+  		LIMIT
+  			1
+  </select>
 </mapper>
