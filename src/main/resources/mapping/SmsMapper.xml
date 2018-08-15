@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.appsrv.dao.SmsDAO">
+  <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.Sms">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uId" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="sms" jdbcType="VARCHAR" property="sms" />
+    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+  </resultMap>
+</mapper>

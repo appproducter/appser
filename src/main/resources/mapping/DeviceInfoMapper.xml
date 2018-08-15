@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.appsrv.dao.DeviceInfoDAO">
+  <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.DeviceInfo">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uId" />
+    <result column="deviceid" jdbcType="VARCHAR" property="deviceId" />
+    <result column="vercode" jdbcType="INTEGER" property="verCode" />
+    <result column="verinfo" jdbcType="VARCHAR" property="verInfo" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="os" jdbcType="VARCHAR" property="os" />
+    <result column="hpi" jdbcType="INTEGER" property="hpi" />
+    <result column="wpi" jdbcType="INTEGER" property="wpi" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="imsi" jdbcType="VARCHAR" property="imsi" />
+    <result column="sysversion" jdbcType="INTEGER" property="sysVersion" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="ctime" jdbcType="DATETIME" property="cTime" />
+  </resultMap>
+</mapper>
