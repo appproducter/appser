@@ -18,7 +18,7 @@ public interface UserInfoDAO {
 	 * @param name
 	 * @return
 	 */
-	UserInfo selectByNameAndPassword(@Param("name") String name,@Param("password") String password);
+	UserInfo selectByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
 	/**
 	 * 查询uid是否被占用
@@ -27,4 +27,20 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	Integer selectByUserid(@Param("uid") String uid);
+
+	/**
+	 * 使用手机查询用户信息
+	 * 
+	 * @param mobile
+	 * @return
+	 */
+	UserInfo selectByMobile(String mobile);
+
+	/**
+	 * 使用身份证查询用户信息
+	 * 
+	 * @param idcard
+	 * @return
+	 */
+	UserInfo selectByIdcard(String idcard);
 }

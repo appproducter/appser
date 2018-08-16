@@ -1,43 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruiliang.appsrv.dao.UserInfoDAO">
-  <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.UserInfo">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="uid" jdbcType="VARCHAR" property="uId" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="idcard" jdbcType="VARCHAR" property="idCard" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="gender" jdbcType="TINYINT" property="gender" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="ctime" jdbcType="DATE" property="cTime" />
-    <result column="up_time_calllog" jdbcType="BIGINT" property="upTimeCalllog" />
-    <result column="up_time_sms" jdbcType="BIGINT" property="upTimeSms" />
-    <result column="up_time_pim" jdbcType="BIGINT" property="upTimePim" />
-  </resultMap>
-  
-  
-  <!-- 根据姓名查询用户 -->
-  <select id="selectByNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
-  		SELECT 
-  			uid,password,idcard,mobile,gender,email,area,address,avatar,
-  			type,status,creator,ctime,up_time_calllog,up_time_sms,up_time_pim
-  		FROM
-  			user_info
-  		WHERE
-  		 	name = #{name} AND password = #{password}
-  		LIMIT
-  			1
-  </select>
-  
-  <select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">
-  	  select count(0) from user_info where uid = #{uid}
-  </select>
- 
+	<resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.UserInfo">
+		<result column="id" property="id" />
+		<result column="uid" property="uId" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="idcard" property="idCard" />
+		<result column="mobile" property="mobile" />
+		<result column="gender" property="gender" />
+		<result column="email" property="email" />
+		<result column="area" property="area" />
+		<result column="address" property="address" />
+		<result column="avatar" property="avatar" />
+		<result column="type" property="type" />
+		<result column="status" property="status" />
+		<result column="creator" property="creator" />
+		<result column="ctime" property="cTime" />
+		<result column="login_times" property="loginTimes" />
+		<result column="last_login_time" property="lastLoginTime" />
+		<result column="cid" property="cid" />
+		<result column="up_time_calllog" property="upTimeCalllog" />
+		<result column="up_time_sms" property="upTimeSms" />
+		<result column="up_time_pim" property="upTimePim" />
+	</resultMap>
+
+
+	<!-- 根据姓名查询用户 -->
+	<select id="selectByNameAndPassword" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select * from user_info
+		where name = #{name} and password = #{password}
+		limit 1
+	</select>
+
+	<select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">
+		select
+		count(0) from user_info where uid = #{uid}
+	</select>
+
+	<select id="selectByMobile" parameterType="String" resultMap="BaseResultMap">
+		select * from user_info where mobile = #{mobile}
+	</select>
+	
+	<select id="selectByIdcard" parameterType="String" resultMap="BaseResultMap">
+		select * from user_info where idcard = #{idcard}
+	</select>
 </mapper>

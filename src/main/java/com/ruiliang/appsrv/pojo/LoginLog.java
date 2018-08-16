@@ -4,10 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author LinJian.Liu
- * 登录日志
+ * @author LinJian.Liu 登录日志
  */
-public class LoginLog implements Serializable{
+public class LoginLog implements Serializable {
 
 	/**
 	 * Serializable
@@ -18,17 +17,22 @@ public class LoginLog implements Serializable{
 	 * 主键
 	 */
 	private Integer id;
-	
+
 	/**
 	 * 用户ID
 	 */
 	private String uId;
-	
+
 	/**
 	 * 公司编码
 	 */
 	private String cId;
-	
+
+	/**
+	 * 设备号
+	 */
+	private String deviceid;
+
 	/**
 	 * 登录时间
 	 */
@@ -58,6 +62,14 @@ public class LoginLog implements Serializable{
 		this.cId = cId;
 	}
 
+	public String getDeviceid() {
+		return deviceid;
+	}
+
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
+	}
+
 	public Date getLoginTime() {
 		return loginTime;
 	}
@@ -68,9 +80,8 @@ public class LoginLog implements Serializable{
 
 	@Override
 	public String toString() {
-		return "LoginLog [id=" + id + ", uId=" + uId + ", cId=" + cId
-				+ ", loginTime=" + loginTime + "]";
+		return "LoginLog [id=" + id + ", uId=" + uId + ", cId=" + cId + ", deviceid=" + deviceid + ", loginTime="
+				+ loginTime + "]";
 	}
-	
-	
+
 }

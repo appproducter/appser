@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruiliang.appsrv.dao.LoginLogDAO">
-  <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.LoginLog">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="uid" jdbcType="VARCHAR" property="uId" />
-    <result column="cid" jdbcType="VARCHAR" property="cId" />
-    <result column="logintime" jdbcType="DATE" property="loginTime" />
-  </resultMap>
+	<resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.LoginLog">
+		<result column="id" property="id" />
+		<result column="uid" property="uId" />
+		<result column="cid" property="cId" />
+		<result column="deviceid" property="deviceid" />
+		<result column="logintime" property="loginTime" />
+	</resultMap>
+
+	<insert id="create" parameterType="com.ruiliang.appsrv.pojo.LoginLog">
+		insert into login_log (uid, cid, deviceid, logintime) values (#{uId}, #{cId}, #{deviceid}, #{logintime})
+	</insert>
 </mapper>

@@ -1,5 +1,6 @@
 package com.ruiliang.appsrv.service;
 
+import com.ruiliang.appsrv.exception.LoginFailureException;
 import com.ruiliang.appsrv.pojo.UserInfo;
 
 /**
@@ -7,12 +8,17 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  * 
  */
 public interface UserInfoService {
-	
+
+	UserInfo create(UserInfo userInfo);
+
 	/**
-	 * 根据用户名查询用户
-	 * @param name
+	 * 登录
+	 * 
+	 * @param deviceid 登录设备
+	 * @param name     可以是手机号或身份证号
+	 * @param password 登录密码
 	 * @return
 	 */
-	UserInfo selectByNameAndPassword(String name,String password);
-	
+	UserInfo login(String deviceid, String name, String password) throws LoginFailureException;
+
 }

@@ -11,16 +11,22 @@ import com.ruiliang.appsrv.pojo.UserToken;
  */
 @Mapper
 public interface UserTokenDAO {
-	
+
+	void insert(UserToken userToken);
+
+	UserToken findByToken(String token);
+
+	void update(UserToken userToken);
+
 	/**
 	 * @return
 	 */
-	UserToken UserselectTokenByUid(@Param("uid") String uid);
-	
+	UserToken selectTokenByUid(@Param("uid") String uid);
+
 	/**
 	 * @param token
 	 * @param uid
 	 * @return
 	 */
-	int updateTokenByUid(@Param("token") String token,@Param("uid") String uid);
+	int updateTokenByUid(@Param("token") String token, @Param("uid") String uid);
 }
