@@ -10,9 +10,9 @@ import java.util.Date;
 public class Version implements Serializable{
 
 	/**
-	 * Serializable
+	 * 
 	 */
-	private static final long serialVersionUID = -3315748534240003037L;
+	private static final long serialVersionUID = -6226058384664244252L;
 
 	/**
 	 * 主键
@@ -48,6 +48,11 @@ public class Version implements Serializable{
 	 * 创建时间
 	 */
 	private Date cTime;
+	
+	/**
+	 * 是否强更 1 否 2是
+	 */
+	private Byte forceflag;
 
 	public Integer getId() {
 		return id;
@@ -105,12 +110,24 @@ public class Version implements Serializable{
 		this.cTime = cTime;
 	}
 
+	
+	public Byte getForceFlag() {
+		return forceflag;
+	}
+
+	public void setForceFlag(Byte forceflag) {
+		this.forceflag = forceflag;
+	}
+
 	@Override
 	public String toString() {
 		return "Version [id=" + id + ", platForm=" + platForm + ", code="
 				+ code + ", info=" + info + ", downUrl=" + downUrl
-				+ ", updateInfo=" + updateInfo + ", cTime=" + cTime + "]";
+				+ ", updateInfo=" + updateInfo + ", cTime=" + cTime
+				+ ", forceflag=" + forceflag + "]";
 	}
+
+	
 	
 	
 }

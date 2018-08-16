@@ -20,11 +20,6 @@ public class DeviceInfo implements Serializable{
 	private Integer id;
 	
 	/**
-	 * 用户ID
-	 */
-	private String uId;
-	
-	/**
 	 * 设备ID
 	 */
 	private String deviceId;
@@ -95,14 +90,6 @@ public class DeviceInfo implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getuId() {
-		return uId;
-	}
-
-	public void setuId(String uId) {
-		this.uId = uId;
 	}
 
 	public String getDeviceId() {
@@ -211,7 +198,7 @@ public class DeviceInfo implements Serializable{
 
 	@Override
 	public String toString() {
-		return "DeviceInfo [id=" + id + ", uId=" + uId + ", deviceId="
+		return "DeviceInfo [id=" + id + ", deviceId="
 				+ deviceId + ", verCode=" + verCode + ", verInfo=" + verInfo
 				+ ", brand=" + brand + ", model=" + model + ", os=" + os
 				+ ", hpi=" + hpi + ", wpi=" + wpi + ", imei=" + imei

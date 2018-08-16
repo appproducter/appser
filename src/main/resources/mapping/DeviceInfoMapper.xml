@@ -3,7 +3,6 @@
 <mapper namespace="com.ruiliang.appsrv.dao.DeviceInfoDAO">
   <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.DeviceInfo">
     <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="uid" jdbcType="VARCHAR" property="uId" />
     <result column="deviceid" jdbcType="VARCHAR" property="deviceId" />
     <result column="vercode" jdbcType="INTEGER" property="verCode" />
     <result column="verinfo" jdbcType="VARCHAR" property="verInfo" />
@@ -18,4 +17,14 @@
     <result column="channel" jdbcType="VARCHAR" property="channel" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
+  
+  <!-- 添加设备信息 -->
+  <insert id="insertDeviceInfo" parameterType="com.ruiliang.appsrv.pojo.DeviceInfo">
+  		INSERT INTO device_info (deviceid,vercode,verinfo,brand,model,os,hpi,
+  			wpi,imei,imsi,sysversion,channel,ctime)
+  		VALUES
+  			(#{deviceId},#{verCode},#{verInfo},#{brand},#{model},#{os},
+  				#{hpi},#{wpi},#{imei},#{imsi},#{sysVersion},#{channel},sysdate()
+  			)
+  </insert>
 </mapper>

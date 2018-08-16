@@ -1,6 +1,4 @@
-package com.ruiliang.appsrv.dao;
-
-import org.apache.ibatis.annotations.Mapper;
+package com.ruiliang.appsrv.service;
 
 import com.ruiliang.appsrv.pojo.Version;
 
@@ -8,8 +6,7 @@ import com.ruiliang.appsrv.pojo.Version;
  * @author LinJian.Liu
  *
  */
-@Mapper
-public interface VersionDAO {
+public interface VersionService {
 	
 	/**
 	 * 查询版本

@@ -9,5 +9,12 @@
     <result column="downurl" jdbcType="VARCHAR" property="downUrl" />
     <result column="updateinfo" jdbcType="VARCHAR" property="updateInfo" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
+    <result column="forceflag" jdbcType="TINYINT" property="forceflag" />
   </resultMap>
+  
+  <!-- 根据版本号查询 -->
+  <select id="selectVersion" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT platform,code,info,downurl,updateinfo,forceflag,ctime FROM version WHERE code 
+  	IN (SELECT max(code) FROM version ) ORDER BY ctime desc limit 1
+  </select>
 </mapper>
