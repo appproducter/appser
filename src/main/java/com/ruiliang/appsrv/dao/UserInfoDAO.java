@@ -43,4 +43,6 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	UserInfo selectByIdcard(String idcard);
+	
+	int insert(UserInfo userInfo);
 }

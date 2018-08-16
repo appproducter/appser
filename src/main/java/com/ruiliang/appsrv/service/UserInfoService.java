@@ -9,7 +9,13 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  */
 public interface UserInfoService {
 
-	UserInfo create(UserInfo userInfo);
+	/**
+	 * 添加用户
+	 * 
+	 * @param userInfo
+	 * @return
+	 */
+	UserInfo create(String token, UserInfo userInfo);
 
 	/**
 	 * 登录

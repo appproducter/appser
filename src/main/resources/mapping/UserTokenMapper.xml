@@ -36,9 +36,7 @@
 
 	<!-- 根据uid更新token -->
 	<update id="updateTokenByUid" parameterType="java.lang.String">
-		update user_token set token =
-		#{token}, ctime = sysdate()
-		WHERE
-		uid = #{uid}
+		update user_token set token = #{token}, ctime = sysdate()
+		where uid = #{uid}
 	</update>
 </mapper>

@@ -40,10 +40,19 @@
 	</select>
 
 	<select id="selectByMobile" parameterType="String" resultMap="BaseResultMap">
-		select * from user_info where mobile = #{mobile}
+		select * from
+		user_info where mobile = #{mobile}
 	</select>
-	
+
 	<select id="selectByIdcard" parameterType="String" resultMap="BaseResultMap">
-		select * from user_info where idcard = #{idcard}
+		select * from
+		user_info where idcard = #{idcard}
 	</select>
+
+	<insert id="insert" parameterType="com.ruiliang.appsrv.pojo.UserInfo">
+		insert into user_info (uid, password, name,
+		idcard, mobile, gender, email, area, address, avatar, creator, type, status, ctime, cid)
+		values (#{uId}, #{password}, #{name}, #{idCard}, #{mobile}, #{gender}, #{email},
+		#{area}, #{address}, #{avatar}, #{creator}, #{type}, #{status}, #{cTime}, #{cid})
+	</insert>
 </mapper>
