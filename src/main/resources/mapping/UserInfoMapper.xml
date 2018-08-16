@@ -22,6 +22,7 @@
     <result column="up_time_pim" jdbcType="BIGINT" property="upTimePim" />
   </resultMap>
   
+  
   <!-- 根据姓名查询用户 -->
   <select id="selectByNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
   		SELECT 
