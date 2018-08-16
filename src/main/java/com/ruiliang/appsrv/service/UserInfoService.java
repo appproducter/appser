@@ -27,4 +27,5 @@ public interface UserInfoService {
 	 */
 	UserInfo login(String deviceid, String name, String password) throws LoginFailureException;
 
+	int updateAvatar(String token, String avatar);
 }

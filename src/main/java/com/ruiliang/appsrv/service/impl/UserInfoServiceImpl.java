@@ -57,6 +57,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 		// 生成token
 		String token = createToken(uinfo.getCid(), uinfo.getUId());
 		uinfo.setToken(token);
+		
+		// 更新登录时间次数
 
 		return uinfo;
 	}
@@ -126,5 +128,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 		uDao.insert(userInfo);
 
 		return userInfo;
+	}
+
+	@Override
+	public int updateAvatar(String token, String avatar) {
+		
+		
+		
+		return 0;
 	}
 }

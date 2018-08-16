@@ -55,4 +55,14 @@
 		values (#{uId}, #{password}, #{name}, #{idCard}, #{mobile}, #{gender}, #{email},
 		#{area}, #{address}, #{avatar}, #{creator}, #{type}, #{status}, #{cTime}, #{cid})
 	</insert>
+
+	<update id="updateLoginTimes" parameterType="String">
+		update user_info set last_login_time =
+		now(), login_times = login_times + 1 where uid = #{uid}
+	</update>
+
+	<update id="updateUserAvatar">
+		update user_info set avatar = #{avatar}
+		where uid = #{uid}
+	</update>
 </mapper>

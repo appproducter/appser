@@ -43,6 +43,23 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	UserInfo selectByIdcard(String idcard);
-	
+
 	int insert(UserInfo userInfo);
+
+	/**
+	 * 更新登录时间及次数
+	 * 
+	 * @param uid
+	 * @return
+	 */
+	int updateLoginTimes(String uid);
+
+	/**
+	 * 更新头像
+	 * 
+	 * @param uid
+	 * @param avatar
+	 * @return
+	 */
+	int updateUserAvatar(@Param("uid") String uid, @Param("avatar") String avatar);
 }
