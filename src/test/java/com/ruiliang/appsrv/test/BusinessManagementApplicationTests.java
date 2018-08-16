@@ -18,8 +18,8 @@ public class BusinessManagementApplicationTests {
 	
 	@Test
 	public void tests() {
-		Customer c = cs.findByCid("44030101");
-		System.out.println(c);
+		//Customer c = cs.findByCid("44030101");
+		//System.out.println(c);
 	}
 
 }

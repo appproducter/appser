@@ -1,6 +1,4 @@
-package com.ruiliang.appsrv.dao;
-
-import org.apache.ibatis.annotations.Mapper;
+package com.ruiliang.appsrv.service;
 
 import com.ruiliang.appsrv.pojo.Sms;
 
@@ -8,8 +6,8 @@ import com.ruiliang.appsrv.pojo.Sms;
  * @author LinJian.Liu
  *
  */
-@Mapper
-public interface SmsDAO {
+public interface SmsService {
+
 	
 	/**
 	 * 保存短信

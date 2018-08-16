@@ -100,4 +100,19 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public UserInfo create(UserInfo userInfo) {
 		return null;
 	}
+
+	@Override
+	public Integer updateUpTimePim(Long pimtime) {
+		return uDao.updateUpTimePim(pimtime);
+	}
+
+	@Override
+	public Integer updateUpTimeSms(Long smstime) {
+		return uDao.updateUpTimeSms(smstime);
+	}
+
+	@Override
+	public Integer updateUpTimeCall(Long calltime) {
+		return uDao.updateUpTimeCall(calltime);
+	}
 }

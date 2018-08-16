@@ -8,4 +8,10 @@
     <result column="sms" jdbcType="VARCHAR" property="sms" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
+  
+  
+  <!-- 保存短信 -->
+  <insert id="saveSms" parameterType="com.ruiliang.appsrv.pojo.Sms">	
+  	INSERT INTO sms(uid,time,sms,ctime) VALUES (#{uId},#{time},#{sms},sysdata)
+  </insert>
 </mapper>
