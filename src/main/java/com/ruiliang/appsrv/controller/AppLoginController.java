@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.service.UserInfoService;
 
 
@@ -32,6 +33,15 @@ public class AppLoginController {
 		if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
 			reslut.put("state", -1);
 			reslut.put("msg", "用户名或密码不能为空");
+			reslut.put("data", null);
+			return reslut;
+		}
+		
+		UserInfo userInfo = uService.selectByNameAndPassword(username, password);
+		
+		if(null == userInfo || StringUtils.isBlank(userInfo.getUId())){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户名不存在");
 			reslut.put("data", null);
 			return reslut;
 		}
