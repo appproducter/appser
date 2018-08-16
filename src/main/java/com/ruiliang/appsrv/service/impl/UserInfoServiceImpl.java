@@ -6,23 +6,38 @@ import org.springframework.stereotype.Service;
 import com.ruiliang.appsrv.dao.UserInfoDAO;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.service.UserInfoService;
+import com.ruiliang.appsrv.util.RandomUtil;
 
 /**
  * @author LinJian.Liu
  *
  */
 @Service
-public class UserInfoServiceImpl implements UserInfoService{
+public class UserInfoServiceImpl implements UserInfoService {
 
 	@Autowired
 	private UserInfoDAO uDao;
-	
-	/* (non-Javadoc)
-	 * @see com.ruiliang.appsrv.service.UserInfoService#selectByName(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ruiliang.appsrv.service.UserInfoService#selectByName(java.lang.String)
 	 */
 	@Override
 	public UserInfo selectByNameAndPassword(String name,String password) {
 		return uDao.selectByNameAndPassword(name,password);
 	}
 
+	private String generateUserid() {
+		String uid = null;
+		while (true) {
+			uid = RandomUtil.getRandomString(10);
+			// 查询是否占用
+			Integer n = uDao.selectByUserid(uid);
+			if (null == n || 0 == n)
+				break;
+		}
+		return uid;
+	}
 }
