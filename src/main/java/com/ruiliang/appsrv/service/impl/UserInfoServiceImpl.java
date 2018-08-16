@@ -57,7 +57,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 		// 生成token
 		String token = createToken(uinfo.getCid(), uinfo.getUId());
 		uinfo.setToken(token);
-		
+
 		// 更新登录时间次数
 
 		return uinfo;
@@ -132,9 +132,27 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 	@Override
 	public int updateAvatar(String token, String avatar) {
-		
-		
-		
+
 		return 0;
+	}
+
+	@Override
+	public UserInfo create(UserInfo userInfo) {
+		if (null == userInfo.getCid())
+			throw new RuntimeException("用户所属公司不为能空");
+
+		if (null == userInfo.getuId()) {
+			String uid = generateUserid();
+			if (StringUtils.isEmpty(uid))
+				throw new RuntimeException("uid系统出错");
+			userInfo.setUId(uid);
+		}
+
+		if (null == userInfo.getcTime())
+			userInfo.setcTime(new Date());
+
+		uDao.insert(userInfo);
+
+		return userInfo;
 	}
 }
