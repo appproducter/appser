@@ -17,5 +17,5 @@ public interface UserInfoDAO {
 	 * @param name
 	 * @return
 	 */
-	UserInfo selectByName(@Param("name") String name);
+	UserInfo selectByNameAndPassword(@Param("name") String name,@Param("password") String password);
 }

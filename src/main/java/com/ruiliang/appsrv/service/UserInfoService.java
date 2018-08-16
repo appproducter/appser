@@ -13,6 +13,6 @@ public interface UserInfoService {
 	 * @param name
 	 * @return
 	 */
-	UserInfo selectByName(String name);
+	UserInfo selectByNameAndPassword(String name,String password);
 	
 }

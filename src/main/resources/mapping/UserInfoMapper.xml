@@ -23,14 +23,14 @@
   </resultMap>
   
   <!-- 根据姓名查询用户 -->
-  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByNameAndPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
   		SELECT 
   			uid,password,idcard,mobile,gender,email,area,address,avatar,
   			type,status,creator,ctime,up_time_calllog,up_time_sms,up_time_pim
   		FROM
   			user_info
   		WHERE
-  		 	name = #{name}
+  		 	name = #{name} AND password = #{password}
   		LIMIT
   			1
   </select>

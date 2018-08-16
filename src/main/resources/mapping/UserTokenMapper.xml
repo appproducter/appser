@@ -9,4 +9,25 @@
     <result column="timeout" jdbcType="INTEGER" property="timeOut" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
+  
+  <!-- 根据uid查询token -->
+  <select id="selectTokenByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		SELECT 
+  			id,uid,token,customerid,timeout
+  		FROM
+  			user_token
+  		WHERE
+  			uid = #{uid}
+  </select>
+  
+  <!-- 根据uid更新token -->
+  <update id="updateTokenByUid" parameterType="java.lang.String">
+  		UPDATE 
+  			user_token
+  		SET
+  			token = #{token},
+  			ctime = sysdate()
+  		WHERE
+  			uid = #{uid}
+  </update>
 </mapper>

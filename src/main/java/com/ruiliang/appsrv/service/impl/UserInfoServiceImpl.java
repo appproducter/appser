@@ -21,8 +21,8 @@ public class UserInfoServiceImpl implements UserInfoService{
 	 * @see com.ruiliang.appsrv.service.UserInfoService#selectByName(java.lang.String)
 	 */
 	@Override
-	public UserInfo selectByName(String name) {
-		return uDao.selectByName(name);
+	public UserInfo selectByNameAndPassword(String name,String password) {
+		return uDao.selectByNameAndPassword(name,password);
 	}
 
 }
