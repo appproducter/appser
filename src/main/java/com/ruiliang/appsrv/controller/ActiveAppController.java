@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.DeviceInfo;
+import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.Version;
+import com.ruiliang.appsrv.service.CustomerService;
 import com.ruiliang.appsrv.service.DeviceInfoService;
+import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.VersionService;
 
 /**
@@ -28,6 +32,12 @@ public class ActiveAppController {
 	
 	@Autowired
 	private VersionService vService;
+	
+	@Autowired
+	private CustomerService cService;
+	
+	@Autowired
+	private OperLogService oService;
 	
 	/**
 	 * APP激活
@@ -63,6 +73,14 @@ public class ActiveAppController {
 			return reslut;
 		}
 		
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码有误");
+			reslut.put("data", data);
+		}
+		
 		DeviceInfo di = new DeviceInfo();
 		di.setBrand(brand);
 		di.setChannel(channel);
@@ -85,6 +103,18 @@ public class ActiveAppController {
 			reslut.put("msg", "更新数据失败");
 			return reslut;
 		}
+		
+		//记录操作日志，由于没有UID 则存储设备ID
+		OperLog ol = new OperLog();
+		ol.setuId(deviceid);
+		ol.setContent("激活APP成功");
+		ol.setType((byte)3);
+				
+		Integer log = oService.saveOperLog(ol);
+		if(log != 1){
+			LOG.warn("method (appActive) 保存操作日志失败");
+		}
+		
 		data.put("flag", 1);
 		reslut.put("state", 0);
 		reslut.put("data", data);
@@ -119,6 +149,13 @@ public class ActiveAppController {
 			reslut.put("data",data);
 			reslut.put("msg", "参数不能为空");
 			return reslut;
+		}
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码有误");
+			reslut.put("data", data);
 		}
 		//查询更新信息
 		Version version = vService.selectVersion();

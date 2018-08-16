@@ -1,6 +1,4 @@
-package com.ruiliang.appsrv.dao;
-
-import org.apache.ibatis.annotations.Mapper;
+package com.ruiliang.appsrv.service;
 
 import com.ruiliang.appsrv.pojo.OperLog;
 
@@ -8,8 +6,8 @@ import com.ruiliang.appsrv.pojo.OperLog;
  * @author LinJian.Liu
  *
  */
-@Mapper
-public interface OperLogDAO {
+public interface OperLogService {
+
 	
 	/**
 	 * 保存操作日志

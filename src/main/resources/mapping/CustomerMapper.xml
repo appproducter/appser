@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruiliang.appsrv.dao.CustomerDAO">
+
 	<resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.Customer">
 		<result column="id" property="id" />
 		<result column="cid" property="cId" />
@@ -21,7 +22,6 @@
 	</update>
 
 	<select id="selectCustomerByCid" parameterType="String" resultMap="BaseResultMap">
-		select * from customer
-		where cid = #{cid}
+		select * from customer where cid = #{cid}
 	</select>
 </mapper>

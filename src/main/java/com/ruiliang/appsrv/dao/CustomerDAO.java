@@ -11,9 +11,10 @@ import com.ruiliang.appsrv.pojo.Customer;
 @Mapper
 public interface CustomerDAO {
 	
-	void insert(Customer customer);
+	int insert(Customer customer);
 	
-	void update(Customer customer);
+	int update(Customer customer);
 	
 	Customer selectCustomerByCid(String cid);
+
 }

@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 		if (CUSTOMER_CACHE.containsKey(cid))
 			return CUSTOMER_CACHE.get(cid);
 		else {
-			Customer cus = customerDao.selectByCid(cid);
+			Customer cus = customerDao.selectCustomerByCid(cid);
 
 			if (cus != null) {
 				synchronized (CUSTOMER_CACHE) {

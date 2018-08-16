@@ -11,9 +11,9 @@ public class Pim implements Serializable{
  
 
 	/**
-	 * Serializable
+	 * 
 	 */
-	private static final long serialVersionUID = 3413012554319021995L;
+	private static final long serialVersionUID = -8139453580218415541L;
 
 	/**
 	 * 主键
@@ -25,10 +25,6 @@ public class Pim implements Serializable{
 	 */
 	private String uId;
 	
-	/**
-	 * 最后上传时间
-	 */
-	private Long time;
 	
 	/**
 	 * 通讯录
@@ -56,13 +52,6 @@ public class Pim implements Serializable{
 		this.uId = uId;
 	}
 
-	public Long getTime() {
-		return time;
-	}
-
-	public void setTime(Long time) {
-		this.time = time;
-	}
 
 	public String getPim() {
 		return pim;
@@ -82,9 +71,10 @@ public class Pim implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Pim [id=" + id + ", uId=" + uId + ", time=" + time + ", pim="
-				+ pim + ", cTime=" + cTime + "]";
+		return "Pim [id=" + id + ", uId=" + uId + ", pim=" + pim + ", cTime="
+				+ cTime + "]";
 	}
+
 
 	
 	
