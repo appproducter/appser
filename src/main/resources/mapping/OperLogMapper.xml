@@ -8,4 +8,9 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="time" jdbcType="DATE" property="time" />
   </resultMap>
+  
+  <!-- 保存操作日志 -->
+  <insert id="saveOperLog" parameterType="com.ruiliang.appsrv.pojo.OperLog">
+  		INSERT INTO oper_log (uid,type,content,time) VALUES (#{uId},#{type},#{content},sysdate())
+  </insert>
 </mapper>

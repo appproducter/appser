@@ -9,4 +9,9 @@
     <result column="mgr_qua" jdbcType="INTEGER" property="mgrQua" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
+  
+  <!-- 根据cid查询客户 -->
+  <select id="selectCustomerByCid" resultMap="BaseResultMap" parameterType="java.lang.String">
+  		SELECT cid ,name ,apikey,mgr_qua,ctime FROM customer WHERE cid = #{cid}
+  </select>
 </mapper>
