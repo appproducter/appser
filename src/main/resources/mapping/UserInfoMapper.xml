@@ -34,4 +34,9 @@
   		LIMIT
   			1
   </select>
+  
+  <select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">
+  	  select count(0) from user_info where uid = #{uid}
+  </select>
+ 
 </mapper>
