@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruiliang.appsrv.dao.CustomerDAO">
-  <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.Customer">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="cid" jdbcType="VARCHAR" property="cId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="apikey" jdbcType="VARCHAR" property="apiKey" />
-    <result column="mgr_qua" jdbcType="INTEGER" property="mgrQua" />
-    <result column="ctime" jdbcType="DATE" property="cTime" />
-  </resultMap>
+	<resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.Customer">
+		<result column="id" property="id" />
+		<result column="cid" property="cId" />
+		<result column="name" property="name" />
+		<result column="apikey" property="apiKey" />
+		<result column="mgr_qua" property="mgrQua" />
+		<result column="ctime" property="cTime" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.ruiliang.appsrv.pojo.Customer">
+		insert into customer (cid, name, apikey,
+		mgr_qua, ctime) values (#{cId}, #{name}, #{apiKey}, #{mgrQua}, #{cTime})
+	</insert>
+
+	<update id="update" parameterType="com.ruiliang.appsrv.pojo.Customer">
+		update customer set name = #{name}, mgr_qua =
+		#{mgrQua} where id = #{id}
+	</update>
+
+	<select id="selectCustomerByCid" parameterType="String" resultMap="BaseResultMap">
+		select * from customer
+		where cid = #{cid}
+	</select>
 </mapper>
