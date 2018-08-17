@@ -6,7 +6,7 @@ import com.ruiliang.appsrv.pojo.Sms;
  * @author LinJian.Liu
  *
  */
-public interface SmsService {
+public interface SmsLogService {
 
 	
 	/**
