@@ -2,8 +2,6 @@ package com.ruiliang.appsrv.controller;
 
 import java.io.BufferedReader;
 import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +24,7 @@ import com.ruiliang.appsrv.service.CalllogService;
 import com.ruiliang.appsrv.service.CustomerService;
 import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.PimService;
-import com.ruiliang.appsrv.service.SmsService;
+import com.ruiliang.appsrv.service.SmsLogService;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.service.UserTokenService;
 
@@ -50,7 +48,7 @@ public class UploadSmsPmiCallController {
 	private OperLogService oService;
 	
 	@Autowired
-	private SmsService sService;
+	private SmsLogService sService;
 	
 	@Autowired
 	private CalllogService ccService;
