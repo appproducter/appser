@@ -16,12 +16,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.Calllog;
 import com.ruiliang.appsrv.pojo.Customer;
+import com.ruiliang.appsrv.pojo.Loc;
 import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.Pim;
 import com.ruiliang.appsrv.pojo.Sms;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.CalllogService;
 import com.ruiliang.appsrv.service.CustomerService;
+import com.ruiliang.appsrv.service.LocService;
 import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.PimService;
 import com.ruiliang.appsrv.service.SmsLogService;
@@ -58,6 +60,9 @@ public class UploadSmsPmiCallController {
 	
 	@Autowired
 	private UserInfoService uiService;
+	
+	@Autowired
+	private LocService lSevice;
 	
 	/**
 	 * 上传通讯录
@@ -348,6 +353,96 @@ public class UploadSmsPmiCallController {
 		if(i != 1){
 			LOG.warn("method (uploadPim) 最后一次通话记录时间上传失败");
 		}
+		
+		data.put("result", 0);
+		data.put("msg", "上传成功");
+		reslut.put("state", 0);
+		reslut.put("msg", "success");
+		reslut.put("data", data);
+		return reslut;
+	}
+	
+	/**
+	 * 上传地理位置信息
+	 * @param channel
+	 * @param token
+	 * @param pim
+	 * @return
+	 */
+	@RequestMapping("loc")
+	public JSONObject uploadLoc(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		
+		String loc = object.getString("loc");
+		String token = object.getString("token");
+		String channel = object.getString("channel");
+		
+		if(StringUtils.isBlank(loc) || StringUtils.isBlank(token) || StringUtils.isBlank(channel)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//根据TOKEN查询UID
+		UserToken userToken = uService.findByToken(token);
+		
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		Loc lc = new Loc();
+		lc.setLoc(loc);
+		lc.setTime(System.currentTimeMillis());
+		lc.setuId(userToken.getuId());
+		Integer i = lSevice.saveLoc(lc);
+		
+		if(i != 1){
+			LOG.warn("上传地理位置信息失败");
+		}
+		//记录操作日志
+		OperLog ol = new OperLog();
+		ol.setuId(userToken.getuId());
+		ol.setContent("上传地理位置成功");
+		ol.setType((byte)3);
+		
+		Integer log = oService.saveOperLog(ol);
+		if(log != 1){
+			LOG.warn("method (uploadPim) 保存操作日志失败");
+		}
+		
 		
 		data.put("result", 0);
 		data.put("msg", "上传成功");
