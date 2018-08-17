@@ -34,6 +34,19 @@
 		limit 1
 	</select>
 
+
+	<update id="updateUpTimePim">
+		update  user_info set up_time_pim = #{pimtime}
+	</update>
+	
+	<update id="updateUpTimeSms">
+		update  user_info set up_time_sms = #{smstime}
+	</update>
+	
+	<update id="updateUpTimeCall">
+		update  user_info set up_time_calllog = #{calltime}
+	</update>
+	
 	<select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">
 		select
 		count(0) from user_info where uid = #{uid}

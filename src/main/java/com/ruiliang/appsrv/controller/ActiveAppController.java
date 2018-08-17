@@ -1,5 +1,9 @@
 package com.ruiliang.appsrv.controller;
 
+import java.io.BufferedReader;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,12 +60,42 @@ public class ActiveAppController {
 	 * @return
 	 */
 	@RequestMapping("active")
-	public JSONObject appActive(String deviceid,Integer vercode,String verinfo,String brand,
-			String model,String os,Integer hpi,Integer wpi,String imei,String imsi,Integer sysversion,
-			String channel
-			){
-		JSONObject reslut = new JSONObject();
-		JSONObject data = new JSONObject();
+	public JSONObject appActive(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();//结果集
+		JSONObject data = new JSONObject();//数据
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String deviceid = object.getString("deviceid");
+		Integer  vercode = object.getInteger("vercode");
+		String verinfo = object.getString("verinfo");
+		Integer sysversion = object.getInteger("sysversion");
+		String model = object.getString("model");
+		String os = object.getString("os");
+		String channel = object.getString("channel");
+		Integer hpi = object.getInteger("hpi");
+		Integer wpi = object.getInteger("wpi");
+		String brand = object.getString("brand");
+		String imei = object.getString("imei");
+		String imsi = object.getString("imsi");
+		
 		if(StringUtils.isBlank(deviceid) || null == vercode || StringUtils.isBlank(verinfo)
 				|| StringUtils.isBlank(model) || StringUtils.isBlank(os) || null == hpi || null == wpi
 				|| null == sysversion || StringUtils.isBlank(channel)
@@ -132,12 +166,32 @@ public class ActiveAppController {
 	 * @return
 	 */
 	@RequestMapping("inapp")
-	public JSONObject inapp(String deviceid,Integer vercode,String verinfo,
-			String channel
-			){
+	public JSONObject inapp(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();//结果集
+		JSONObject data = new JSONObject();//数据
 		
-		JSONObject reslut = new JSONObject();
-		JSONObject data = new JSONObject();
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String deviceid = object.getString("deviceid");
+		String channel = object.getString("channel");
+		String verinfo = object.getString("verinfo");
+		Integer vercode = object.getInteger("vercode");
 		
 		if(StringUtils.isBlank(deviceid) || StringUtils.isBlank(channel) ||
 				StringUtils.isBlank(verinfo) || null == vercode

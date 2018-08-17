@@ -59,11 +59,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 		uinfo.setToken(token);
 
 		// 更新登录时间次数
+		uDao.updateLoginTimes(uinfo.getUId());
 
 		return uinfo;
 	}
 
-	@Transactional
 	private String createToken(String cid, String uid) {
 		UserToken userToken = userTokenDao.selectTokenByUid(uid);
 
@@ -99,7 +99,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	@Transactional
 	public UserInfo create(String token, UserInfo userInfo) {
 		// 查询token
 		UserToken userToken = userTokenDao.findByToken(token);
@@ -115,7 +114,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			throw new RuntimeException("身份证已存在");
 
 		userInfo.setCid(userToken.getCid());
-		if (null == userInfo.getuId()) {
+		if (null == userInfo.getUId()) {
 			String uid = generateUserid();
 			if (StringUtils.isEmpty(uid))
 				throw new RuntimeException("uid系统出错");
@@ -137,11 +136,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
+	@Transactional
 	public UserInfo create(UserInfo userInfo) {
 		if (null == userInfo.getCid())
 			throw new RuntimeException("用户所属公司不为能空");
 
-		if (null == userInfo.getuId()) {
+		if (null == userInfo.getUId()) {
 			String uid = generateUserid();
 			if (StringUtils.isEmpty(uid))
 				throw new RuntimeException("uid系统出错");
@@ -154,5 +154,19 @@ public class UserInfoServiceImpl implements UserInfoService {
 		uDao.insert(userInfo);
 
 		return userInfo;
+	}
+	
+	public Integer updateUpTimePim(Long pimtime) {
+		return uDao.updateUpTimePim(pimtime);
+	}
+
+	@Override
+	public Integer updateUpTimeSms(Long smstime) {
+		return uDao.updateUpTimeSms(smstime);
+	}
+
+	@Override
+	public Integer updateUpTimeCall(Long calltime) {
+		return uDao.updateUpTimeCall(calltime);
 	}
 }

@@ -37,14 +37,6 @@ public class AppLoginController {
 			return reslut;
 		}
 		
-		UserInfo userInfo = uService.selectByNameAndPassword(username, password);
-		
-		if(null == userInfo || StringUtils.isBlank(userInfo.getUId())){
-			reslut.put("state", -1);
-			reslut.put("msg", "用户名不存在");
-			reslut.put("data", null);
-			return reslut;
-		}
 		
 		
 		return null;

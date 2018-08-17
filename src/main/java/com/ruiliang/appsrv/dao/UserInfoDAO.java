@@ -43,6 +43,12 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	UserInfo selectByIdcard(String idcard);
+	
+	Integer updateUpTimePim(Long pimtime);
+	
+	Integer updateUpTimeSms(Long smstime);
+	
+	Integer updateUpTimeCall(Long calltime);
 
 	int insert(UserInfo userInfo);
 
