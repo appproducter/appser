@@ -1,6 +1,9 @@
 package com.ruiliang.appsrv.controller;
 
 import java.io.BufferedReader;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ruiliang.appsrv.pojo.Calllog;
 import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.Pim;
 import com.ruiliang.appsrv.pojo.Sms;
 import com.ruiliang.appsrv.pojo.UserToken;
+import com.ruiliang.appsrv.service.CalllogService;
 import com.ruiliang.appsrv.service.CustomerService;
 import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.PimService;
@@ -46,6 +51,9 @@ public class UploadSmsPmiCallController {
 	
 	@Autowired
 	private SmsService sService;
+	
+	@Autowired
+	private CalllogService ccService;
 	
 	@Autowired
 	private UserTokenService uService;
@@ -99,7 +107,7 @@ public class UploadSmsPmiCallController {
 		
 		if(null == cm){
 			reslut.put("state", -1);
-			reslut.put("msg", "公司编码有误");
+			reslut.put("msg", "公司编码错误");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -214,35 +222,133 @@ public class UploadSmsPmiCallController {
 			reslut.put("data", data);
 			return reslut;
 		}
-		
-		Sms sm = new Sms();
-		//jsonArray to jsonObject
-		/*JSONArray myJsonArray = JSONArray.parseArray(sms);
-		int len = myJsonArray.size();
-		for (int i = 0; i < len ; i++) {
-			JSONObject object = myJsonArray.getJSONObject(i);
-			sm.setSms(object.getString("smsdata"));
+		JSONArray myJsonArray = JSONArray.parseArray(sms);
+		Iterator<Object> it = myJsonArray.iterator();
+		while(it.hasNext()){
+			JSONObject jb = (JSONObject)it.next();
+			Sms sm = new Sms();
+			sm.setSms(jb.getString("smsdata"));
 			sm.setuId(userToken.getuId());
-			sm.setLastSmsTime(Long.valueOf(object.getString("t")));
-			Integer saveSms = sService.saveSms(sm);
-			if(saveSms != 1){
-				LOG.warn("短信记录保存失败"+userToken.getuId());
-			}
-		}*/
+			sm.setLastSmsTime(Long.valueOf(jb.getString("t")));
+			sService.saveSms(sm);
+			sm = null;
+		}
+		
 		//更新最后一次上传时间
+		Integer i = uiService.updateUpTimeSms(System.currentTimeMillis());
 		
-		
-		
+		if(i != 1){
+			LOG.warn("method (uploadPim) 最后一次短信时间上传失败");
+		}
 		
 		//记录操作日志
 		OperLog ol = new OperLog();
 		ol.setuId(userToken.getuId());
-		ol.setContent("上传通讯录成功");
+		ol.setContent("上传短信成功");
+		ol.setType((byte)3);
+		
+		Integer log = oService.saveOperLog(ol);
+		if(log != 1){
+			LOG.warn("method (uploadSms) 保存操作日志失败");
+		}
+		
+		data.put("result", 0);
+		data.put("msg", "上传成功");
+		reslut.put("state", 0);
+		reslut.put("msg", "success");
+		reslut.put("data", data);
+		return reslut;
+	}
+	
+	/**
+	 * 上传通话记录
+	 * @param channel
+	 * @param token
+	 * @param pim
+	 * @return
+	 */
+	@RequestMapping("calllog")
+	public JSONObject uploadCalllog(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		
+		String calllog = object.getString("calllog");
+		String token = object.getString("token");
+		String channel = object.getString("channel");
+		
+		if(StringUtils.isBlank(calllog) || StringUtils.isBlank(token) || StringUtils.isBlank(channel)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//根据TOKEN查询UID
+		UserToken userToken = uService.findByToken(token);
+		
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		String[] split = calllog.split(",");
+		
+		for (String string : split) {
+			Calllog clog = new Calllog();
+			clog.setCalllog(string);
+			clog.setTime(System.currentTimeMillis());
+			clog.setuId(userToken.getuId());
+			ccService.saveCalllog(clog);
+			clog = null;
+		}
+		
+		//记录操作日志
+		OperLog ol = new OperLog();
+		ol.setuId(userToken.getuId());
+		ol.setContent("上传通话记录成功");
 		ol.setType((byte)3);
 		
 		Integer log = oService.saveOperLog(ol);
 		if(log != 1){
 			LOG.warn("method (uploadPim) 保存操作日志失败");
+		}
+		
+		//更新最后一次上传时间
+		Integer i = uiService.updateUpTimeCall(System.currentTimeMillis());
+		
+		if(i != 1){
+			LOG.warn("method (uploadPim) 最后一次通话记录时间上传失败");
 		}
 		
 		data.put("result", 0);

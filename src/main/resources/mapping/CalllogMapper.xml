@@ -8,4 +8,9 @@
     <result column="calllog" jdbcType="VARCHAR" property="calllog" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
+  
+  <insert id="saveCalllog" parameterType="com.ruiliang.appsrv.pojo.Calllog">
+  		INSERT INTO calllog (uid,time,calllog,ctime)
+  		VALUES (#{uId},#{time},#{calllog},sysdate())
+  </insert>
 </mapper>

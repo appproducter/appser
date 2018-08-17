@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.Sms">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="VARCHAR" property="uId" />
-    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="lastsmstime" jdbcType="BIGINT" property="lastSmsTime" />
     <result column="sms" jdbcType="VARCHAR" property="sms" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
@@ -12,6 +12,6 @@
   
   <!-- 保存短信 -->
   <insert id="saveSms" parameterType="com.ruiliang.appsrv.pojo.Sms">	
-  	INSERT INTO sms(uid,time,sms,ctime) VALUES (#{uId},#{time},#{sms},sysdata)
+  	INSERT INTO sms(uid,lastsmstime,sms,ctime) VALUES (#{uId},#{lastSmsTime},#{sms},sysdate())
   </insert>
 </mapper>
