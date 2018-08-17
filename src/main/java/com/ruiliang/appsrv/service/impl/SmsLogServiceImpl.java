@@ -5,14 +5,14 @@ import org.springframework.stereotype.Service;
 
 import com.ruiliang.appsrv.dao.SmsDAO;
 import com.ruiliang.appsrv.pojo.Sms;
-import com.ruiliang.appsrv.service.SmsService;
+import com.ruiliang.appsrv.service.SmsLogService;
 
 /**
  * @author LinJian.Liu
  *
  */
 @Service
-public class SmsServiceImpl implements SmsService{
+public class SmsLogServiceImpl implements SmsLogService{
 
 	
 	@Autowired
