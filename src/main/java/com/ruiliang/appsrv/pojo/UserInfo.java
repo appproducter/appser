@@ -263,10 +263,6 @@ public class UserInfo implements Serializable {
 		this.cTime = cTime;
 	}
 
-	public String getuId() {
-		return uId;
-	}
-
 	public void setuId(String uId) {
 		this.uId = uId;
 	}
