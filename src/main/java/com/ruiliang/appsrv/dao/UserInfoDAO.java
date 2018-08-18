@@ -44,13 +44,17 @@ public interface UserInfoDAO {
 	 */
 	UserInfo selectByIdcard(String idcard);
 	
-	Integer updateUpTimePim(Long pimtime);
+	Integer updateUpTimePim(@Param("pimtime") Long pimtime,@Param("uid") String uid);
 	
-	Integer updateUpTimeSms(Long smstime);
+	Integer updateUpTimeSms(@Param("smstime") Long smstime,@Param("uid") String uid);
 	
-	Integer updateUpTimeCall(Long calltime);
+	Integer updateUpTimeCall(@Param("calltime") Long calltime,@Param("uid") String uid);
 
-	int insert(UserInfo userInfo);
+	int insert(UserInfo userInfo); 
+	
+	int updateUser(UserInfo userInfo);
+	
+	int updateUserAuth(@Param("type") Byte type,@Param("uid") String uid);
 
 	/**
 	 * 更新登录时间及次数

@@ -35,10 +35,14 @@ public interface UserInfoService {
 	 */
 	UserInfo login(String deviceid, String name, String password) throws LoginFailureException;
 
-	Integer updateUpTimePim(Long pimtime);
+	Integer updateUpTimePim(Long pimtime,String uid);
 	
-	Integer updateUpTimeSms(Long smstime);
+	Integer updateUpTimeSms(Long smstime,String uid);
 	
-	Integer updateUpTimeCall(Long calltime);
+	Integer updateUpTimeCall(Long calltime,String uid);
 	int updateAvatar(String token, String avatar);
+	
+	int updateUserAuth(Byte type,String uid);
+	
+	int updateUser(UserInfo userInfo);
 }

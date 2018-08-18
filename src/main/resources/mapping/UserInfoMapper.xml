@@ -6,7 +6,7 @@
 		<result column="uid" property="uId" />
 		<result column="password" property="password" />
 		<result column="name" property="name" />
-		<result column="idcard" property="idCard" />
+		<result column="idcard"  property="idCard" />
 		<result column="mobile" property="mobile" />
 		<result column="gender" property="gender" />
 		<result column="email" property="email" />
@@ -24,7 +24,28 @@
 		<result column="up_time_sms" property="upTimeSms" />
 		<result column="up_time_pim" property="upTimePim" />
 	</resultMap>
-
+	
+	<update id="updateUserAuth">
+		update user_info set type = #{type} where uid = #{uid}
+	</update>
+	
+	<update id="updateUser" parameterType="com.ruiliang.appsrv.pojo.UserInfo">
+		update user_info 
+		set password=#{password},name=#{name},idcard=#{idCard} 
+		<if test="email != null and email != ''">
+				email=#{email},
+		</if>
+		<if test="area != null">
+				area=#{area},
+		</if>
+		<if test="gender != null and area != ''">
+				gender=#{gender},
+		</if>
+		<if test="address != null and address != ''">
+				address=#{address},
+		</if>
+		where uid = #{uId}
+	</update>
 
 	<!-- 根据姓名查询用户 -->
 	<select id="selectByNameAndPassword" parameterType="java.lang.String"
@@ -36,15 +57,15 @@
 
 
 	<update id="updateUpTimePim">
-		update  user_info set up_time_pim = #{pimtime}
+		update  user_info set up_time_pim = #{pimtime} where uid = #{uid}
 	</update>
 	
 	<update id="updateUpTimeSms">
-		update  user_info set up_time_sms = #{smstime}
+		update  user_info set up_time_sms = #{smstime} where uid = #{uid}
 	</update>
 	
 	<update id="updateUpTimeCall">
-		update  user_info set up_time_calllog = #{calltime}
+		update  user_info set up_time_calllog = #{calltime} where uid = #{uid}
 	</update>
 	
 	<select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">

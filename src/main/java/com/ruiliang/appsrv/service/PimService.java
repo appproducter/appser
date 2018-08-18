@@ -15,4 +15,6 @@ public interface PimService {
 	 * @return
 	 */
 	Integer savePim(Pim pim);
+	
+	Pim selectPimByUid(String uid);
 }

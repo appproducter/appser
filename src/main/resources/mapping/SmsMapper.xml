@@ -14,4 +14,8 @@
   <insert id="saveSms" parameterType="com.ruiliang.appsrv.pojo.Sms">	
   	INSERT INTO sms(uid,lastsmstime,sms,ctime) VALUES (#{uId},#{lastSmsTime},#{sms},sysdate())
   </insert>
+  
+  <select id="selectSmsByUid" resultMap="BaseResultMap">
+  	select * from sms where uid = #{uid} and lastsmstime &lt; #{time}
+  </select>
 </mapper>

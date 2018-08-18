@@ -156,17 +156,27 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfo;
 	}
 	
-	public Integer updateUpTimePim(Long pimtime) {
-		return uDao.updateUpTimePim(pimtime);
+	public Integer updateUpTimePim(Long pimtime,String uid) {
+		return uDao.updateUpTimePim(pimtime,uid);
 	}
 
 	@Override
-	public Integer updateUpTimeSms(Long smstime) {
-		return uDao.updateUpTimeSms(smstime);
+	public Integer updateUpTimeSms(Long smstime,String uid) {
+		return uDao.updateUpTimeSms(smstime,uid);
 	}
 
 	@Override
-	public Integer updateUpTimeCall(Long calltime) {
-		return uDao.updateUpTimeCall(calltime);
+	public Integer updateUpTimeCall(Long calltime,String uid) {
+		return uDao.updateUpTimeCall(calltime,uid);
+	}
+
+	@Override
+	public int updateUser(UserInfo userInfo) {
+		return uDao.updateUser(userInfo);
+	}
+
+	@Override
+	public int updateUserAuth(Byte type, String uid) {
+		return uDao.updateUserAuth(type, uid);
 	}
 }

@@ -13,4 +13,8 @@
   		INSERT INTO calllog (uid,time,calllog,ctime)
   		VALUES (#{uId},#{time},#{calllog},sysdate())
   </insert>
+  
+  <select id="selectCalllogByUid" resultMap="BaseResultMap">
+  	select * from calllog where uid = #{uid}
+  </select>
 </mapper>

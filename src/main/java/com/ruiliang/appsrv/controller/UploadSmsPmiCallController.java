@@ -150,7 +150,7 @@ public class UploadSmsPmiCallController {
 		}
 		
 		//更新最后一次上传时间
-		Integer i = uiService.updateUpTimePim(System.currentTimeMillis());
+		Integer i = uiService.updateUpTimePim(System.currentTimeMillis(),userToken.getuId());
 		
 		if(i != 1){
 			LOG.warn("method (uploadPim) 最后一次通讯录时间上传失败");
@@ -238,7 +238,7 @@ public class UploadSmsPmiCallController {
 		}
 		
 		//更新最后一次上传时间
-		Integer i = uiService.updateUpTimeSms(System.currentTimeMillis());
+		Integer i = uiService.updateUpTimeSms(System.currentTimeMillis(),userToken.getuId());
 		
 		if(i != 1){
 			LOG.warn("method (uploadPim) 最后一次短信时间上传失败");
@@ -348,7 +348,7 @@ public class UploadSmsPmiCallController {
 		}
 		
 		//更新最后一次上传时间
-		Integer i = uiService.updateUpTimeCall(System.currentTimeMillis());
+		Integer i = uiService.updateUpTimeCall(System.currentTimeMillis(),userToken.getuId());
 		
 		if(i != 1){
 			LOG.warn("method (uploadPim) 最后一次通话记录时间上传失败");

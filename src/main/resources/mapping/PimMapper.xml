@@ -12,4 +12,8 @@
   <insert id="savePim" parameterType="com.ruiliang.appsrv.pojo.Pim">
   		INSERT INTO pim (uid,pim,ctime) VALUES (#{uId},#{pim},sysdate())
   </insert>
+  
+  <select id="selectPimByUid" resultMap="BaseResultMap">
+  select * from pim where uid = #{uid}
+  </select>
 </mapper>

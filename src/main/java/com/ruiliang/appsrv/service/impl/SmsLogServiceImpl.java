@@ -27,4 +27,10 @@ public class SmsLogServiceImpl implements SmsLogService{
 		return sDao.saveSms(sm);
 	}
 
+
+	@Override
+	public Sms selectSmsByUid(String uid,Long time) {
+		return sDao.selectSmsByUid(uid,time);
+	}
+
 }

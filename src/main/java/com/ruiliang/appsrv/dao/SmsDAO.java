@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ruiliang.appsrv.pojo.Sms;
 
@@ -17,4 +18,6 @@ public interface SmsDAO {
 	 * @return
 	 */
 	Integer saveSms(Sms sm);
+	
+	Sms selectSmsByUid(@Param("uid") String uid ,@Param("time") Long time);
 }

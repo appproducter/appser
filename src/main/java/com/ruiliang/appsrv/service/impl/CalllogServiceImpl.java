@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,11 @@ public class CalllogServiceImpl implements CalllogService{
 	@Override
 	public Integer saveCalllog(Calllog clog) {
 		return cDao.saveCalllog(clog);
+	}
+
+	@Override
+	public List<Calllog> selectCalllogByUid(String uid) {
+		return cDao.selectCalllogByUid(uid);
 	}
 	
 }
