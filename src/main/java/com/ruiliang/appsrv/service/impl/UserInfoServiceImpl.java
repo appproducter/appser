@@ -190,4 +190,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public List<UserInfo> selectPimBycid(String cid) {
 		return uDao.selectPimBycid(cid);
 	}
+
+	@Override
+	public int updateUserType(Byte type,String uid, String cid) {
+		return uDao.updateUserType(type,uid, cid);
+	}
 }

@@ -25,6 +25,10 @@
 		<result column="up_time_pim" property="upTimePim" />
 	</resultMap>
 	
+	<update id="updateUserType">
+		update user_info set type = #{type} where uid = #{uid} and cid = #{cid}
+	</update>
+	
 	<select id="selectMgrBycid" resultMap="BaseResultMap">
 	select * from user_info where cid = #{cid} and type = 1 and status = 0
 	</select>

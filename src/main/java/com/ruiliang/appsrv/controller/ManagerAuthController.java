@@ -1,7 +1,6 @@
 package com.ruiliang.appsrv.controller;
 
 import java.io.BufferedReader;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -367,5 +366,181 @@ public class ManagerAuthController {
 		reslut.put("data", data);
 		return reslut;
 		
+	}
+	
+	/**
+	 * 添加管理员
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("authorize")
+	public JSONObject authorize(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();//结果集
+		JSONObject data = new JSONObject();//数据
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("result", -1);
+			data.put("msg", "添加失败");
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//根据TOKEN查询UID
+		UserToken userToken = uService.findByToken(token);
+				
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		JSONObject us = JSONObject.parseObject(da);
+		
+		String channel = (String) us.get("channel");
+		String uid = (String) us.get("uid");
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		if(!StringUtils.isBlank(uid)){
+			String[] split = uid.split(",");
+			for (String string : split) {
+				int i = uiService.updateUserType((byte)1,string, channel);
+				if(i != 1){
+					reslut.put("state", -1);
+					reslut.put("msg", "添加管理员失败");
+					reslut.put("data", data);
+					return reslut;
+				}
+			}
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			data.put("result", 0);
+			data.put("msg", "设置成功");
+			reslut.put("data", data);
+			return reslut;
+		}
+		reslut.put("state", -1);
+		reslut.put("msg", "添加管理员失败");
+		reslut.put("data", data);
+		return reslut;
+	}
+	
+	/**
+	 * 删除管理权限
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("deletemanage")
+	public JSONObject deleteManage(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();//结果集
+		JSONObject data = new JSONObject();//数据
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("result", -1);
+			data.put("msg", "添加失败");
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//根据TOKEN查询UID
+		UserToken userToken = uService.findByToken(token);
+				
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		JSONObject us = JSONObject.parseObject(da);
+		
+		String channel = (String) us.get("channel");
+		String uid = (String) us.get("uid");
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		if(!StringUtils.isBlank(uid)){
+			String[] split = uid.split(",");
+			for (String string : split) {
+				int i = uiService.updateUserType((byte)0,string, channel);
+				if(i != 1){
+					reslut.put("state", -1);
+					reslut.put("msg", "删除管理权限失败");
+					reslut.put("data", data);
+					return reslut;
+				}
+			}
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			data.put("result", 0);
+			data.put("msg", "设置成功");
+			reslut.put("data", data);
+			return reslut;
+		}
+		reslut.put("state", -1);
+		reslut.put("msg", "删除管理权限失败");
+		reslut.put("data", data);
+		return reslut;
 	}
 }

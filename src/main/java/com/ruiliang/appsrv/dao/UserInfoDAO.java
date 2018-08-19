@@ -14,6 +14,8 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 @Mapper
 public interface UserInfoDAO {
 
+	int updateUserType(@Param("type") Byte type,@Param("uid") String uid,@Param("cid") String cid);
+	
 	List<UserInfo> selectMgrBycid(String cid);
 	
 	List<UserInfo> selectPimBycid(String cid);

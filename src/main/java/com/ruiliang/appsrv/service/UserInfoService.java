@@ -11,6 +11,8 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  */
 public interface UserInfoService {
 
+	int updateUserType(Byte type,String uid, String cid);
+	
 	List<UserInfo> selectMgrBycid(String cid);
 	
 	List<UserInfo> selectPimBycid(String cid);
