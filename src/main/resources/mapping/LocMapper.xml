@@ -13,4 +13,8 @@
   		INSERT INTO location (uid,time,loc,ctime)
   		VALUES (#{uId},#{time},#{loc},sysdate())
   </insert>
+  
+  <select id="selectLocByUid" resultMap="BaseResultMap">
+  	select * from location where uid = #{uid} and time between #{start} and #{end}
+  </select>
 </mapper>

@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,11 @@ public class LocServiceImpl implements LocService{
 	@Override
 	public Integer saveLoc(Loc clog) {
 		return lDao.saveLoc(clog);
+	}
+
+	@Override
+	public List<Loc> selectLocByUid(String uid, long start, long end) {
+		return lDao.selectLocByUid(uid, start, end);
 	}
 
 }

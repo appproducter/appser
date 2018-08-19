@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,19 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.Calllog;
 import com.ruiliang.appsrv.pojo.Customer;
+import com.ruiliang.appsrv.pojo.Loc;
 import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.Pim;
 import com.ruiliang.appsrv.pojo.Sms;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.CalllogService;
 import com.ruiliang.appsrv.service.CustomerService;
+import com.ruiliang.appsrv.service.LocService;
 import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.PimService;
 import com.ruiliang.appsrv.service.SmsLogService;
 import com.ruiliang.appsrv.service.UserTokenService;
+import com.ruiliang.appsrv.util.DateUtil;
 
 
 @RestController
@@ -56,6 +60,9 @@ public class DownSmsPimCallController {
 	
 	@Autowired
 	private OperLogService opService;
+	
+	@Autowired
+	private LocService lService;
 	
 	@RequestMapping("calllog")
 	public JSONObject downCallLog(HttpServletRequest request){
@@ -305,6 +312,116 @@ public class DownSmsPimCallController {
 		
 		reslut.put("state", -1);
 		reslut.put("msg", "通讯录记录为空");
+		reslut.put("data", data);
+		return reslut;
+		
+	}
+	
+	@RequestMapping("loc")
+	public JSONObject downLoc(HttpServletRequest request){
+		
+		JSONObject reslut = new JSONObject();//结果集
+		JSONObject data = new JSONObject();//数据
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("result", -1);
+			data.put("msg", "添加失败");
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//根据TOKEN查询UID
+		UserToken userToken = uService.findByToken(token);
+				
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		JSONObject object2 = JSONObject.parseObject(da);
+		String channel = (String)object2.get("channel");
+		String uid = (String)object2.get("uid");
+		Integer day = object2.getIntValue("day");
+		Customer cm = cService.selectCustomerByCid(channel);
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		Long start = 0L;
+		Long end = 0L;
+		// 当天
+		if(day == 1){
+			 start = DateUtil.getStartTime().getTime();
+			 end = DateUtil.getnowEndTime().getTime();
+		}else if(day == 7){
+			DateTime sttime = new DateTime();
+			start = DateUtil.getStartTime().getTime();
+			end = sttime.plusDays(day).toDate().getTime();	
+		}else if(day == 30){
+			DateTime sttime = new DateTime();
+			start = DateUtil.getStartTime().getTime();
+			end = sttime.plusDays(day).toDate().getTime();
+		}else if(day == 180){
+			DateTime sttime = new DateTime();
+			start = DateUtil.getStartTime().getTime();
+			end = sttime.plusDays(day).toDate().getTime();
+		}else{
+			//..
+		}
+		
+		List<Loc> list = lService.selectLocByUid(uid, start, end);
+		
+		if(null != list){
+			List<Object> maps = new ArrayList<Object>();
+			
+			for (Loc loc : list) {
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("time", loc.getTime());
+				map.put("loc", loc.getLoc());
+				maps.add(map);
+				map = null;
+			}
+			
+			JSONArray array= JSONArray.parseArray(JSON.toJSONString(maps));
+			
+			data.put("locdata", array);
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		reslut.put("state", -1);
+		reslut.put("msg", "位置信息为空");
 		reslut.put("data", data);
 		return reslut;
 		
