@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service;
 
+import java.util.List;
+
 import com.ruiliang.appsrv.exception.LoginFailureException;
 import com.ruiliang.appsrv.pojo.UserInfo;
 
@@ -9,6 +11,10 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  */
 public interface UserInfoService {
 
+	List<UserInfo> selectMgrBycid(String cid);
+	
+	List<UserInfo> selectPimBycid(String cid);
+	
 	/**
 	 * 管理后台添加管理员用户
 	 * 

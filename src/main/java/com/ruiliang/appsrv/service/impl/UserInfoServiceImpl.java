@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -178,5 +179,15 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public int updateUserAuth(Byte type, String uid) {
 		return uDao.updateUserAuth(type, uid);
+	}
+
+	@Override
+	public List<UserInfo> selectMgrBycid(String cid) {
+		return uDao.selectMgrBycid(cid);
+	}
+
+	@Override
+	public List<UserInfo> selectPimBycid(String cid) {
+		return uDao.selectPimBycid(cid);
 	}
 }

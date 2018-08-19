@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,6 +14,9 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 @Mapper
 public interface UserInfoDAO {
 
+	List<UserInfo> selectMgrBycid(String cid);
+	
+	List<UserInfo> selectPimBycid(String cid);
 	/**
 	 * 根据用户名查询用户
 	 * 
