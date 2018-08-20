@@ -119,4 +119,9 @@
 		update user_info set avatar = #{avatar}
 		where uid = #{uid}
 	</update>
+	
+	<update id="updateUserPwd">
+		update user_info set password = #{pwd}
+		where mobile = #{mobile}
+	</update>
 </mapper>

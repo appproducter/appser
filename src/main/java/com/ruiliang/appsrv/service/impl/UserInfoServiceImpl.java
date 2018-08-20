@@ -188,4 +188,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public List<UserInfo> selectPim(String cid) {
 		return uDao.selectPim(cid);
 	}
+
+	@Override
+	public int updateUserPwd(String pwd, String mobile) {
+		return uDao.updateUserPwd(pwd, mobile);
+	}
 }

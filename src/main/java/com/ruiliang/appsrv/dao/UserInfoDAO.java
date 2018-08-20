@@ -23,6 +23,8 @@ public interface UserInfoDAO {
 	UserInfo selectUserInfoByUid(String uid);
 	
 	List<UserInfo> selectPim(String cid);
+	
+	int updateUserPwd(@Param("pwd") String pwd,@Param("mobile") String mobile);
 	/**
 	 * 根据用户名查询用户
 	 * 

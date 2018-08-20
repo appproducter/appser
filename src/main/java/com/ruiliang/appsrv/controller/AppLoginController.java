@@ -173,4 +173,76 @@ public class AppLoginController {
 		return reslut;
 	}
 	
+	
+	/**
+	 * 重置密码
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("resetpwd")
+	public JSONObject resetPwd(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String username = object.getString("username");
+		String code = object.getString("code");
+		String newpwd = object.getString("newpwd");
+		String repwd = object.getString("repwd");
+		if(StringUtils.isBlank(username) || StringUtils.isBlank(code)||StringUtils.isBlank(newpwd)){
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//验证验证码
+		boolean checkCode;
+		try {
+			checkCode = uvService.checkCode(username, code, 1, 1);
+		} catch (SendCodeFailureException e) {
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			reslut.put("msg", "短信验证码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		if(checkCode){
+			int i = uService.updateUserPwd(MD5Util.MD5Encode(newpwd), username);
+			if(i != 1){
+				reslut.put("state", -1);
+				reslut.put("msg", "密码重置失败");
+				reslut.put("data", data);
+				return reslut;
+			}
+			data.put("result", 0);
+			data.put("msg", "密码重置成功");
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			reslut.put("data", data);
+			return reslut;
+		}
+		reslut.put("state", -1);
+		reslut.put("msg", "密码重置失败");
+		reslut.put("data", data);
+		return reslut;
+	}
 }
