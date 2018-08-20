@@ -23,7 +23,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.Calllog;
 import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.Loc;
-import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.Pim;
 import com.ruiliang.appsrv.pojo.Sms;
 import com.ruiliang.appsrv.pojo.UserToken;
@@ -37,6 +36,10 @@ import com.ruiliang.appsrv.service.UserTokenService;
 import com.ruiliang.appsrv.util.DateUtil;
 
 
+/**
+ * @author LinJian.Liu
+ * 查看手机 短信 通话记录 通讯录
+ */
 @RestController
 @RequestMapping("api/mgr/show")
 public class DownSmsPimCallController {
@@ -64,6 +67,11 @@ public class DownSmsPimCallController {
 	@Autowired
 	private LocService lService;
 	
+	/**
+	 * 通话记录
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("calllog")
 	public JSONObject downCallLog(HttpServletRequest request){
 		
@@ -152,6 +160,11 @@ public class DownSmsPimCallController {
 		
 	}
 	
+	/**
+	 * 手机短信
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("sms")
 	public JSONObject downSms(HttpServletRequest request){
 		
@@ -235,6 +248,11 @@ public class DownSmsPimCallController {
 		
 	}
 	
+	/**
+	 * 手机通讯录
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("pim")
 	public JSONObject downPim(HttpServletRequest request){
 		
@@ -317,6 +335,11 @@ public class DownSmsPimCallController {
 		
 	}
 	
+	/** 
+	 * 地理位置
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("loc")
 	public JSONObject downLoc(HttpServletRequest request){
 		

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.ruiliang.appsrv.dao.UserVerifyLogDAO;
 import com.ruiliang.appsrv.exception.SendCodeFailureException;
@@ -15,11 +16,13 @@ import com.ruiliang.appsrv.service.UserVerifyService;
 import com.ruiliang.appsrv.util.CalendarUtil;
 import com.ruiliang.appsrv.util.RandomUtil;
 
+@Service
 public class UserVerifyServiceImpl implements UserVerifyService {
 
 	@Autowired
 	private UserVerifyLogDAO userVerifyLogDao;
 
+	@Autowired
 	@Qualifier("tencentSmsService")
 	private SmsService smsService;
 
@@ -46,8 +49,8 @@ public class UserVerifyServiceImpl implements UserVerifyService {
 		else
 			verifyLog.setUserid("");
 
-		Long id = this.userVerifyLogDao.create(verifyLog);
-		verifyLog.setId(id);
+		this.userVerifyLogDao.create(verifyLog);
+		verifyLog.setId(verifyLog.getId());
 		try {
 			switch (type) {
 			case UserVerifyLog.TYPE_SMS:
@@ -68,6 +71,7 @@ public class UserVerifyServiceImpl implements UserVerifyService {
 		try {
 			this.smsService.send(verifyLog.getType(), verifyLog.getDest(), msg);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new SendCodeFailureException("发送出错");
 		}
 
