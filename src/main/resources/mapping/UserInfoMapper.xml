@@ -34,6 +34,10 @@
 	</select>
 	
 	<select id="selectPimBycid" resultMap="BaseResultMap">
+	select * from user_info where cid = #{cid} and status = 0
+	</select>
+	
+	<select id="selectPim" resultMap="BaseResultMap">
 	select * from user_info where cid = #{cid} and type = 0 and status = 0
 	</select>
 	

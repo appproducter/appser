@@ -21,6 +21,8 @@ public interface UserInfoDAO {
 	List<UserInfo> selectPimBycid(String cid);
 	
 	UserInfo selectUserInfoByUid(String uid);
+	
+	List<UserInfo> selectPim(String cid);
 	/**
 	 * 根据用户名查询用户
 	 * 

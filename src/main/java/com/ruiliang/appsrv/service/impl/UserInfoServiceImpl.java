@@ -183,4 +183,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public UserInfo selectUserInfoByUid(String uid) {
 		return uDao.selectUserInfoByUid(uid);
 	}
+
+	@Override
+	public List<UserInfo> selectPim(String cid) {
+		return uDao.selectPim(cid);
+	}
 }

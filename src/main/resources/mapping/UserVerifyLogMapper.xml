@@ -35,7 +35,7 @@
 
 	<select id="loadSmsSendLogByDate" parameterType="java.lang.String"
 		resultMap="BaseResultMap">
-		select id, dest, send_time sendTime from user_verify_log
+		select id, dest, send_time from user_verify_log
 		where dest = #{dest} and date_format(send_time, '%Y-%m-%d') = #{date}
 		and type = 1 order by send_time
 	</select>

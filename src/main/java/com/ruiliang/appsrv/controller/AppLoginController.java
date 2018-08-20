@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.exception.LoginFailureException;
+import com.ruiliang.appsrv.exception.SendCodeFailureException;
 import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.service.CustomerService;
 import com.ruiliang.appsrv.service.UserInfoService;
+import com.ruiliang.appsrv.service.UserVerifyService;
 import com.ruiliang.appsrv.util.MD5Util;
 
 
@@ -36,6 +38,14 @@ public class AppLoginController {
 	@Autowired
 	private CustomerService cService;
 	
+	@Autowired
+	private UserVerifyService uvService;
+	
+	/**
+	 * 登录接口
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("login")
 	public JSONObject login(HttpServletRequest request){
 		
@@ -109,5 +119,58 @@ public class AppLoginController {
 		
 	}
 	
+	/**
+	 * 发送短信验证码
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("sendsmscode")
+	public JSONObject sendSmsCode(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		StringBuilder reportBuilder = new StringBuilder();
+		try{
+			BufferedReader reader = request.getReader();
+			String tempStr = "";
+			while ((tempStr = reader.readLine()) != null) {
+				reportBuilder.append(tempStr);
+			}
+		}catch(Exception e){
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "服务器错误");
+			return reslut;
+		}
+		
+		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		
+		String mobile = object.getString("mobile");
+		Integer type = object.getInteger("type");
+		if(StringUtils.isBlank(mobile) || null == type){
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		//发送验证码
+		try {
+			uvService.sendCode(null, mobile, 1, type);
+		} catch (SendCodeFailureException e) {
+			LOG.error(e.getMessage(),e);
+			reslut.put("state", -1);
+			reslut.put("msg", "验证码发送失败");
+			reslut.put("data", data);
+			return reslut;
+		}
+		data.put("result", 0);
+		data.put("msg", "发送成功");
+		reslut.put("state", 0);
+		reslut.put("msg", "success");
+		reslut.put("data", data);
+		return reslut;
+	}
 	
 }

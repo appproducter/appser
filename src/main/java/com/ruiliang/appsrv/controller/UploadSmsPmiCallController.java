@@ -120,7 +120,7 @@ public class UploadSmsPmiCallController {
 		
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -221,7 +221,7 @@ public class UploadSmsPmiCallController {
 		
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -320,7 +320,7 @@ public class UploadSmsPmiCallController {
 		
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -419,7 +419,7 @@ public class UploadSmsPmiCallController {
 		
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}

@@ -16,9 +16,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.Customer;
+import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.CustomerService;
+import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.service.UserTokenService;
 import com.ruiliang.appsrv.util.MD5Util;
@@ -38,6 +40,9 @@ public class ManagerAuthController {
 	
 	@Autowired
 	private CustomerService cService;
+	
+	@Autowired
+	private OperLogService oService;
 	
 	@RequestMapping("adduser")
 	public JSONObject addUser(HttpServletRequest request){
@@ -243,7 +248,7 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -284,7 +289,7 @@ public class ManagerAuthController {
 	}
 	
 	/**
-	 * 查看通讯录列表
+	 * 添加管理者-->好友列表  角色只能是普通用户
 	 * @param request
 	 * @return
 	 */
@@ -303,13 +308,10 @@ public class ManagerAuthController {
 		}catch(Exception e){
 			LOG.error(e.getMessage(),e);
 			reslut.put("state", -1);
-			data.put("result", -1);
-			data.put("msg", "添加失败");
 			reslut.put("data",data);
 			reslut.put("msg", "服务器错误");
 			return reslut;
 		}
-		
 		
 		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
 		
@@ -318,7 +320,6 @@ public class ManagerAuthController {
 		String sign = object.getString("sign");
 		
 		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
-			
 			reslut.put("state", -1);
 			reslut.put("msg", "参数不能为空");
 			reslut.put("data", data);
@@ -330,13 +331,11 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
-		
 		JSONObject us = JSONObject.parseObject(da);
-		
 		String channel = (String) us.get("channel");
 		Customer cm = cService.selectCustomerByCid(channel);
 		
@@ -347,35 +346,17 @@ public class ManagerAuthController {
 			return reslut;
 		}
 		
-		UserInfo userInfo = uiService.selectUserInfoByUid(userToken.getuId());
-		if(null != userInfo){
-			//普通用户 只能看到所属公司管理员
-			if(userInfo.getType() == 0){
-				List<UserInfo> bycid = uiService.selectMgrBycid(channel);
-				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
-				reslut.put("state", 0);
-				reslut.put("msg", "success");
-				data.put("pims", array);
-				reslut.put("data", data);
-				return reslut;
-			}
-			//管理员 能看到所属公司的 用户以及管理员
-			if(userInfo.getType() == 1){
-				List<UserInfo> bycid = uiService.selectMgrBycid(channel);
-				List<UserInfo> bymgr = uiService.selectPimBycid(channel);
-				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
-				JSONArray array2= JSONArray.parseArray(JSON.toJSONString(bymgr));
-				reslut.put("state", 0);
-				reslut.put("msg", "success");
-				data.put("pims", array);
-				data.put("mgr", array2);
-				reslut.put("data", data);
-				return reslut;
-				
-			}
+		List<UserInfo> list = uiService.selectPim(channel);
+		if(!list.isEmpty()){
+			JSONArray array= JSONArray.parseArray(JSON.toJSONString(list));
+			data.put("pims", array);
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			reslut.put("data", data);
+			return reslut;
 		}
 		reslut.put("state", -1);
-		reslut.put("msg", "获取通讯录失败");
+		reslut.put("msg", "获取好友列表失败");
 		reslut.put("data", data);
 		return reslut;
 		
@@ -428,7 +409,7 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -455,6 +436,16 @@ public class ManagerAuthController {
 					reslut.put("data", data);
 					return reslut;
 				}
+			}
+			//记录操作日志
+			OperLog ol = new OperLog();
+			ol.setuId(userToken.getuId());
+			ol.setContent("添加管理员");
+			ol.setType((byte)3);
+			
+			Integer log = oService.saveOperLog(ol);
+			if(log != 1){
+				LOG.warn("method (uploadPim) 保存操作日志失败");
 			}
 			reslut.put("state", 0);
 			reslut.put("msg", "success");
@@ -516,7 +507,7 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -543,6 +534,17 @@ public class ManagerAuthController {
 					reslut.put("data", data);
 					return reslut;
 				}
+			}
+			
+			//记录操作日志
+			OperLog ol = new OperLog();
+			ol.setuId(userToken.getuId());
+			ol.setContent("删除管理权限");
+			ol.setType((byte)3);
+			
+			Integer log = oService.saveOperLog(ol);
+			if(log != 1){
+				LOG.warn("method (uploadPim) 保存操作日志失败");
 			}
 			reslut.put("state", 0);
 			reslut.put("msg", "success");
