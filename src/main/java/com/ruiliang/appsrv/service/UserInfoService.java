@@ -18,14 +18,6 @@ public interface UserInfoService {
 	List<UserInfo> selectPimBycid(String cid);
 	
 	/**
-	 * 管理后台添加管理员用户
-	 * 
-	 * @param userInfo
-	 * @return
-	 */
-	UserInfo create(UserInfo userInfo);
-
-	/**
 	 * 客户端管理员添加用户
 	 * 
 	 * @param userInfo

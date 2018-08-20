@@ -139,27 +139,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return 0;
 	}
 
-	@Override
-	@Transactional
-	public UserInfo create(UserInfo userInfo) {
-		if (null == userInfo.getCid())
-			throw new RuntimeException("用户所属公司不为能空");
-
-		if (null == userInfo.getUId()) {
-			String uid = generateUserid();
-			if (StringUtils.isEmpty(uid))
-				throw new RuntimeException("uid系统出错");
-			userInfo.setUId(uid);
-		}
-
-		if (null == userInfo.getcTime())
-			userInfo.setcTime(new Date());
-
-		uDao.insert(userInfo);
-
-		return userInfo;
-	}
-
 	public Integer updateUpTimePim(Long pimtime,String uid) {
 		return uDao.updateUpTimePim(pimtime,uid);
 	}
