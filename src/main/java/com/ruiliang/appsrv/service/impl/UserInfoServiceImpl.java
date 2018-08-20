@@ -178,4 +178,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public int updateUserType(Byte type,String uid, String cid) {
 		return uDao.updateUserType(type,uid, cid);
 	}
+
+	@Override
+	public UserInfo selectUserInfoByUid(String uid) {
+		return uDao.selectUserInfoByUid(uid);
+	}
 }

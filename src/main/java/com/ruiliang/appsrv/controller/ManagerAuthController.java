@@ -347,22 +347,35 @@ public class ManagerAuthController {
 			return reslut;
 		}
 		
-		//通讯录列表
-		List<UserInfo> bycid = uiService.selectPimBycid(channel);
-		//扩充管理员数量
-		
-		if(null == bycid){
-			reslut.put("state", -1);
-			reslut.put("msg", "获取通讯录列表失败");
-			reslut.put("data", data);
-			return reslut;
-			
+		UserInfo userInfo = uiService.selectUserInfoByUid(userToken.getuId());
+		if(null != userInfo){
+			//普通用户 只能看到所属公司管理员
+			if(userInfo.getType() == 0){
+				List<UserInfo> bycid = uiService.selectMgrBycid(channel);
+				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
+				reslut.put("state", 0);
+				reslut.put("msg", "success");
+				data.put("pims", array);
+				reslut.put("data", data);
+				return reslut;
+			}
+			//管理员 能看到所属公司的 用户以及管理员
+			if(userInfo.getType() == 1){
+				List<UserInfo> bycid = uiService.selectMgrBycid(channel);
+				List<UserInfo> bymgr = uiService.selectPimBycid(channel);
+				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
+				JSONArray array2= JSONArray.parseArray(JSON.toJSONString(bymgr));
+				reslut.put("state", 0);
+				reslut.put("msg", "success");
+				data.put("pims", array);
+				data.put("mgr", array2);
+				reslut.put("data", data);
+				return reslut;
+				
+			}
 		}
-		
-		JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
-		reslut.put("state", 0);
-		reslut.put("msg", "success");
-		data.put("pims", array);
+		reslut.put("state", -1);
+		reslut.put("msg", "获取通讯录失败");
 		reslut.put("data", data);
 		return reslut;
 		
