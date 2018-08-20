@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import com.github.qcloudsms.SmsSingleSender;
+import com.github.qcloudsms.SmsSingleSenderResult;
 import com.jfinal.kit.PropKit;
-import com.qcloud.sms.SmsSingleSender;
-import com.qcloud.sms.SmsSingleSenderResult;
 import com.ruiliang.appsrv.exception.SmsSendFailureException;
 import com.ruiliang.appsrv.service.SmsService;
 
