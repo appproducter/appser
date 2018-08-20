@@ -73,6 +73,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			userToken.setcTime(new Date());
 			userToken.setCid(cid);
 			userToken.setTimeOut(0);
+			userToken.setuId(uid);
 			userToken.setToken(ServerUtil.encryptToken(uid, cid, System.currentTimeMillis()));
 
 			userTokenDao.insert(userToken);
@@ -80,7 +81,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			userToken.setToken(ServerUtil.encryptToken(uid, cid, System.currentTimeMillis()));
 			userToken.setTimeOut(0);
 			userToken.setUpdateTime(new Date());
-
+			userToken.setuId(uid);
 			userTokenDao.update(userToken);
 		}
 

@@ -17,6 +17,7 @@ import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.service.CustomerService;
 import com.ruiliang.appsrv.service.UserInfoService;
+import com.ruiliang.appsrv.util.MD5Util;
 
 
 /**
