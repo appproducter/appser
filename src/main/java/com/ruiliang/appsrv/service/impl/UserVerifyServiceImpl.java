@@ -41,7 +41,10 @@ public class UserVerifyServiceImpl implements UserVerifyService {
 		verifyLog.setStatus(UserVerifyLog.FLAG_DEFAULT);
 		verifyLog.setType(type);
 		verifyLog.setVerifyType(verifyType);
-		verifyLog.setUserid(user.getUId());
+		if (user != null)
+			verifyLog.setUserid(user.getUId());
+		else
+			verifyLog.setUserid("");
 
 		Long id = this.userVerifyLogDao.create(verifyLog);
 		verifyLog.setId(id);

@@ -12,7 +12,7 @@ public interface UserVerifyService {
 
 	/**
 	 * 
-	 * @param user       当前用户
+	 * @param user       当前用户（没有可不传）
 	 * @param dest       接收验证码目标
 	 * @param type       发送方式 1 短信 2 email
 	 * @param verifyType 验证码类型
