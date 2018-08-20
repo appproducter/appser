@@ -124,6 +124,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 		if (null == userInfo.getcTime())
 			userInfo.setcTime(new Date());
 
+		// 密码MD5
+		userInfo.setPassword(MD5Util.MD5Encode(userInfo.getPassword()));
+
 		uDao.insert(userInfo);
 
 		return userInfo;
@@ -155,7 +158,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		return userInfo;
 	}
-	
+
 	public Integer updateUpTimePim(Long pimtime) {
 		return uDao.updateUpTimePim(pimtime);
 	}
