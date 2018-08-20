@@ -16,9 +16,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.Customer;
+import com.ruiliang.appsrv.pojo.OperLog;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.CustomerService;
+import com.ruiliang.appsrv.service.OperLogService;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.service.UserTokenService;
 import com.ruiliang.appsrv.util.MD5Util;
@@ -38,6 +40,9 @@ public class ManagerAuthController {
 	
 	@Autowired
 	private CustomerService cService;
+	
+	@Autowired
+	private OperLogService oService;
 	
 	@RequestMapping("adduser")
 	public JSONObject addUser(HttpServletRequest request){
@@ -243,7 +248,7 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -404,7 +409,7 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -431,6 +436,16 @@ public class ManagerAuthController {
 					reslut.put("data", data);
 					return reslut;
 				}
+			}
+			//记录操作日志
+			OperLog ol = new OperLog();
+			ol.setuId(userToken.getuId());
+			ol.setContent("添加管理员");
+			ol.setType((byte)3);
+			
+			Integer log = oService.saveOperLog(ol);
+			if(log != 1){
+				LOG.warn("method (uploadPim) 保存操作日志失败");
 			}
 			reslut.put("state", 0);
 			reslut.put("msg", "success");
@@ -492,7 +507,7 @@ public class ManagerAuthController {
 				
 		if(null == userToken || userToken.getuId() == null){
 			reslut.put("state", -1);
-			reslut.put("msg", "用户不存在");
+			reslut.put("msg", "token失效");
 			reslut.put("data", data);
 			return reslut;
 		}
@@ -519,6 +534,17 @@ public class ManagerAuthController {
 					reslut.put("data", data);
 					return reslut;
 				}
+			}
+			
+			//记录操作日志
+			OperLog ol = new OperLog();
+			ol.setuId(userToken.getuId());
+			ol.setContent("删除管理权限");
+			ol.setType((byte)3);
+			
+			Integer log = oService.saveOperLog(ol);
+			if(log != 1){
+				LOG.warn("method (uploadPim) 保存操作日志失败");
 			}
 			reslut.put("state", 0);
 			reslut.put("msg", "success");
