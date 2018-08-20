@@ -1,17 +1,16 @@
 package com.ruiliang.appsrv.service.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
-import com.github.qcloudsms.httpclient.HTTPException;
 import com.ruiliang.appsrv.exception.SmsSendFailureException;
 import com.ruiliang.appsrv.service.SmsService;
 
+@Service("tencentSmsService")
 public class TencentCloudSmsServiceImpl implements SmsService {
 
 	@Value("tencloud.sms.appid")
@@ -23,7 +22,7 @@ public class TencentCloudSmsServiceImpl implements SmsService {
 	public void send(int type, String dest, String content) throws SmsSendFailureException {
 		SmsSingleSender singleSender = new SmsSingleSender(Integer.parseInt(appid), appkey);
 		SmsSingleSenderResult singleSenderResult = null;
-		int tmplId = 50596;
+		int tmplId = 177653;
 		ArrayList<String> params = new ArrayList<>();
 		params.add(content);
 		try {
