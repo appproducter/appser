@@ -17,4 +17,6 @@ public interface PimDAO {
 	 * @return
 	 */
 	Integer savePim(Pim pim);
+	
+	Pim selectPimByUid(String uid);
 }

@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service;
 
+import java.util.List;
+
 import com.ruiliang.appsrv.exception.LoginFailureException;
 import com.ruiliang.appsrv.pojo.UserInfo;
 
@@ -9,6 +11,12 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  */
 public interface UserInfoService {
 
+	int updateUserType(Byte type,String uid, String cid);
+	
+	List<UserInfo> selectMgrBycid(String cid);
+	
+	List<UserInfo> selectPimBycid(String cid);
+	
 	/**
 	 * 管理后台添加管理员用户
 	 * 
@@ -35,10 +43,14 @@ public interface UserInfoService {
 	 */
 	UserInfo login(String deviceid, String name, String password) throws LoginFailureException;
 
-	Integer updateUpTimePim(Long pimtime);
+	Integer updateUpTimePim(Long pimtime,String uid);
 	
-	Integer updateUpTimeSms(Long smstime);
+	Integer updateUpTimeSms(Long smstime,String uid);
 	
-	Integer updateUpTimeCall(Long calltime);
+	Integer updateUpTimeCall(Long calltime,String uid);
 	int updateAvatar(String token, String avatar);
+	
+	int updateUserAuth(Byte type,String uid);
+	
+	int updateUser(UserInfo userInfo);
 }

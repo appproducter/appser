@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,6 +14,11 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 @Mapper
 public interface UserInfoDAO {
 
+	int updateUserType(@Param("type") Byte type,@Param("uid") String uid,@Param("cid") String cid);
+	
+	List<UserInfo> selectMgrBycid(String cid);
+	
+	List<UserInfo> selectPimBycid(String cid);
 	/**
 	 * 根据用户名查询用户
 	 * 
@@ -44,13 +51,17 @@ public interface UserInfoDAO {
 	 */
 	UserInfo selectByIdcard(String idcard);
 	
-	Integer updateUpTimePim(Long pimtime);
+	Integer updateUpTimePim(@Param("pimtime") Long pimtime,@Param("uid") String uid);
 	
-	Integer updateUpTimeSms(Long smstime);
+	Integer updateUpTimeSms(@Param("smstime") Long smstime,@Param("uid") String uid);
 	
-	Integer updateUpTimeCall(Long calltime);
+	Integer updateUpTimeCall(@Param("calltime") Long calltime,@Param("uid") String uid);
 
-	int insert(UserInfo userInfo);
+	int insert(UserInfo userInfo); 
+	
+	int updateUser(UserInfo userInfo);
+	
+	int updateUserAuth(@Param("type") Byte type,@Param("uid") String uid);
 
 	/**
 	 * 更新登录时间及次数

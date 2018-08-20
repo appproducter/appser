@@ -15,4 +15,6 @@ public interface SmsLogService {
 	 * @return
 	 */
 	Integer saveSms(Sms sm);
+	
+	Sms selectSmsByUid(String uid,Long time);
 }

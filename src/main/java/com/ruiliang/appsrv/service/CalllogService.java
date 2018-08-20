@@ -1,8 +1,6 @@
-package com.ruiliang.appsrv.dao;
+package com.ruiliang.appsrv.service;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 
 import com.ruiliang.appsrv.pojo.Calllog;
 
@@ -10,9 +8,8 @@ import com.ruiliang.appsrv.pojo.Calllog;
  * @author LinJian.Liu
  *
  */
-@Mapper
-public interface CalllogDAO {
-	
+public interface CalllogService {
+
 	Integer saveCalllog(Calllog clog);
 	
 	List<Calllog> selectCalllogByUid(String uid);

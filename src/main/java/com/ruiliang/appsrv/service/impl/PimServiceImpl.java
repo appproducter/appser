@@ -27,4 +27,10 @@ public class PimServiceImpl implements PimService {
 		return pDao.savePim(pim);
 	}
 
+
+	@Override
+	public Pim selectPimByUid(String uid) {
+		return pDao.selectPimByUid(uid);
+	}
+
 }

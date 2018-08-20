@@ -8,4 +8,13 @@
     <result column="calllog" jdbcType="VARCHAR" property="calllog" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
+  
+  <insert id="saveCalllog" parameterType="com.ruiliang.appsrv.pojo.Calllog">
+  		INSERT INTO calllog (uid,time,calllog,ctime)
+  		VALUES (#{uId},#{time},#{calllog},sysdate())
+  </insert>
+  
+  <select id="selectCalllogByUid" resultMap="BaseResultMap">
+  	select * from calllog where uid = #{uid}
+  </select>
 </mapper>

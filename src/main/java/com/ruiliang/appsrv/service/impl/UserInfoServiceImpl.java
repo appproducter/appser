@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -159,17 +160,42 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfo;
 	}
 
-	public Integer updateUpTimePim(Long pimtime) {
-		return uDao.updateUpTimePim(pimtime);
+	public Integer updateUpTimePim(Long pimtime,String uid) {
+		return uDao.updateUpTimePim(pimtime,uid);
 	}
 
 	@Override
-	public Integer updateUpTimeSms(Long smstime) {
-		return uDao.updateUpTimeSms(smstime);
+	public Integer updateUpTimeSms(Long smstime,String uid) {
+		return uDao.updateUpTimeSms(smstime,uid);
 	}
 
 	@Override
-	public Integer updateUpTimeCall(Long calltime) {
-		return uDao.updateUpTimeCall(calltime);
+	public Integer updateUpTimeCall(Long calltime,String uid) {
+		return uDao.updateUpTimeCall(calltime,uid);
+	}
+
+	@Override
+	public int updateUser(UserInfo userInfo) {
+		return uDao.updateUser(userInfo);
+	}
+
+	@Override
+	public int updateUserAuth(Byte type, String uid) {
+		return uDao.updateUserAuth(type, uid);
+	}
+
+	@Override
+	public List<UserInfo> selectMgrBycid(String cid) {
+		return uDao.selectMgrBycid(cid);
+	}
+
+	@Override
+	public List<UserInfo> selectPimBycid(String cid) {
+		return uDao.selectPimBycid(cid);
+	}
+
+	@Override
+	public int updateUserType(Byte type,String uid, String cid) {
+		return uDao.updateUserType(type,uid, cid);
 	}
 }
