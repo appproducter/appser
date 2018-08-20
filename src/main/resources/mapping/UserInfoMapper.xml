@@ -80,6 +80,10 @@
 		update  user_info set up_time_calllog = #{calltime} where uid = #{uid}
 	</update>
 	
+	<select id="selectUserInfoByUid" resultMap="BaseResultMap">
+	select * from user_info where uid = #{uid} and status = 0
+	</select>
+	
 	<select id="selectByUserid" parameterType="java.lang.String" resultType="Integer">
 		select
 		count(0) from user_info where uid = #{uid}

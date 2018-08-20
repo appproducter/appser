@@ -17,6 +17,8 @@ public interface UserInfoService {
 	
 	List<UserInfo> selectPimBycid(String cid);
 	
+	UserInfo selectUserInfoByUid(String uid);
+	
 	/**
 	 * 客户端管理员添加用户
 	 * 
