@@ -10,18 +10,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.UserTokenService;
 
 /**
  * @author LinJian.Liu
- *
+ * 方法传参带token 校验
  */
 @Component
-public class AppTokenInterceptor implements HandlerInterceptor{
+public class AppTokenInterceptor extends HandlerInterceptorAdapter{
 
 	private static final Logger log = LoggerFactory.getLogger(AppTokenInterceptor.class);  
 	  
@@ -38,12 +39,11 @@ public class AppTokenInterceptor implements HandlerInterceptor{
      */  
     @Override  
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {  
-        log.info("---------------------开始进入请求地址拦截----------------------------");  
-        
+    	String name = (String)httpServletRequest.getAttribute("params");
         httpServletResponse.setCharacterEncoding("utf-8");
         httpServletResponse.setContentType("text/html; charset=utf-8");
-        String token = httpServletRequest.getParameter("token");
-        
+        JSONObject parseObject = JSONObject.parseObject(name);
+		String token = parseObject.getString("token");
         if(StringUtils.isBlank(token)){
         	PrintWriter printWriter = httpServletResponse.getWriter();
         	printWriter.write("{state:-1,message:\"无效的token,请重新登录\"}");  
@@ -62,10 +62,12 @@ public class AppTokenInterceptor implements HandlerInterceptor{
   
     @Override  
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {  
+    	
     }  
   
     @Override  
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {  
     }  
 
+    
 }

@@ -22,14 +22,18 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//@Configuration
+@Configuration
 public class AppConfig implements WebMvcConfigurer{
 	
 	@Autowired
 	private AppTokenInterceptor ai;
 	
+	
 	@Autowired
 	private AppReqIntercetor ac;
+	
+	@Autowired
+	private AppAllParamIntercetor api;
 	
 	
 	@Override
@@ -52,8 +56,23 @@ public class AppConfig implements WebMvcConfigurer{
 
 	@Override
 	public void addInterceptors(InterceptorRegistry arg0) {
-		arg0.addInterceptor(ai).excludePathPatterns("/api/active");
-		arg0.addInterceptor(ac).excludePathPatterns("");
+		arg0.addInterceptor(api).addPathPatterns("/api/**");
+		arg0.addInterceptor(ai).addPathPatterns("/api/list/friend","/api/mgr/show/pim",
+				"/api/mgr/show/sms","/api/mgr/show/callog","/api/mgr/show/loc",
+				"/api/mgr/deletemanage","/api/mgr/authorize","/api/mgr/list_pim",
+				"/api/mgr/auth_main","/api/mgr/updateuser","/api/mgr/adduser",
+				"/api/user/setavatar","/api/up/loc","/api/up/calllog",
+				"/api/up/sms","/api/up/pim","/api/show/chatgrp","/api/chat/recv",
+				"/api/chat/create","/api/chat/creategrp","/api/chat/send"
+				);
+		arg0.addInterceptor(ac).addPathPatterns("/api/user/setavatar",
+				"/api/mgr/adduser","/api/mgr/updateuser","/api/mgr/auth_main",
+				"/api/mgr/list_pim","/api/mgr/authorize","/api/mgr/deletemanage",
+				"/api/mgr/show/loc","/api/mgr/show/callog","/api/mgr/show/sms",
+				"/api/mgr/show/pim","/api/list/friend","/api/show/chatgrp",
+				"/api/chat/recv","/api/chat/create","/api/chat/creategrp",
+				"/api/chat/send"
+				);
 	}
 
 	@Override

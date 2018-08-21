@@ -52,23 +52,9 @@ public class AppLoginController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String deviceid = object.getString("deviceid");
 		String username = object.getString("username");
@@ -129,23 +115,9 @@ public class AppLoginController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String mobile = object.getString("mobile");
 		Integer type = object.getInteger("type");
@@ -184,23 +156,9 @@ public class AppLoginController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String username = object.getString("username");
 		String code = object.getString("code");

@@ -76,24 +76,9 @@ public class UploadSmsPmiCallController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
-		
+		JSONObject object = JSONObject.parseObject(req);
 		String pim = object.getString("pim");
 		String token = object.getString("token");
 		String channel = object.getString("channel");
@@ -177,23 +162,9 @@ public class UploadSmsPmiCallController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String sms = object.getString("sms");
 		String token = object.getString("token");
@@ -275,24 +246,9 @@ public class UploadSmsPmiCallController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
-		
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String calllog = object.getString("calllog");
 		String token = object.getString("token");
@@ -374,23 +330,9 @@ public class UploadSmsPmiCallController {
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		
 		String loc = object.getString("loc");

@@ -1,6 +1,6 @@
 package com.ruiliang.appsrv.controller;
 
-import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.UserInfoService;
@@ -41,30 +40,15 @@ public class ListPimController {
 	 * 好友列表
 	 * @param request
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping("friend")
-	public JSONObject listFriends(HttpServletRequest request){
-		
+	public JSONObject listFriends(HttpServletRequest request) throws IOException{
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		String req = (String)request.getAttribute("params");
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String da = object.getString("data");
 		String token = object.getString("token");

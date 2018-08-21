@@ -64,24 +64,9 @@ public class ActiveAppController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String deviceid = object.getString("deviceid");
 		Integer  vercode = object.getInteger("vercode");
@@ -170,23 +155,9 @@ public class ActiveAppController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("flag", 0);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String deviceid = object.getString("deviceid");
 		String channel = object.getString("channel");
