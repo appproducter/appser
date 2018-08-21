@@ -49,9 +49,6 @@ public class UserController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
-	@Value("${img}")
-	private String img;
-	
 	@Value("${appurl}")
 	private String appurl;
 	
@@ -137,6 +134,13 @@ public class UserController {
 			    
 			}
 		} catch (IOException e) {
+			reslut.put("state", -1);
+			reslut.put("msg", "图像上传失败");
+			reslut.put("data", data);
+			return reslut;
+		}
+		int avatar = uService.updateAvatar(userInfo.getUId(), imgurl);
+		if(avatar != 1){
 			reslut.put("state", -1);
 			reslut.put("msg", "图像上传失败");
 			reslut.put("data", data);

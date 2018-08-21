@@ -137,7 +137,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public int updateAvatar(String token, String avatar) {
 
-		return 0;
+		return uDao.updateUserAvatar(token, avatar);
 	}
 
 	public Integer updateUpTimePim(Long pimtime,String uid) {
