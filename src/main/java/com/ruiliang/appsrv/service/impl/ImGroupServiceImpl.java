@@ -42,7 +42,8 @@ public class ImGroupServiceImpl implements ImGroupService {
 		group.setCreator(creator);
 		group.setMaxUserNum(100);
 
-		group = imGroupDao.create(group);
+		Integer id = imGroupDao.create(group);
+		ImGroup imGroup = this.selectGroupById(group.getId());
 
 		// 保存群用户
 		imGroupDao.saveGroupUser(creator, group.getGroupId());
@@ -50,7 +51,7 @@ public class ImGroupServiceImpl implements ImGroupService {
 			imGroupDao.saveGroupUser(group.getGroupId(), uid);
 		}
 
-		return group;
+		return imGroup;
 	}
 
 	@Override
@@ -65,6 +66,11 @@ public class ImGroupServiceImpl implements ImGroupService {
 	@Override
 	public List<ImGroup> listByUser(String uid) {
 		return imGroupDao.listByUid(uid);
+	}
+
+	@Override
+	public ImGroup selectGroupById(Integer id) {
+		return imGroupDao.selectGroupById(id);
 	}
 
 }

@@ -6,6 +6,8 @@ import com.ruiliang.appsrv.pojo.ImGroup;
 
 public interface ImGroupService {
 
+	
+	ImGroup selectGroupById(Integer id);
 	/**
 	 * 添加群
 	 * 
