@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.upload.impl;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +14,7 @@ import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.UploadResult;
 import com.qcloud.cos.region.Region;
@@ -38,7 +40,7 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	private ExecutorService threadPool = Executors.newFixedThreadPool(32);
 
 	@Override
-	public String copy(File srcFile, String contentType, String srcFileName, int nfsType) throws Exception {
+	public String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception {
 		String fileUrl = "";
 
 		String tempname = FileUtil.htmlEncode(NFSPathUtil.getPath(nfsType));
@@ -59,7 +61,9 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 		tempname += "." + contentType;
 
 		try {
-			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, tempname, srcFile);
+			ObjectMetadata objectMetadata = new ObjectMetadata();
+			//objectMetadata.setContentLength(200);
+			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, tempname, input, objectMetadata);
 
 			TransferManager transferManager = new TransferManager(cosClient, threadPool);
 
@@ -77,10 +81,10 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	}
 
 	@Override
-	public String copy2Chat(File srcFile, String contentType, String srcFileName) throws Exception {
+	public String copy2Chat(InputStream input, String contentType, String srcFileName) throws Exception {
 		int nfsType = NFSPathUtil.getNFSType(contentType);
 
-		return copy(srcFile, contentType, srcFileName, nfsType);
+		return copy(input, contentType, srcFileName, nfsType);
 	}
 
 }

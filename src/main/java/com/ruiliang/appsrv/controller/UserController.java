@@ -22,6 +22,7 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.service.UserTokenService;
+import com.ruiliang.appsrv.util.Base64;
 import com.ruiliang.appsrv.util.CharUtils;
 import com.ruiliang.appsrv.util.DateUtil;
 
@@ -111,10 +112,9 @@ public class UserController {
 			return reslut;
 		}
 		String imgurl = uploadPath+userInfo.getUId()+"."+suffix;
-	    BASE64Decoder decoder = new BASE64Decoder();
 	    byte[] b;
 		try {
-			b = decoder.decodeBuffer(imgString);
+			b = Base64.decode(imgString);
 			long size=(long)b.length/1024;
 			if(size > maxSize){
 				reslut.put("state", -1);

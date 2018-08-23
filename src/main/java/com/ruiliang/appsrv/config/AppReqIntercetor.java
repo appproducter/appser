@@ -72,7 +72,7 @@ private static final Logger log = LoggerFactory.getLogger(AppTokenInterceptor.cl
         Map map = (Map)JSONObject.parse(data);
         //校验
         String ssign = SignUtil.generateSign(map, apiKey);
-        
+        System.out.println("生成的sign------>"+ssign);
         if(!Objects.equals(csign, ssign)){
         	PrintWriter printWriter = httpServletResponse.getWriter();
         	printWriter.write("{state:-1,message:\"签名错误\"}");  

@@ -23,12 +23,12 @@ public class TestCosFileUploadService {
 	public void testUpload() {
 		File f = new File("D:\\我的文档\\我的照片\\崽崽\\微信图片_20180112100131.jpg");
 
-		try {
+		/*try {
 			fileUploadService.copy2Chat(f, "jpg", f.getName());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 }

@@ -1,6 +1,6 @@
 package com.ruiliang.appsrv.upload;
 
-import java.io.File;
+import java.io.InputStream;
 
 public interface FileUploadService {
 
@@ -14,7 +14,7 @@ public interface FileUploadService {
 	 * @return
 	 * @throws Exception
 	 */
-	String copy(File srcFile, String contentType, String srcFileName, int nfsType) throws Exception;
+	String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception;
 
-	String copy2Chat(File srcFile, String contentType, String srcFileName) throws Exception;
+	String copy2Chat(InputStream input, String contentType, String srcFileName) throws Exception;
 }

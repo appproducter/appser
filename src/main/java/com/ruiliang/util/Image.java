@@ -12,6 +12,8 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
+import com.ruiliang.appsrv.util.Base64;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -36,8 +38,7 @@ public class Image {
 	    	             e.printStackTrace();
 	    	         }
 	    	         // 加密
-	    	         BASE64Encoder encoder = new BASE64Encoder();
-	    	         return encoder.encode(data);
+	    	       return  Base64.encode(data);
 	    	     }
 
 	    public static boolean generateImage(String imgStr, String filename) {
