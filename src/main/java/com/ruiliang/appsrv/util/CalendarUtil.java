@@ -20,6 +20,10 @@ public class CalendarUtil {
 		}
 		return null;
 	}
+	
+	public static String format(Date d, String format) {
+		return new SimpleDateFormat(format).format(d);
+	}
 
 	public static int getNowHour() {
 		Calendar c = Calendar.getInstance();
