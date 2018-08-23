@@ -21,6 +21,8 @@ public interface UserInfoService {
 	
 	List<UserInfo> selectPim(String cid);
 	
+	int updateUserPwd(String pwd, String mobile);
+	
 	/**
 	 * 客户端管理员添加用户
 	 * 

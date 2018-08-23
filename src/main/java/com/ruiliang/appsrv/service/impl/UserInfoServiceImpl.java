@@ -137,7 +137,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public int updateAvatar(String token, String avatar) {
 
-		return 0;
+		return uDao.updateUserAvatar(token, avatar);
 	}
 
 	public Integer updateUpTimePim(Long pimtime,String uid) {
@@ -187,5 +187,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public List<UserInfo> selectPim(String cid) {
 		return uDao.selectPim(cid);
+	}
+
+	@Override
+	public int updateUserPwd(String pwd, String mobile) {
+		return uDao.updateUserPwd(pwd, mobile);
 	}
 }

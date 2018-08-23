@@ -49,25 +49,9 @@ public class ManagerAuthController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("result", -1);
-			data.put("msg", "添加失败");
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String da = object.getString("data");
 		String token = object.getString("token");
@@ -130,25 +114,9 @@ public class ManagerAuthController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("result", -1);
-			data.put("msg", "添加失败");
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String da = object.getString("data");
 		String token = object.getString("token");
@@ -211,25 +179,9 @@ public class ManagerAuthController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("result", -1);
-			data.put("msg", "添加失败");
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String da = object.getString("data");
 		String token = object.getString("token");
@@ -298,23 +250,9 @@ public class ManagerAuthController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
-		
+		JSONObject object = JSONObject.parseObject(req);
 		String da = object.getString("data");
 		String token = object.getString("token");
 		String sign = object.getString("sign");
@@ -372,25 +310,9 @@ public class ManagerAuthController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("result", -1);
-			data.put("msg", "添加失败");
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
+		JSONObject object = JSONObject.parseObject(req);
 		
 		String da = object.getString("data");
 		String token = object.getString("token");
@@ -470,26 +392,9 @@ public class ManagerAuthController {
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
-		StringBuilder reportBuilder = new StringBuilder();
-		try{
-			BufferedReader reader = request.getReader();
-			String tempStr = "";
-			while ((tempStr = reader.readLine()) != null) {
-				reportBuilder.append(tempStr);
-			}
-		}catch(Exception e){
-			LOG.error(e.getMessage(),e);
-			reslut.put("state", -1);
-			data.put("result", -1);
-			data.put("msg", "添加失败");
-			reslut.put("data",data);
-			reslut.put("msg", "服务器错误");
-			return reslut;
-		}
+		String req = (String)request.getAttribute("params");
 		
-		
-		JSONObject object = JSONObject.parseObject(reportBuilder.toString());
-		
+		JSONObject object = JSONObject.parseObject(req);
 		String da = object.getString("data");
 		String token = object.getString("token");
 		String sign = object.getString("sign");
