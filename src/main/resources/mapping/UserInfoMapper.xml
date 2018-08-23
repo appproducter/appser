@@ -124,4 +124,8 @@
 		update user_info set password = #{pwd}
 		where mobile = #{mobile}
 	</update>
+	
+	<select id="getByUid" parameterType="String" resultMap="BaseResultMap">
+		select * from user_info where uid = #{uid}
+	</select>
 </mapper>

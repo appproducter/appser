@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruiliang.appsrv.dao.ImGroupDAO">
+	<resultMap id="BaseResultMap" type="com.ruiliang.appsrv.pojo.ImGroup">
+		<result column="id" property="id" />
+		<result column="group_id" property="groupId" />
+		<result column="group_name" property="groupName" />
+		<result column="avatar" property="avatar" />
+		<result column="creator" property="creator" />
+		<result column="max_user_num" property="maxUserNum" />
+		<result column="create_time" property="createTime" />
+	</resultMap>
+
+	<insert id="create" parameterType="com.ruiliang.appsrv.pojo.ImGroup">
+		insert into im_group (group_id, group_name,
+		avator, creator, max_user_num, create_time)
+		values (#{groupId}, #{groupName}, #{avatar},
+		#{creator}, #{maxUserNum}, #{createTime})
+	</insert>
+	
+	<update id="saveGroupUser">
+		insert into im_group_user (group_id, uid) values (#{groupId}, #{uid})
+	</update>
+	
+	<update id="setGroupName" parameterType="com.ruiliang.appsrv.pojo.ImGroup">
+		update im_group set group_name = #{groupName} where group_id = #{groupId}
+	</update>
+
+	<select id="listByUid" parameterType="String" resultMap="BaseResultMap">
+		select * from im_group a left join im_group_user b on a.group_id = b.group_id 
+		where b.id = #{uid}
+	</select>
+</mapper>

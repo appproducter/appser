@@ -85,4 +85,6 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	int updateUserAvatar(@Param("uid") String uid, @Param("avatar") String avatar);
+	
+	UserInfo getByUid(String uid);
 }
