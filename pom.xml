@@ -69,8 +69,8 @@
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
-				<artifactId>android-json</artifactId>
-				<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+					<groupId>com.vaadin.external.google</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -116,6 +116,12 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.11</version>
 			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.qcloud</groupId>
+			<artifactId>cos_api</artifactId>
+			<version>5.4.4</version>
 		</dependency>
 	</dependencies>
 
