@@ -11,16 +11,22 @@
 		<result column="create_time" property="createTime" />
 	</resultMap>
 
+
+	<select id="selectGroupById" resultMap="BaseResultMap">
+	select * from im_group where id = #{id}
+	</select>
 	<insert id="create" parameterType="com.ruiliang.appsrv.pojo.ImGroup">
-		insert into im_group (group_id, group_name,
-		avator, creator, max_user_num, create_time)
+	<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+				SELECT LAST_INSERT_ID()
+			</selectKey>
+		insert into im_group (group_id, group_name,avatar, creator, max_user_num, create_time)
 		values (#{groupId}, #{groupName}, #{avatar},
 		#{creator}, #{maxUserNum}, #{createTime})
 	</insert>
 	
-	<update id="saveGroupUser">
+	<insert id="saveGroupUser">
 		insert into im_group_user (group_id, uid) values (#{groupId}, #{uid})
-	</update>
+	</insert>
 	
 	<update id="setGroupName" parameterType="com.ruiliang.appsrv.pojo.ImGroup">
 		update im_group set group_name = #{groupName} where group_id = #{groupId}
