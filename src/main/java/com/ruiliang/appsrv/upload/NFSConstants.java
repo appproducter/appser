@@ -4,7 +4,7 @@ public class NFSConstants {
 
 	public static String NFS_CHAT_ROOT_PATH = "/chat";
 	
-	public static final String NFS_SERVER_URL = "http://rl-1257334654.file.myqcloud.com/";
+	public static final String NFS_SERVER_URL = "http://rl-1257334654.file.myqcloud.com";
 
 	public static final int NFS_TYPE_CHAT_IMAGE = 1;
 
