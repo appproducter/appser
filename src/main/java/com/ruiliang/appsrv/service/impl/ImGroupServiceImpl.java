@@ -42,12 +42,15 @@ public class ImGroupServiceImpl implements ImGroupService {
 		group.setCreator(creator);
 		group.setMaxUserNum(100);
 
-		group = imGroupDao.create(group);
+		imGroupDao.create(group);
 
 		// 保存群用户
-		imGroupDao.saveGroupUser(creator, group.getGroupId());
+		imGroupDao.saveGroupUser(group.getGroupId(), creator);
+		
 		for (String uid : users) {
 			imGroupDao.saveGroupUser(group.getGroupId(), uid);
+
+			group.getUsers().add(userDao.getByUid(uid));
 		}
 
 		return group;
@@ -72,9 +75,12 @@ public class ImGroupServiceImpl implements ImGroupService {
 		imGroupDao.addGroupUser(group_user, group_id);
 	}
 
-	@Override
 	public void removeGroupUser(String group_id, String group_user) {
 		imGroupDao.removeGroupUser(group_user, group_id);
+	}
+
+	public ImGroup selectGroupById(Integer id) {
+		return imGroupDao.selectGroupById(id);
 	}
 
 }

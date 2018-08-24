@@ -1,6 +1,8 @@
 package com.ruiliang.appsrv.pojo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ImGroup {
 
@@ -11,6 +13,8 @@ public class ImGroup {
 	private String creator;
 	private int maxUserNum;
 	private Date createTime;
+
+	private List<UserInfo> users = new ArrayList<UserInfo>();
 
 	public Integer getId() {
 		return id;
@@ -66,6 +70,14 @@ public class ImGroup {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public void setUsers(List<UserInfo> users) {
+		this.users = users;
+	}
+
+	public List<UserInfo> getUsers() {
+		return users;
 	}
 
 }
