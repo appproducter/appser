@@ -14,17 +14,18 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 @Mapper
 public interface UserInfoDAO {
 
-	int updateUserType(@Param("type") Byte type,@Param("uid") String uid,@Param("cid") String cid);
-	
+	int updateUserType(@Param("type") Byte type, @Param("uid") String uid, @Param("cid") String cid);
+
 	List<UserInfo> selectMgrBycid(String cid);
-	
+
 	List<UserInfo> selectPimBycid(String cid);
-	
+
 	UserInfo selectUserInfoByUid(String uid);
-	
+
 	List<UserInfo> selectPim(String cid);
-	
-	int updateUserPwd(@Param("pwd") String pwd,@Param("mobile") String mobile);
+
+	int updateUserPwd(@Param("pwd") String pwd, @Param("mobile") String mobile);
+
 	/**
 	 * 根据用户名查询用户
 	 * 
@@ -56,18 +57,18 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	UserInfo selectByIdcard(String idcard);
-	
-	Integer updateUpTimePim(@Param("pimtime") Long pimtime,@Param("uid") String uid);
-	
-	Integer updateUpTimeSms(@Param("smstime") Long smstime,@Param("uid") String uid);
-	
-	Integer updateUpTimeCall(@Param("calltime") Long calltime,@Param("uid") String uid);
 
-	int insert(UserInfo userInfo); 
-	
+	Integer updateUpTimePim(@Param("pimtime") Long pimtime, @Param("uid") String uid);
+
+	Integer updateUpTimeSms(@Param("smstime") Long smstime, @Param("uid") String uid);
+
+	Integer updateUpTimeCall(@Param("calltime") Long calltime, @Param("uid") String uid);
+
+	int insert(UserInfo userInfo);
+
 	int updateUser(UserInfo userInfo);
-	
-	int updateUserAuth(@Param("type") Byte type,@Param("uid") String uid);
+
+	int updateUserAuth(@Param("type") Byte type, @Param("uid") String uid);
 
 	/**
 	 * 更新登录时间及次数
@@ -85,6 +86,6 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	int updateUserAvatar(@Param("uid") String uid, @Param("avatar") String avatar);
-	
+
 	UserInfo getByUid(String uid);
 }
