@@ -1,6 +1,5 @@
 package com.ruiliang.appsrv.upload.impl;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Random;
@@ -61,8 +60,12 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 		tempname += "." + contentType;
 
 		try {
+			
+			
+			
 			ObjectMetadata objectMetadata = new ObjectMetadata();
-			//objectMetadata.setContentLength(200);
+			objectMetadata.setContentLength(input.available());
+//			objectMetadata.setContentType("image/jpeg");
 			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, tempname, input, objectMetadata);
 
 			TransferManager transferManager = new TransferManager(cosClient, threadPool);
@@ -71,6 +74,7 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 			UploadResult uploadResult = upload.waitForUploadResult();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 
 		}

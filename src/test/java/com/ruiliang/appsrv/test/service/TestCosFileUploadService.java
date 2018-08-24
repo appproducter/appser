@@ -1,6 +1,8 @@
 package com.ruiliang.appsrv.test.service;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,19 @@ public class TestCosFileUploadService {
 	@Test
 	public void testUpload() {
 		File f = new File("D:\\我的文档\\我的照片\\崽崽\\微信图片_20180112100131.jpg");
+		
+		
+		try {
+			FileInputStream fis = new FileInputStream(f);
+			
+			fileUploadService.copy2Chat(fis, "jpg", "");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
 
 		/*try {
 			fileUploadService.copy2Chat(f, "jpg", f.getName());
