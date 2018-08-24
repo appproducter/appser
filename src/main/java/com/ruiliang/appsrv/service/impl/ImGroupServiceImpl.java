@@ -67,4 +67,14 @@ public class ImGroupServiceImpl implements ImGroupService {
 		return imGroupDao.listByUid(uid);
 	}
 
+	@Override
+	public void addGroupUser(String group_id, String group_user) {
+		imGroupDao.addGroupUser(group_user, group_id);
+	}
+
+	@Override
+	public void removeGroupUser(String group_id, String group_user) {
+		imGroupDao.removeGroupUser(group_user, group_id);
+	}
+
 }

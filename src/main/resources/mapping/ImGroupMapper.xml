@@ -30,4 +30,12 @@
 		select * from im_group a left join im_group_user b on a.group_id = b.group_id 
 		where b.id = #{uid}
 	</select>
+	
+	<insert id="addGroupUser">
+		insert into im_group_user (group_id, uid) values (#{groupId}, #{uid})
+	</insert>
+	
+	<delete id="removeGroupUser">
+		delete from im_group_user where group_id = #{groupId} and uid = #{uid}
+	</delete>
 </mapper>

@@ -17,4 +17,8 @@ public interface ImGroupDAO {
 	void setGroupName(ImGroup group);
 
 	List<ImGroup> listByUid(String uid);
+	
+	void addGroupUser(@Param("uid") String uid, @Param("groupId") String groupId);
+
+	void removeGroupUser(@Param("uid") String uid, @Param("groupId") String groupId);
 }

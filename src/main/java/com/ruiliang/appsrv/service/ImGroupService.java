@@ -31,4 +31,20 @@ public interface ImGroupService {
 	 * @return
 	 */
 	List<ImGroup> listByUser(String uid);
+
+	/**
+	 * 添加用户入群
+	 * 
+	 * @param group_id
+	 * @param group_user
+	 */
+	void addGroupUser(String group_id, String group_user);
+
+	/**
+	 * 移除群组用户
+	 * 
+	 * @param group_id
+	 * @param group_user
+	 */
+	void removeGroupUser(String group_id, String group_user);
 }
