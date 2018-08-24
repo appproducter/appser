@@ -46,7 +46,6 @@ public class ImGroupServiceImpl implements ImGroupService {
 		ImGroup imGroup = this.selectGroupById(group.getId());
 
 		// 保存群用户
-		imGroupDao.saveGroupUser(creator, group.getGroupId());
 		for (String uid : users) {
 			imGroupDao.saveGroupUser(group.getGroupId(), uid);
 		}

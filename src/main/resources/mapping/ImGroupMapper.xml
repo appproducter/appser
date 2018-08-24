@@ -24,9 +24,9 @@
 		#{creator}, #{maxUserNum}, #{createTime})
 	</insert>
 	
-	<update id="saveGroupUser">
+	<insert id="saveGroupUser">
 		insert into im_group_user (group_id, uid) values (#{groupId}, #{uid})
-	</update>
+	</insert>
 	
 	<update id="setGroupName" parameterType="com.ruiliang.appsrv.pojo.ImGroup">
 		update im_group set group_name = #{groupName} where group_id = #{groupId}
