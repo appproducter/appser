@@ -10,6 +10,11 @@ import com.ruiliang.appsrv.pojo.UserVerifyLog;
 @Mapper
 public interface UserVerifyLogDAO {
 
+	/**
+	 * 保存短信日志
+	 * @param userVerifyLog
+	 * @return
+	 */
 	Long create(UserVerifyLog userVerifyLog);
 
 	int updateUsedFlag(@Param("id") Long id, @Param("useFlag") int useFlag);

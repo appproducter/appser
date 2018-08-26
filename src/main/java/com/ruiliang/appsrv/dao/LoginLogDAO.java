@@ -11,5 +11,9 @@ import com.ruiliang.appsrv.pojo.LoginLog;
 @Mapper
 public interface LoginLogDAO {
 	
+	/**
+	 * 保存登录日志
+	 * @param loginLog
+	 */
 	void create(LoginLog loginLog);
 }

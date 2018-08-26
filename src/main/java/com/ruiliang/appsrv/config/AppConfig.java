@@ -22,6 +22,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author LinJian.Liu
+ * 拦截器
+ */
 @Configuration
 public class AppConfig implements WebMvcConfigurer{
 	
@@ -58,21 +62,24 @@ public class AppConfig implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry arg0) {
 		arg0.addInterceptor(api).addPathPatterns("/api/**");
 		arg0.addInterceptor(ai).addPathPatterns("/api/list/friend","/api/mgr/show/pim",
-				"/api/mgr/show/sms","/api/mgr/show/callog","/api/mgr/show/loc",
+				"/api/mgr/show/sms","/api/mgr/show/calllog","/api/mgr/show/loc",
 				"/api/mgr/deletemanage","/api/mgr/authorize","/api/mgr/list_pim",
 				"/api/mgr/auth_main","/api/mgr/updateuser","/api/mgr/adduser",
 				"/api/user/setavatar","/api/up/loc","/api/up/calllog",
 				"/api/up/sms","/api/up/pim","/api/show/chatgrp","/api/chat/recv",
-				"/api/chat/create","/api/chat/creategrp","/api/chat/send","/api/chat/upload/mediamsg",
-				"/api/chat/creategrp"
+				"/api/chat/create","/api/chat/group/create","/api/chat/send",
+				"/api/chat/upload/mediamsg","/api/chat/group/setname","/api/chat/group/adduser",
+				"/api/chat/group/removeuser"
 				);
 		arg0.addInterceptor(ac).addPathPatterns("/api/user/setavatar",
 				"/api/mgr/adduser","/api/mgr/updateuser","/api/mgr/auth_main",
 				"/api/mgr/list_pim","/api/mgr/authorize","/api/mgr/deletemanage",
-				"/api/mgr/show/loc","/api/mgr/show/callog","/api/mgr/show/sms",
+				"/api/mgr/show/loc","/api/mgr/show/calllog","/api/mgr/show/sms",
 				"/api/mgr/show/pim","/api/list/friend","/api/show/chatgrp",
-				"/api/chat/recv","/api/chat/create","/api/chat/creategrp",
-				"/api/chat/send","/api/chat/upload/mediamsg","/api/chat/creategrp"
+				"/api/chat/recv","/api/chat/create","/api/chat/group/create",
+				"/api/chat/send","/api/chat/upload/mediamsg",
+				"/api/chat/group/setname","/api/chat/group/adduser",
+				"/api/chat/group/removeuser"
 				);
 	}
 

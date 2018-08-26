@@ -1,6 +1,5 @@
 package com.ruiliang.appsrv.controller;
 
-import java.io.BufferedReader;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;

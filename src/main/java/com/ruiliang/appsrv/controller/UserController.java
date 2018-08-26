@@ -8,14 +8,10 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import sun.misc.BASE64Decoder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ruiliang.appsrv.pojo.UserInfo;
@@ -48,7 +44,6 @@ public class UserController {
 	/***支持图片的最大大小***/
 	private static long maxSize = 2048;  //2M
 	
-	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 	
 	@Value("${appurl}")
 	private String appurl;

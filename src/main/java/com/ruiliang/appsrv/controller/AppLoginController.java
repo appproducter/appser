@@ -1,7 +1,5 @@
 package com.ruiliang.appsrv.controller;
 
-import java.io.BufferedReader;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -163,7 +161,7 @@ public class AppLoginController {
 		String username = object.getString("username");
 		String code = object.getString("code");
 		String newpwd = object.getString("newpwd");
-		String repwd = object.getString("repwd");
+		//String repwd = object.getString("repwd");
 		if(StringUtils.isBlank(username) || StringUtils.isBlank(code)||StringUtils.isBlank(newpwd)){
 			reslut.put("state", -1);
 			reslut.put("msg", "参数不能为空");
