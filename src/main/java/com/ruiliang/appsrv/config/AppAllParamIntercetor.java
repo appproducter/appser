@@ -27,6 +27,7 @@ public class AppAllParamIntercetor extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {  
         log.info("---------------------开始进入请求地址拦截----------------------------");  
         String bodyParam = getBodyString(httpServletRequest);
+        log.info("请求参数为:["+bodyParam+"]");
         httpServletRequest.setAttribute("params", bodyParam);
         return true;
         
