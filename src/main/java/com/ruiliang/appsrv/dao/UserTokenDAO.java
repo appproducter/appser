@@ -12,10 +12,23 @@ import com.ruiliang.appsrv.pojo.UserToken;
 @Mapper
 public interface UserTokenDAO {
 
+	/**
+	 * 插入token
+	 * @param userToken
+	 */
 	void insert(UserToken userToken);
 
+	/**
+	 * 查询token
+	 * @param token
+	 * @return
+	 */
 	UserToken findByToken(String token);
 
+	/**
+	 * 更新token
+	 * @param userToken
+	 */
 	void update(UserToken userToken);
 
 	/**

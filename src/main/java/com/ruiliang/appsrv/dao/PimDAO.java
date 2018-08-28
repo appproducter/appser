@@ -18,5 +18,10 @@ public interface PimDAO {
 	 */
 	Integer savePim(Pim pim);
 	
+	/**
+	 * 查询用户通讯录
+	 * @param uid
+	 * @return
+	 */
 	Pim selectPimByUid(String uid);
 }

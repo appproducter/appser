@@ -30,7 +30,12 @@ public class GroupCreateController {
 	@Autowired
 	private ImGroupService igService;
 	
-	@RequestMapping("creategrp")
+	/**
+	 * 创建群聊
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("group/create")
 	public JSONObject creategrp(HttpServletRequest request){
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
@@ -57,9 +62,8 @@ public class GroupCreateController {
 			return reslut;
 		}
 		JSONObject user = JSONObject.parseObject(da);
-		String crtuid = (String)user.get("crtuid");
-		String grpuids = (String)user.get("grpuids");
-		String[] split = grpuids.split(",");
+		String userid = (String)user.get("userid");
+		String[] split = userid.split(",");
 		List<String> list = new ArrayList<String>();
 		for (String string : split) {
 			list.add(string);
@@ -67,7 +71,7 @@ public class GroupCreateController {
 		
 		ImGroup create = null;
 		try {
-			 create = igService.create(crtuid, list);
+			 create = igService.create(userToken.getuId(), list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			reslut.put("state", -1);
@@ -78,7 +82,7 @@ public class GroupCreateController {
 		if(null != create){
 			data.put("result", 0);
 			data.put("msg", "创建成功");
-			data.put("chatid", create.getGroupId());
+			data.put("groupdata", create);
 			reslut.put("state", 0);
 			reslut.put("msg", "success");
 			reslut.put("data", data);
@@ -86,6 +90,148 @@ public class GroupCreateController {
 		}
 		reslut.put("state", -1);
 		reslut.put("msg", "群聊创建失败");
+		reslut.put("data", data);
+		return reslut;
+	}
+	
+	/**
+	 * 移除群组用户
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("group/removeuser")
+	public JSONObject removeuser(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		UserToken userToken = utService.findByToken(token);
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "token失效");
+			reslut.put("data", data);
+			return reslut;
+		}
+		JSONObject user = JSONObject.parseObject(da);
+		String grpid = (String)user.get("group_id");
+		String uid = (String)user.get("uid");
+		
+		igService.removeGroupUser(grpid, uid);
+		
+		data.put("result", 0);
+		data.put("msg", "移除群组用户成功");
+		reslut.put("state", 0);
+		reslut.put("msg", "success");
+		reslut.put("data", data);
+		return reslut;
+	}
+	
+	/**
+	 * 添加组成员
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("group/adduser")
+	public JSONObject adduser(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		UserToken userToken = utService.findByToken(token);
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "token失效");
+			reslut.put("data", data);
+			return reslut;
+		}
+		JSONObject user = JSONObject.parseObject(da);
+		String grpid = (String)user.get("group_id");
+		String uid = (String)user.get("uid");
+		
+		igService.addGroupUser(grpid, uid);
+		
+		data.put("result", 0);
+		data.put("msg", "添加群组成员成功");
+		reslut.put("state", 0);
+		reslut.put("msg", "success");
+		reslut.put("data", data);
+		return reslut;
+	}
+	
+	/**
+	 * 修改群组名称
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("group/setname")
+	public JSONObject setname(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		UserToken userToken = utService.findByToken(token);
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "token失效");
+			reslut.put("data", data);
+			return reslut;
+		}
+		JSONObject user = JSONObject.parseObject(da);
+		String grpid = (String)user.get("group_id");
+		String grpname = (String)user.get("group_name");
+		
+		try {
+			igService.setGroupName(userToken.getuId(), grpid, grpname);
+		} catch (Exception e) {
+			reslut.put("state", -1);
+			reslut.put("msg", "修改群名称失败");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		data.put("result", 0);
+		data.put("msg", "修改群名称成功");
+		reslut.put("state", 0);
+		reslut.put("msg", "success");
 		reslut.put("data", data);
 		return reslut;
 	}

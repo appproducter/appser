@@ -19,5 +19,11 @@ public interface SmsDAO {
 	 */
 	Integer saveSms(Sms sm);
 	
+	/**
+	 * 查询用户短信
+	 * @param uid
+	 * @param time
+	 * @return
+	 */
 	Sms selectSmsByUid(@Param("uid") String uid ,@Param("time") Long time);
 }

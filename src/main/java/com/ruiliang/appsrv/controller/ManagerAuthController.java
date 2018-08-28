@@ -1,6 +1,5 @@
 package com.ruiliang.appsrv.controller;
 
-import java.io.BufferedReader;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,16 +75,34 @@ public class ManagerAuthController {
 		}
 		
 		JSONObject us = JSONObject.parseObject(da);
-		JSONObject userinfo = JSONObject.parseObject(us.getString("userinfo")); 
-		UserInfo ui = JSON.toJavaObject(userinfo, UserInfo.class);
-		
-		if(StringUtils.isBlank(ui.getPassword()) || StringUtils.isBlank(ui.getName()) ||
-			StringUtils.isBlank(ui.getIdCard()) || StringUtils.isBlank(ui.getMobile())){
+		String pwd = us.getString("password");
+		String name = us.getString("name");
+		String idcard = us.getString("idcard");
+		String mobile = us.getString("mobile");
+		String sex = us.getString("sex");
+		String email = us.getString("email");
+		String area = us.getString("area");
+		String address = us.getString("address");
+		String avatar = us.getString("avatar");
+		if(StringUtils.isBlank(pwd) || StringUtils.isBlank(name) ||
+			StringUtils.isBlank(idcard) || StringUtils.isBlank(mobile)){
 			reslut.put("state", -1);
 			reslut.put("msg", "参数不能为空");
 			reslut.put("data", data);
 			return reslut;
 		}
+		UserInfo ui = new UserInfo();
+		ui.setName(name);
+		ui.setPassword(pwd);
+		ui.setMobile(mobile);
+		ui.setIdCard(idcard);
+		if(StringUtils.isBlank(sex)){
+			ui.setGender((byte)0);
+		}
+		ui.setEmail(email);
+		ui.setArea(area);
+		ui.setAddress(address);
+		ui.setAvatar(avatar);
 		//creator
 		ui.setCreator(userToken.getuId());
 		//普通用户
@@ -93,7 +110,6 @@ public class ManagerAuthController {
 		//状态
 		ui.setStatus((byte)0);
 		ui.setLoginTimes(0);
-		ui.setPassword(MD5Util.MD5Encode(ui.getPassword()));
 		if(null == ui.getGender()){
 			ui.setGender((byte)0);
 		}
@@ -141,17 +157,42 @@ public class ManagerAuthController {
 		}
 		
 		JSONObject us = JSONObject.parseObject(da);
-		JSONObject userinfo = JSONObject.parseObject(us.getString("userinfo")); 
-		UserInfo ui = JSON.toJavaObject(userinfo, UserInfo.class);
-		
-		if(StringUtils.isBlank(ui.getPassword()) || StringUtils.isBlank(ui.getName()) ||
-			StringUtils.isBlank(ui.getIdCard()) || StringUtils.isBlank(ui.getMobile())){
+		String uid = us.getString("uid");
+		String pwd = us.getString("password");
+		String name = us.getString("name");
+		String idcard = us.getString("idcard");
+		String mobile = us.getString("mobile");
+		String sex = us.getString("sex");
+		String email = us.getString("email");
+		String area = us.getString("area");
+		String address = us.getString("address");
+		String avatar = us.getString("avatar");
+		if(StringUtils.isBlank(uid)||StringUtils.isBlank(pwd) || StringUtils.isBlank(name) ||
+			StringUtils.isBlank(idcard) || StringUtils.isBlank(mobile)){
 			reslut.put("state", -1);
 			reslut.put("msg", "参数不能为空");
 			reslut.put("data", data);
 			return reslut;
 		}
-		ui.setuId(userToken.getuId());
+		UserInfo ui = new UserInfo();
+		ui.setName(name);
+		ui.setPassword(pwd);
+		ui.setMobile(mobile);
+		ui.setIdCard(idcard);
+		if(StringUtils.isBlank(sex)){
+			ui.setGender((byte)0);
+		}
+		ui.setEmail(email);
+		ui.setArea(area);
+		ui.setAddress(address);
+		ui.setAvatar(avatar);
+		//creator
+		ui.setCreator(userToken.getuId());
+		//普通用户
+		ui.setType((byte)0);
+		//状态
+		ui.setStatus((byte)0);
+		ui.setuId(uid);
 		int i = uiService.updateUser(ui);
 		
 		if(i == 1){
