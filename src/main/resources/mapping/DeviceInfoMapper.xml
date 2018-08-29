@@ -13,7 +13,7 @@
     <result column="wpi" jdbcType="INTEGER" property="wpi" />
     <result column="imei" jdbcType="VARCHAR" property="imei" />
     <result column="imsi" jdbcType="VARCHAR" property="imsi" />
-    <result column="sysversion" jdbcType="INTEGER" property="sysVersion" />
+    <result column="sysversion" jdbcType="VARCHAR" property="sysVersion" />
     <result column="channel" jdbcType="VARCHAR" property="channel" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
   </resultMap>
