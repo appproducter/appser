@@ -75,8 +75,8 @@ public class ListPimController {
 				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
 				reslut.put("state", 0);
 				reslut.put("msg", "success");
-				data.put("pims", array);
-				reslut.put("data", data);
+				//data.put("pims", array);
+				reslut.put("data", array);
 				return reslut;
 			}
 			//管理员 能看到所属公司的 用户以及管理员
@@ -85,8 +85,8 @@ public class ListPimController {
 				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bymgr));
 				reslut.put("state", 0);
 				reslut.put("msg", "success");
-				data.put("pims", array);
-				reslut.put("data", data);
+				//data.put("pims", array);
+				reslut.put("data", array);
 				return reslut;
 				
 			}

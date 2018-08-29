@@ -20,7 +20,8 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -32,7 +33,7 @@ import org.apache.log4j.Logger;
 				RowBounds.class, ResultHandler.class }),
 		@Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }) })
 public class PerformanceInterceptor implements Interceptor {
-	private Logger logger = Logger.getLogger(PerformanceInterceptor.class);
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 	public Object intercept(Invocation invocation) throws Throwable {
