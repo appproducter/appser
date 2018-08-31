@@ -84,7 +84,7 @@ public class ManagerAuthController {
 		String area = us.getString("area");
 		String address = us.getString("address");
 		String avatar = us.getString("avatar");
-		if(StringUtils.isBlank(pwd) || StringUtils.isBlank(name) ||
+		if(StringUtils.isBlank(name) ||
 			StringUtils.isBlank(idcard) || StringUtils.isBlank(mobile)){
 			reslut.put("state", -1);
 			reslut.put("msg", "参数不能为空");
@@ -93,7 +93,7 @@ public class ManagerAuthController {
 		}
 		UserInfo ui = new UserInfo();
 		ui.setName(name);
-		ui.setPassword(pwd);
+		ui.setPassword("123456");
 		ui.setMobile(mobile);
 		ui.setIdCard(idcard);
 		if(StringUtils.isBlank(sex)){

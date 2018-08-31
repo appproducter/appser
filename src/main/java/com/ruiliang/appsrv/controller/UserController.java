@@ -33,12 +33,8 @@ public class UserController {
 
 	private static final String dateTimePath = DateUtil.getFormatDateString(new Date(), "yyyyMMdd") ;
 	
-	/***上传图片的保存地址***/
-	//private static final String storagePath = "/images/user_img" ;
-	private static final String storagePath = "E:/img" ;
-	/***上传图片的保存地址***/
-	//private static final String uploadPath = "/data"+ storagePath +"/"+ dateTimePath + "/" ;
-	private static final String uploadPath =  storagePath +"/"+ dateTimePath + "/" ;
+	@Value("${image.server}")
+	private String imageServer ;
 	/**支持上传的图片格式****/
 	private static final String[] imgSuffix = {"gif","jpg","png","jpeg","bmp"} ;
 	/***支持图片的最大大小***/
@@ -106,7 +102,7 @@ public class UserController {
 			reslut.put("data", data);
 			return reslut;
 		}
-		String imgurl = uploadPath+userInfo.getUId()+"."+suffix;
+		String imgurl = imageServer+"/"+dateTimePath+"/"+userInfo.getUId()+"."+suffix;
 	    byte[] b;
 		try {
 			b = Base64.decode(imgString);
@@ -134,14 +130,14 @@ public class UserController {
 			reslut.put("data", data);
 			return reslut;
 		}
-		int avatar = uService.updateAvatar(userInfo.getUId(), imgurl);
+		int avatar = uService.updateAvatar(userInfo.getUId(), dateTimePath+"/"+userInfo.getUId()+"."+suffix);
 		if(avatar != 1){
 			reslut.put("state", -1);
 			reslut.put("msg", "图像上传失败");
 			reslut.put("data", data);
 			return reslut;
 		}
-		data.put("imgurl", appurl+"/"+imgurl);
+		data.put("imgurl", appurl+"/"+dateTimePath+"/"+userInfo.getUId()+"."+suffix);
 		data.put("result", 0);
 		data.put("msg", "success");
 		reslut.put("state", 0);

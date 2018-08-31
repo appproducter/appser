@@ -68,7 +68,7 @@ private static final Logger log = LoggerFactory.getLogger(AppTokenInterceptor.cl
         
         String apiKey = customer.getApiKey();
         
-        Map map = (Map)JSONObject.parse(data);
+        Map<String, Object> map = (Map<String, Object>)JSONObject.parse(data);
         //校验
         String ssign = SignUtil.generateSign(map, apiKey);
         log.info("生成的sign------>"+ssign);

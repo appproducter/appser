@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ruiliang.appsrv.pojo.Pim;
@@ -23,5 +25,5 @@ public interface PimDAO {
 	 * @param uid
 	 * @return
 	 */
-	Pim selectPimByUid(String uid);
+	List<Pim> selectPimByUid(String uid);
 }

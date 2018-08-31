@@ -260,11 +260,12 @@ public class DownSmsPimCallController {
 			return reslut;
 		}
 		
-		Pim pim = pService.selectPimByUid(uid);
+		List<Pim> pims = pService.selectPimByUid(uid);
 		
-		if(null != pim){
+		if(null != pims && pims.size() > 0){
+			Pim pim = pims.get(0);
 			Map<String,Object> map = new HashMap<String,Object>();
-			//取值是取记录创建时间 还是user_info 表最后一次上传时间
+			
 			map.put("time", pim.getcTime().getTime());
 			map.put("pim", pim.getPim());
 			JSONObject itemJSONObj = JSONObject.parseObject(JSON.toJSONString(map));

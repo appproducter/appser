@@ -18,7 +18,7 @@ public class SignUtil {
 	 * @param apiKey
 	 * @return
 	 */
-	public static String generateSign(Map<String, String> data, String apiKey) {
+	public static String generateSign(Map<String, Object> data, String apiKey) {
 		String sign = "";
 
 		// 将数据参数按首字母升序排列
@@ -28,7 +28,7 @@ public class SignUtil {
 		StringBuilder content = new StringBuilder();
 		for (int i = 0; i < keys.size(); i++) {
 			String key = keys.get(i);
-			String val = data.get(key);
+			String val = data.get(key)+"";
 
 			// 值为空的不参与签名
 			if (val != null && !val.equals("null") && val.length() > 0) {
