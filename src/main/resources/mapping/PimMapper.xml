@@ -16,4 +16,5 @@
   <select id="selectPimByUid" resultMap="BaseResultMap">
   select * from pim where uid = #{uid}  order by ctime desc
   </select>
+  
 </mapper>

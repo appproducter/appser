@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ import com.ruiliang.appsrv.util.DateUtil;
 @RequestMapping("api/user")
 public class UserController {
 
-	private static final String dateTimePath = DateUtil.getFormatDateString(new Date(), "yyyyMMdd") ;
+	private  String dateTimePath = DateUtil.getFormatDateString(new Date(), "yyyyMMdd") ;
 	
 	@Value("${image.server}")
 	private String imageServer ;
@@ -40,6 +42,7 @@ public class UserController {
 	/***支持图片的最大大小***/
 	private static long maxSize = 2048;  //2M
 	
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
 	@Value("${appurl}")
 	private String appurl;
@@ -50,7 +53,7 @@ public class UserController {
 	@Autowired
 	private UserTokenService utService;
 	
-	@RequestMapping("setavatar")
+	/*@RequestMapping("setavatar")
 	public JSONObject setavatar(HttpServletRequest request){
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
@@ -103,6 +106,7 @@ public class UserController {
 			return reslut;
 		}
 		String imgurl = imageServer+"/"+dateTimePath+"/"+userInfo.getUId()+"."+suffix;
+		LOG.info("图片服务器路径------>"+imgurl);
 	    byte[] b;
 		try {
 			b = Base64.decode(imgString);
@@ -138,6 +142,61 @@ public class UserController {
 			return reslut;
 		}
 		data.put("imgurl", appurl+"/"+dateTimePath+"/"+userInfo.getUId()+"."+suffix);
+		data.put("result", 0);
+		data.put("msg", "success");
+		reslut.put("state", 0);
+		reslut.put("msg", "图像更新成功");
+		reslut.put("data", data);
+		return reslut;
+	}*/
+	
+	@RequestMapping("setavatar")
+	public JSONObject setavatar(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		UserToken userToken = utService.findByToken(token);
+		if(null == userToken){
+			reslut.put("state", -1);
+			reslut.put("msg", "无效的token");
+			reslut.put("data", data);
+			return reslut;
+		}
+		UserInfo userInfo = uService.selectUserInfoByUid(userToken.getuId());
+		
+		if(null == userInfo){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//获取图片字符串
+		String imgString = JSONObject.parseObject(da).getString("avatar");
+		
+		int avatar = uService.updateAvatar(userInfo.getUId(), imgString);
+		if(avatar != 1){
+			reslut.put("state", -1);
+			reslut.put("msg", "图像上传失败");
+			reslut.put("data", data);
+			return reslut;
+		}
+		data.put("imgurl", imgString);
 		data.put("result", 0);
 		data.put("msg", "success");
 		reslut.put("state", 0);

@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service;
 
+import java.util.List;
+
 import com.ruiliang.appsrv.pojo.Sms;
 
 /**
@@ -16,5 +18,5 @@ public interface SmsLogService {
 	 */
 	Integer saveSms(Sms sm);
 	
-	Sms selectSmsByUid(String uid,Long time);
+	List<Sms> selectSmsByUid(String uid,Long time);
 }

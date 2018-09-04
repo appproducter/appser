@@ -189,13 +189,17 @@ public class DownSmsPimCallController {
 			return reslut;
 		}
 		
-		Sms sms = slService.selectSmsByUid(uid,lastTime);
+		List<Sms> sms = slService.selectSmsByUid(uid,lastTime);
 		if(null != sms){
 			List<Object> maps = new ArrayList<Object>();
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("time", new Date().getTime());
-			map.put("sms", sms.getSms());
-			maps.add(map);
+			for (Sms sms2 : sms) {
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("time", new Date().getTime());
+				map.put("sms", sms2.getSms());
+				maps.add(map);
+				map =null;
+			}
+			
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(maps));
 			
 			data.put("smsdata", array);
