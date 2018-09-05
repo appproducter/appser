@@ -128,4 +128,12 @@
 	<select id="getByUid" parameterType="String" resultMap="BaseResultMap">
 		select * from user_info where uid = #{uid}
 	</select>
+	
+	<select id="selectUByIds" resultMap="BaseResultMap">
+	SELECT uid, password, name,idcard, mobile, gender, email, area, address, creator, type, status, ctime from user_info
+        WHERE uid in
+        <foreach collection="Ids" item="dramaId" open="(" close=")" separator=",">
+            #{dramaId}
+        </foreach>
+	</select>
 </mapper>

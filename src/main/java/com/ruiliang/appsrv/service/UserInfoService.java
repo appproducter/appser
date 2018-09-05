@@ -10,6 +10,8 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  * 
  */
 public interface UserInfoService {
+	
+	List<UserInfo> selectUByIds(List<String> Ids);
 
 	int updateUserType(Byte type,String uid, String cid);
 	

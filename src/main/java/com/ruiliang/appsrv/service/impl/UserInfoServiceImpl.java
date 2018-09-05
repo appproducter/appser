@@ -192,4 +192,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public int updateUserPwd(String pwd, String mobile) {
 		return uDao.updateUserPwd(pwd, mobile);
 	}
+
+	@Override
+	public List<UserInfo> selectUByIds(List<String> Ids) {
+		return uDao.selectUByIds(Ids);
+	}
 }
