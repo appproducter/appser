@@ -87,7 +87,7 @@ public class ListPimController {
 				return reslut;
 			}
 			//管理员 能看到所属公司的 用户以及管理员
-			if(userInfo.getType() == 1){
+			if(userInfo.getType() == 1 ||userInfo.getType() == 2){
 				List<UserInfo> bymgr = uService.selectPimBycid(userInfo.getCid());
 				int len = bymgr.size();
 				for(int i=0;i<len;i++){

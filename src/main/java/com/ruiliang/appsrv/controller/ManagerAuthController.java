@@ -93,7 +93,7 @@ public class ManagerAuthController {
 		}
 		UserInfo ui = new UserInfo();
 		ui.setName(name);
-		ui.setPassword(MD5Util.MD5Encode(MD5Util.MD5Encode("123456")));
+		ui.setPassword(MD5Util.MD5Encode("123456"));
 		ui.setMobile(mobile);
 		ui.setIdCard(idcard);
 		if(StringUtils.isBlank(sex)){
@@ -473,12 +473,15 @@ public class ManagerAuthController {
 		if(!StringUtils.isBlank(uid)){
 			String[] split = uid.split(",");
 			for (String string : split) {
-				int i = uiService.updateUserType((byte)0,string, channel);
-				if(i != 1){
-					reslut.put("state", -1);
-					reslut.put("msg", "删除管理权限失败");
-					reslut.put("data", data);
-					return reslut;
+				UserInfo info = uiService.selectUserInfoByUid(string);
+				if(null != info && info.getStatus() != 2){
+					int i = uiService.updateUserType((byte)0,string, channel);
+					if(i != 1){
+						reslut.put("state", -1);
+						reslut.put("msg", "删除管理权限失败");
+						reslut.put("data", data);
+						return reslut;
+					}
 				}
 			}
 			
