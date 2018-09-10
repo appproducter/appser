@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -10,6 +11,8 @@ import com.ruiliang.appsrv.pojo.ImGroup;
 @Mapper
 public interface ImGroupDAO {
 
+	int getGroupNum(String gid);
+	
 	/**
 	 * 创建聊天群组
 	 * @param group
@@ -56,4 +59,8 @@ public interface ImGroupDAO {
 	 * @return
 	 */
 	ImGroup selectGroupById(Integer id);
+	
+	List<ImGroup> listGroup(String uid);
+	
+	List<Map<String,Object>> listGroupUser(String uid);
 }

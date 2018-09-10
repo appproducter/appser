@@ -1,11 +1,16 @@
 package com.ruiliang.appsrv.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruiliang.appsrv.pojo.ImGroup;
 
 public interface ImGroupService {
-
+	int getGroupNum(String gid);
+	
+	List<ImGroup> listGroup(String uid);
+	
+	List<Map<String,Object>> listGroupUser(String uid);
 	
 	ImGroup selectGroupById(Integer id);
 	/**

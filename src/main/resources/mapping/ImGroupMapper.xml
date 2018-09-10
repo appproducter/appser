@@ -37,6 +37,15 @@
 		where b.id = #{uid}
 	</select>
 	
+	<select id="listGroup" parameterType="String" resultMap="BaseResultMap">
+		select * from im_group a left join im_group_user b on a.group_id = b.group_id 
+		where b.uid = #{uid}
+	</select>
+	
+	<select id="listGroupUser" parameterType="String" resultType="java.util.Map">
+		select * from im_group_user where group_id = #{uid}
+	</select>
+	
 	<insert id="addGroupUser">
 		insert into im_group_user (group_id, uid) values (#{groupId}, #{uid})
 	</insert>
@@ -44,4 +53,8 @@
 	<delete id="removeGroupUser">
 		delete from im_group_user where group_id = #{groupId} and uid = #{uid}
 	</delete>
+	
+	<select id="getGroupNum" resultType="int">
+	select count(*) from im_group_user where group_id = #{gid}
+	</select>
 </mapper>

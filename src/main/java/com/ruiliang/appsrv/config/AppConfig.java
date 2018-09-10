@@ -66,7 +66,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/api/mgr/deletemanage","/api/mgr/authorize","/api/mgr/list_pim",
 				"/api/mgr/auth_main","/api/mgr/updateuser","/api/mgr/adduser",
 				"/api/user/setavatar","/api/up/loc","/api/up/calllog",
-				"/api/up/sms","/api/up/pim","/api/show/chatgrp","/api/chat/recv",
+				"/api/up/sms","/api/up/pim","/api/chat/group/list","/api/chat/recv",
 				"/api/chat/create","/api/chat/group/create","/api/chat/send",
 				"/api/chat/upload/mediamsg","/api/chat/group/setname","/api/chat/group/adduser",
 				"/api/chat/group/removeuser"
@@ -75,7 +75,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/api/mgr/adduser","/api/mgr/updateuser","/api/mgr/auth_main",
 				"/api/mgr/list_pim","/api/mgr/authorize","/api/mgr/deletemanage",
 				"/api/mgr/show/loc","/api/mgr/show/calllog","/api/mgr/show/sms",
-				"/api/mgr/show/pim","/api/list/friend","/api/show/chatgrp",
+				"/api/mgr/show/pim","/api/list/friend","/api/chat/group/list",
 				"/api/chat/recv","/api/chat/create","/api/chat/group/create",
 				"/api/chat/send","/api/chat/upload/mediamsg",
 				"/api/chat/group/setname","/api/chat/group/adduser",

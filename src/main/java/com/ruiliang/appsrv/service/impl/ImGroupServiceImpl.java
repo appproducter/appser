@@ -2,6 +2,7 @@ package com.ruiliang.appsrv.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,21 @@ public class ImGroupServiceImpl implements ImGroupService {
 
 	public ImGroup selectGroupById(Integer id) {
 		return imGroupDao.selectGroupById(id);
+	}
+
+	@Override
+	public List<ImGroup> listGroup(String uid) {
+		return imGroupDao.listGroup(uid);
+	}
+
+	@Override
+	public List<Map<String, Object>> listGroupUser(String uid) {
+		return imGroupDao.listGroupUser(uid);
+	}
+
+	@Override
+	public int getGroupNum(String gid) {
+		return imGroupDao.getGroupNum(gid);
 	}
 
 }

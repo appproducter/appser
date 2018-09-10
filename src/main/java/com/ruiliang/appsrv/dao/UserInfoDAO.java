@@ -154,4 +154,6 @@ public interface UserInfoDAO {
 	 * @return
 	 */
 	UserInfo getByUid(String uid);
+	
+	List<UserInfo> selectUByIds(@Param("Ids") List<String> Ids);
 }
