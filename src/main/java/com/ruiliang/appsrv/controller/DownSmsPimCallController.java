@@ -340,8 +340,8 @@ public class DownSmsPimCallController {
 		Long end = 0L;
 		// 当天
 		if(day == 1){
-			 end = DateUtil.getStartTime().getTime();
-			 start = DateUtil.getnowEndTime().getTime();
+			 start = DateUtil.getStartTime().getTime();
+			 end = DateUtil.getnowEndTime().getTime();
 		}else if(day == 7){
 			DateTime sttime = new DateTime();
 			end = DateUtil.getStartTime().getTime();

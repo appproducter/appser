@@ -36,8 +36,8 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	@Value("${tencloud.cols.bucketname}")
 	private String bucketName;
 
-	private ExecutorService threadPool = Executors.newFixedThreadPool(32);
-
+	//private ExecutorService threadPool = Executors.newFixedThreadPool(32);
+	private ExecutorService threadPool = Executors.newCachedThreadPool();
 	@Override
 	public String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception {
 		String fileUrl = "";
