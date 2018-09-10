@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service;
 
+import java.util.List;
+
 import com.ruiliang.appsrv.pojo.Pim;
 
 /**
@@ -16,5 +18,5 @@ public interface PimService {
 	 */
 	Integer savePim(Pim pim);
 	
-	Pim selectPimByUid(String uid);
+	List<Pim> selectPimByUid(String uid);
 }

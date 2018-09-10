@@ -63,18 +63,24 @@ public class ActiveAppController {
 		JSONObject data = new JSONObject();//数据
 		
 		String req = (String)request.getAttribute("params");
-		
+		if(StringUtils.isBlank(req)){
+			reslut.put("state", -1);
+			data.put("flag", 0);
+			reslut.put("data",data);
+			reslut.put("msg", "参数不能为空");
+			return reslut;
+		}
 		JSONObject object = JSONObject.parseObject(req);
 		
 		String deviceid = object.getString("deviceid");
-		Integer  vercode = object.getInteger("vercode");
+		String  vercode = object.getString("vercode");
 		String verinfo = object.getString("verinfo");
-		Integer sysversion = object.getInteger("sysversion");
+		String sysversion = object.getString("sysversion");
 		String model = object.getString("model");
 		String os = object.getString("os");
 		String channel = object.getString("channel");
-		Integer hpi = object.getInteger("hpi");
-		Integer wpi = object.getInteger("wpi");
+		String hpi = object.getString("hpi");
+		String wpi = object.getString("wpi");
 		String brand = object.getString("brand");
 		String imei = object.getString("imei");
 		String imsi = object.getString("imsi");
@@ -102,15 +108,15 @@ public class ActiveAppController {
 		di.setBrand(brand);
 		di.setChannel(channel);
 		di.setDeviceId(deviceid);
-		di.setHpi(hpi);
+		di.setHpi(Integer.parseInt(hpi));
 		di.setImei(imei);
 		di.setImsi(imsi);
 		di.setModel(model);
 		di.setOs(os);
 		di.setSysVersion(sysversion);
-		di.setVerCode(vercode);
+		di.setVerCode(Integer.parseInt(vercode));
 		di.setVerInfo(verinfo);
-		di.setWpi(wpi);
+		di.setWpi(Integer.parseInt(wpi));
 		Integer info = dService.insertDeviceInfo(di);
 		
 		if(info != 1){

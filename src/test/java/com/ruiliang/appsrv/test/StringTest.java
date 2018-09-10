@@ -9,5 +9,6 @@ public class StringTest {
 		System.out.println(RandomUtil.getRandomString(12));
 		
 		System.out.println(MD5Util.MD5Encode("123456"));
+		System.out.println(MD5Util.MD5Encode(MD5Util.MD5Encode("123456")));
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.UserInfoService;
@@ -72,21 +73,33 @@ public class ListPimController {
 			//普通用户 只能看到所属公司管理员
 			if(userInfo.getType() == 0){
 				List<UserInfo> bycid = uService.selectMgrBycid(userInfo.getCid());
-				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid));
+				int len = bycid.size();
+				for(int i=0;i<len;i++){
+					if(userInfo.getName().equals(bycid.get(i))){
+						bycid.remove(bycid.get(i));
+					}
+				}
+				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bycid,SerializerFeature.WriteMapNullValue));
 				reslut.put("state", 0);
 				reslut.put("msg", "success");
-				data.put("pims", array);
-				reslut.put("data", data);
+				//data.put("pims", array);
+				reslut.put("data", array);
 				return reslut;
 			}
 			//管理员 能看到所属公司的 用户以及管理员
 			if(userInfo.getType() == 1){
 				List<UserInfo> bymgr = uService.selectPimBycid(userInfo.getCid());
-				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bymgr));
+				int len = bymgr.size();
+				for(int i=0;i<len;i++){
+					if(userInfo.getName().equals(bymgr.get(i))){
+						bymgr.remove(bymgr.get(i));
+					}
+				}
+				JSONArray array= JSONArray.parseArray(JSON.toJSONString(bymgr,SerializerFeature.WriteMapNullValue));
 				reslut.put("state", 0);
 				reslut.put("msg", "success");
-				data.put("pims", array);
-				reslut.put("data", data);
+				//data.put("pims", array);
+				reslut.put("data", array);
 				return reslut;
 				
 			}

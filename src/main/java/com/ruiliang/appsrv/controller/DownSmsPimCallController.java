@@ -189,13 +189,17 @@ public class DownSmsPimCallController {
 			return reslut;
 		}
 		
-		Sms sms = slService.selectSmsByUid(uid,lastTime);
+		List<Sms> sms = slService.selectSmsByUid(uid,lastTime);
 		if(null != sms){
 			List<Object> maps = new ArrayList<Object>();
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("time", new Date().getTime());
-			map.put("sms", sms.getSms());
-			maps.add(map);
+			for (Sms sms2 : sms) {
+				Map<String,Object> map = new HashMap<String,Object>();
+				map.put("time", new Date().getTime());
+				map.put("sms", sms2.getSms());
+				maps.add(map);
+				map =null;
+			}
+			
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(maps));
 			
 			data.put("smsdata", array);
@@ -260,11 +264,12 @@ public class DownSmsPimCallController {
 			return reslut;
 		}
 		
-		Pim pim = pService.selectPimByUid(uid);
+		List<Pim> pims = pService.selectPimByUid(uid);
 		
-		if(null != pim){
+		if(null != pims && pims.size() > 0){
+			Pim pim = pims.get(0);
 			Map<String,Object> map = new HashMap<String,Object>();
-			//取值是取记录创建时间 还是user_info 表最后一次上传时间
+			
 			map.put("time", pim.getcTime().getTime());
 			map.put("pim", pim.getPim());
 			JSONObject itemJSONObj = JSONObject.parseObject(JSON.toJSONString(map));

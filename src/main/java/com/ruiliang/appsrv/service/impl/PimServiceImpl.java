@@ -1,5 +1,7 @@
 package com.ruiliang.appsrv.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class PimServiceImpl implements PimService {
 
 
 	@Override
-	public Pim selectPimByUid(String uid) {
+	public List<Pim> selectPimByUid(String uid) {
 		return pDao.selectPimByUid(uid);
 	}
 

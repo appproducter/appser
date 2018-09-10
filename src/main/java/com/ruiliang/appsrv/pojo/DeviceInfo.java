@@ -72,7 +72,7 @@ public class DeviceInfo implements Serializable{
 	/**
 	 * 操作系统版本
 	 */
-	private Integer sysVersion;
+	private String sysVersion;
 	
 	/**
 	 * 公司编码
@@ -172,11 +172,11 @@ public class DeviceInfo implements Serializable{
 		this.imsi = imsi;
 	}
 
-	public Integer getSysVersion() {
+	public String getSysVersion() {
 		return sysVersion;
 	}
 
-	public void setSysVersion(Integer sysVersion) {
+	public void setSysVersion(String sysVersion) {
 		this.sysVersion = sysVersion;
 	}
 

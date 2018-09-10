@@ -48,7 +48,6 @@ private static final Logger log = LoggerFactory.getLogger(AppTokenInterceptor.cl
      */  
     @Override  
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {  
-        log.info("---------------------开始进入请求地址拦截----------------------------");  
         String name = (String)httpServletRequest.getAttribute("params");
 		JSONObject parseObject = JSONObject.parseObject(name);
 		String csign = parseObject.getString("sign");
@@ -69,10 +68,10 @@ private static final Logger log = LoggerFactory.getLogger(AppTokenInterceptor.cl
         
         String apiKey = customer.getApiKey();
         
-        Map map = (Map)JSONObject.parse(data);
+        Map<String, Object> map = (Map<String, Object>)JSONObject.parse(data);
         //校验
         String ssign = SignUtil.generateSign(map, apiKey);
-        System.out.println("生成的sign------>"+ssign);
+        log.info("生成的sign------>"+ssign);
         if(!Objects.equals(csign, ssign)){
         	PrintWriter printWriter = httpServletResponse.getWriter();
         	printWriter.write("{state:-1,message:\"签名错误\"}");  

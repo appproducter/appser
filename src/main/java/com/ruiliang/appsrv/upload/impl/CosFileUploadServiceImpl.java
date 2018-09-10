@@ -60,9 +60,6 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 		tempname += "." + contentType;
 
 		try {
-			
-			
-			
 			ObjectMetadata objectMetadata = new ObjectMetadata();
 			objectMetadata.setContentLength(input.available());
 //			objectMetadata.setContentType("image/jpeg");
@@ -72,14 +69,16 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 
 			Upload upload = transferManager.upload(putObjectRequest);
 			UploadResult uploadResult = upload.waitForUploadResult();
+			
+			fileUrl = NFSConstants.NFS_SERVER_URL + tempname;
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new Exception("上传失败: " + e.toString());
 		} finally {
 
 		}
 
-		fileUrl = NFSConstants.NFS_SERVER_URL + tempname;
+		
 
 		return fileUrl;
 	}
