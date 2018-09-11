@@ -82,7 +82,8 @@ public class MediaUpController {
 			reslut.put("data", data);
 			return reslut;
 		}
-		data.put("mediamsgRespData", chat);
+		data.put("url", chat);
+		data.put("suffix", suffix);
 		reslut.put("state", 0);
 		reslut.put("msg", "success");
 		reslut.put("data", data);
