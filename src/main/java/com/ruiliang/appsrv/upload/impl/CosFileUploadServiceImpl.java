@@ -36,7 +36,7 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	@Value("${tencloud.cols.bucketname}")
 	private String bucketName;
 
-	private ExecutorService threadPool = Executors.newFixedThreadPool(32);
+	private ExecutorService threadPool = Executors.newFixedThreadPool(4);
 
 	@Override
 	public String copy(InputStream input, String contentType, String srcFileName, int nfsType) throws Exception {
@@ -59,13 +59,15 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 
 		tempname += "." + contentType;
 
+		TransferManager transferManager = null;
+
 		try {
 			ObjectMetadata objectMetadata = new ObjectMetadata();
 			objectMetadata.setContentLength(input.available());
 //			objectMetadata.setContentType("image/jpeg");
 			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, tempname, input, objectMetadata);
 
-			TransferManager transferManager = new TransferManager(cosClient, threadPool);
+			transferManager = new TransferManager(cosClient, threadPool);
 
 			Upload upload = transferManager.upload(putObjectRequest);
 			UploadResult uploadResult = upload.waitForUploadResult();
@@ -75,6 +77,11 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 			e.printStackTrace();
 			throw new Exception("上传失败: " + e.toString());
 		} finally {
+			try {
+				if (transferManager != null)
+					transferManager.shutdownNow();
+			} catch (Exception e2) {
+			}
 
 		}
 
