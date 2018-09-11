@@ -30,7 +30,7 @@
 	</update>
 	
 	<select id="selectMgrBycid" resultMap="BaseResultMap">
-	select * from user_info where cid = #{cid} and type = 1 and status = 0
+	select * from user_info where cid = #{cid} and type in (1,2) and status = 0
 	</select>
 	
 	<select id="selectPimBycid" resultMap="BaseResultMap">

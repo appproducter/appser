@@ -344,16 +344,16 @@ public class DownSmsPimCallController {
 			 end = DateUtil.getnowEndTime().getTime();
 		}else if(day == 7){
 			DateTime sttime = new DateTime();
-			start = DateUtil.getStartTime().getTime();
-			end = sttime.plusDays(day).toDate().getTime();	
+			end = DateUtil.getStartTime().getTime();
+			start = sttime.minusDays(day).toDate().getTime();	
 		}else if(day == 30){
 			DateTime sttime = new DateTime();
-			start = DateUtil.getStartTime().getTime();
-			end = sttime.plusDays(day).toDate().getTime();
+			end = DateUtil.getStartTime().getTime();
+			start = sttime.minusDays(day).toDate().getTime();
 		}else if(day == 180){
 			DateTime sttime = new DateTime();
-			start = DateUtil.getStartTime().getTime();
-			end = sttime.plusDays(day).toDate().getTime();
+			end = DateUtil.getStartTime().getTime();
+			start = sttime.minusDays(day).toDate().getTime();
 		}else{
 			//..
 		}

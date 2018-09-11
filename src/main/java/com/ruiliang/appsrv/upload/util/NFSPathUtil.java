@@ -35,11 +35,13 @@ public class NFSPathUtil {
 	}
 
 	public static int getNFSType(String fileType) {
-		if (fileType.indexOf(NFSConstants.NFS_TYPE_IMAGE) != -1) {
+		if(NFSConstants.NFS_TYPE_IMAGE.contains(fileType)){
 			return NFSConstants.NFS_TYPE_CHAT_IMAGE;
-		} else if (fileType.indexOf(NFSConstants.NFS_TYPE_VOICE) != -1) {
+		}
+		if(NFSConstants.NFS_TYPE_VOICE.contains(fileType)){
 			return NFSConstants.NFS_TYPE_CHAT_VOICE;
-		} else if (fileType.indexOf(NFSConstants.NFS_TYPE_CHAT_VEDIO) != -1) {
+		}
+		if(NFSConstants.NFS_TYPE_VIDEO.contains(fileType)){
 			return NFSConstants.NFS_TYPE_CHAT_VEDIO;
 		}
 		return NFSConstants.NFS_TYPE_CHAT_IMAGE;
