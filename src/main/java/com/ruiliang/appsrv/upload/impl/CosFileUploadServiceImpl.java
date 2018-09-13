@@ -73,6 +73,7 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 			UploadResult uploadResult = upload.waitForUploadResult();
 
 			fileUrl = NFSConstants.NFS_SERVER_URL + tempname;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("上传失败: " + e.toString());
