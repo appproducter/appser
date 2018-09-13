@@ -97,4 +97,10 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 		return copy(input, contentType, srcFileName, nfsType);
 	}
 
+	@Override
+	public String copy2Avatar(InputStream input, String contentType, String srcFileName) throws Exception {
+		int nfsType = NFSConstants.NFS_TYPE_USER_AVATAR;
+		return copy(input, contentType, srcFileName, nfsType);
+	}
+
 }
