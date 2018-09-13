@@ -117,7 +117,7 @@ public class UserController {
 		InputStream	inputStream = new ByteArrayInputStream(b);
 		String chat = "";
 		try {
-			 chat = fService.copy2Chat(inputStream, suffix, "");
+			 chat = fService.copy2Avatar(inputStream, suffix, "");
 		} catch (Exception e) {
 			reslut.put("state", -1);
 			reslut.put("msg", "上传失败");
