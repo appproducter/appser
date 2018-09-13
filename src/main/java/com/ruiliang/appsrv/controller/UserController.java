@@ -1,7 +1,10 @@
 package com.ruiliang.appsrv.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
@@ -20,6 +23,7 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.service.UserTokenService;
+import com.ruiliang.appsrv.upload.FileUploadService;
 import com.ruiliang.appsrv.util.Base64;
 import com.ruiliang.appsrv.util.CharUtils;
 import com.ruiliang.appsrv.util.DateUtil;
@@ -40,7 +44,7 @@ public class UserController {
 	/**支持上传的图片格式****/
 	private static final String[] imgSuffix = {"gif","jpg","png","jpeg","bmp"} ;
 	/***支持图片的最大大小***/
-	private static long maxSize = 2048;  //2M
+	private static long maxSize = 20480;  //2M
 	
 	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	
@@ -51,9 +55,12 @@ public class UserController {
 	private UserInfoService uService;
 	
 	@Autowired
+	private FileUploadService fService;
+	
+	@Autowired
 	private UserTokenService utService;
 	
-	/*@RequestMapping("setavatar")
+	@RequestMapping("setavatar")
 	public JSONObject setavatar(HttpServletRequest request){
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
@@ -91,6 +98,7 @@ public class UserController {
 		
 		//获取图片字符串
 		String imgString = JSONObject.parseObject(da).getString("avatar");
+		
 		//图片后缀
 		String suffix = JSONObject.parseObject(da).getString("suffix");
 		if(!CharUtils.contains(imgSuffix, suffix)){
@@ -105,52 +113,35 @@ public class UserController {
 			reslut.put("data", data);
 			return reslut;
 		}
-		String imgurl = imageServer+"/"+dateTimePath+"/"+userInfo.getUId()+"."+suffix;
-		LOG.info("图片服务器路径------>"+imgurl);
-	    byte[] b;
+		byte[]b = Base64.decode(imgString);
+		InputStream	inputStream = new ByteArrayInputStream(b);
+		String chat = "";
 		try {
-			b = Base64.decode(imgString);
-			long size=(long)b.length/1024;
-			if(size > maxSize){
-				reslut.put("state", -1);
-				reslut.put("msg", "图像大小超过限制");
-				reslut.put("data", data);
-				return reslut;
-		    }
-			for(int i = 0; i < b.length; ++i) {
-			       if (b[i] < 0) {
-			             b[i] += 256;
-			         }
-			    
-			    OutputStream out = new FileOutputStream(imgurl);
-			    out.write(b);
-			    out.flush();
-			    out.close();
-			    
-			}
-		} catch (IOException e) {
+			 chat = fService.copy2Chat(inputStream, suffix, "");
+		} catch (Exception e) {
 			reslut.put("state", -1);
-			reslut.put("msg", "图像上传失败");
+			reslut.put("msg", "上传失败");
 			reslut.put("data", data);
 			return reslut;
 		}
-		int avatar = uService.updateAvatar(userInfo.getUId(), dateTimePath+"/"+userInfo.getUId()+"."+suffix);
+		
+		int avatar = uService.updateAvatar(userInfo.getUId(), chat);
 		if(avatar != 1){
 			reslut.put("state", -1);
-			reslut.put("msg", "图像上传失败");
+			reslut.put("msg", "图像更新失败");
 			reslut.put("data", data);
 			return reslut;
 		}
-		data.put("imgurl", appurl+"/"+dateTimePath+"/"+userInfo.getUId()+"."+suffix);
+		data.put("imgurl", chat);
 		data.put("result", 0);
 		data.put("msg", "success");
 		reslut.put("state", 0);
 		reslut.put("msg", "图像更新成功");
 		reslut.put("data", data);
 		return reslut;
-	}*/
+	}
 	
-	@RequestMapping("setavatar")
+	/*@RequestMapping("setavatar")
 	public JSONObject setavatar(HttpServletRequest request){
 		JSONObject reslut = new JSONObject();
 		JSONObject data = new JSONObject();
@@ -203,5 +194,5 @@ public class UserController {
 		reslut.put("msg", "图像更新成功");
 		reslut.put("data", data);
 		return reslut;
-	}
+	}*/
 }

@@ -39,6 +39,7 @@ public class ControllerAOP {
         Object result = pjp.proceed();
         Gson gson = new Gson();
         logger.info("请求结束===返回值:" + gson.toJson(result));
+        logger.info("请求结束===返回值大小:" + gson.toJson(result).getBytes().length/1024+"Kb");
         return result;
     }
  
