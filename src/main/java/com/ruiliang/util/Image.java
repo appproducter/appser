@@ -10,6 +10,7 @@ import com.ruiliang.appsrv.util.MD5Util;
 public class Image {
 
 	    public static void main(String[] args) {
+	    	System.out.println(1721/1024);
 	    	String id = MD5Util.MD5Encode("123456");
 	    	System.out.println(id);
 	    	//  System.out.println(MD5Util.MD5Encode("23456")); // image to base64
