@@ -30,7 +30,7 @@ public class AppAllParamIntercetor extends HandlerInterceptorAdapter{
         if(!url.contains("mediamsg")) {
         	//由于上传东西较多，日志输入过大，针对性屏蔽日志
         	String bodyParam = getBodyString(httpServletRequest);
-            log.info("请求url===>"+url+"::请求参数为===>"+bodyParam);
+            log.info("请求url===>"+url+"::请求参数为===>"+bodyParam+"::请求参数大小====>"+bodyParam.getBytes().length/1024+"Kb");
             httpServletRequest.setAttribute("params", bodyParam);
         }else {
         	String bodyParam = getBodyString(httpServletRequest);

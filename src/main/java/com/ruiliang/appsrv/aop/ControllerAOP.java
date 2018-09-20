@@ -38,7 +38,8 @@ public class ControllerAOP {
         // result的值就是被拦截方法的返回值
         Object result = pjp.proceed();
         Gson gson = new Gson();
-        logger.info("请求结束===返回值:" + gson.toJson(result).getBytes().length);
+        logger.info("请求结束===返回值:" + gson.toJson(result));
+        logger.info("请求结束===返回值大小:" + gson.toJson(result).getBytes().length/1024+"Kb");
         return result;
     }
  

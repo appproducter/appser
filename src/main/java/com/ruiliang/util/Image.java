@@ -13,17 +13,14 @@ public class Image {
 	    	System.out.println(1721/1024);
 	    	String id = MD5Util.MD5Encode("123456");
 	    	System.out.println(id);
-	    	//  System.out.println(MD5Util.MD5Encode("23456")); // image to base64
-	     //  MD5Util.MD5Encode("12345");
-	        // base64StringToImage(getImageBinary()); // base64 to image
-	    	//System.out.println(getImageStr(""));
+	    	System.out.println(getImageStr(""));
 	    }
 
 	    public static String getImageStr(String filePath) {
 	    	         InputStream inputStream = null;
 	    	         byte[] data = null;
 	    	         try {
-	    	            inputStream = new FileInputStream("E:\\123.amr");
+	    	            inputStream = new FileInputStream("E:\\11.png");
 	    	             data = new byte[inputStream.available()];
 	    	             inputStream.read(data);
 	    	             inputStream.close();

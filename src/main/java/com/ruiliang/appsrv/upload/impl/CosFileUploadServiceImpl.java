@@ -73,6 +73,7 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 			UploadResult uploadResult = upload.waitForUploadResult();
 
 			fileUrl = NFSConstants.NFS_SERVER_URL + tempname;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("上传失败: " + e.toString());
@@ -93,6 +94,12 @@ public class CosFileUploadServiceImpl implements FileUploadService {
 	public String copy2Chat(InputStream input, String contentType, String srcFileName) throws Exception {
 		int nfsType = NFSPathUtil.getNFSType(contentType);
 
+		return copy(input, contentType, srcFileName, nfsType);
+	}
+
+	@Override
+	public String copy2Avatar(InputStream input, String contentType, String srcFileName) throws Exception {
+		int nfsType = NFSConstants.NFS_TYPE_USER_AVATAR;
 		return copy(input, contentType, srcFileName, nfsType);
 	}
 

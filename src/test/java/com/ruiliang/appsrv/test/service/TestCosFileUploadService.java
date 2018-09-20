@@ -24,14 +24,17 @@ public class TestCosFileUploadService {
 	public void testUpload() {
 		File f = new File("D:\\我的文档\\我的照片\\崽崽\\微信图片_20180112100131.jpg");
 		
-		
+		String url = "";
 		try {
 			FileInputStream fis = new FileInputStream(f);
 			
-			fileUploadService.copy2Chat(fis, "jpg", "");
+			//url = fileUploadService.copy2Chat(fis, "jpg", "");
+			url = fileUploadService.copy2Avatar(fis, "jpg", "");
 			
+			System.out.println("图片上传成功: " + url);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("上传失败: " + e.toString());
 		}
 		
 		
