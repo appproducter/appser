@@ -69,7 +69,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/api/up/sms","/api/up/pim","/api/chat/group/list","/api/chat/recv",
 				"/api/chat/create","/api/chat/group/create","/api/chat/send",
 				"/api/chat/upload/mediamsg","/api/chat/group/setname","/api/chat/group/adduser",
-				"/api/chat/group/removeuser"
+				"/api/chat/group/removeuser","/api/user/getAvatarById"
 				);
 		arg0.addInterceptor(ac).addPathPatterns("/api/user/setavatar",
 				"/api/mgr/adduser","/api/mgr/updateuser","/api/mgr/auth_main",
@@ -79,7 +79,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/api/chat/recv","/api/chat/create","/api/chat/group/create",
 				"/api/chat/send","/api/chat/upload/mediamsg",
 				"/api/chat/group/setname","/api/chat/group/adduser",
-				"/api/chat/group/removeuser"
+				"/api/chat/group/removeuser","/api/user/getAvatarById"
 				);
 	}
 

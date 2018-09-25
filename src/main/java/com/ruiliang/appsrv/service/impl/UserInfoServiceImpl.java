@@ -2,6 +2,7 @@ package com.ruiliang.appsrv.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -196,5 +197,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public List<UserInfo> selectUByIds(List<String> Ids) {
 		return uDao.selectUByIds(Ids);
+	}
+
+	@Override
+	public Map<String, String> selectAvatar(String id) {
+		return uDao.selectAvatar(id);
 	}
 }

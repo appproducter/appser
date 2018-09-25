@@ -97,6 +97,11 @@
 		select * from
 		user_info where mobile = #{mobile}
 	</select>
+	
+	<select id="selectAvatar" parameterType="String" resultType="map">
+		select avatar from
+		user_info where uid = #{id}
+	</select>
 
 	<select id="selectByIdcard" parameterType="String" resultMap="BaseResultMap">
 		select * from
