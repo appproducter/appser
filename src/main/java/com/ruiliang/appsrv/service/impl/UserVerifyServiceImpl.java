@@ -69,7 +69,7 @@ public class UserVerifyServiceImpl implements UserVerifyService {
 		// String msg = "{\"num\":'" + verifyLog.getCode() + "'}";
 		String msg = verifyLog.getCode();
 		try {
-			this.smsService.send(verifyLog.getType(), verifyLog.getDest(), msg);
+			this.smsService.send(verifyLog.getVerifyType(), verifyLog.getDest(), new String[] { msg });
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new SendCodeFailureException("发送出错");

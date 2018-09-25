@@ -14,5 +14,5 @@ public interface SmsService {
 	 * @param content 短信内容
 	 * @throws SmsSendFailureException
 	 */
-	void send(int type, String dest, String content) throws SmsSendFailureException;
+	void send(int type, String dest, String[] content) throws SmsSendFailureException;
 }
