@@ -26,7 +26,7 @@ public class TestTencentCloudSmsService {
 			json.put("name", "rocky");
 			System.out.println(json.toString());
 
-			smsService.send(SmsService.SMS_TYPE_RESET_PASSWD, "18575588430", "332211");
+			smsService.send(SmsService.SMS_TYPE_RESET_PASSWD, "18575588430", new String[] { "332211" });
 		} catch (SmsSendFailureException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

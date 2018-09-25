@@ -18,7 +18,17 @@ public class UserVerifyLog {
 	 * 验证码发送方式：邮件
 	 */
 	public static final int TYPE_EMAIL = 2;
-	
+
+	/**
+	 * 类型: 找回密码
+	 */
+	public static final int VERIFY_TYPE_FORGETPASSWD = 1;
+
+	/**
+	 * 类型：注册成功通知
+	 */
+	public static final int VERIFY_TYPE_REGNOTIFY = 2;
+
 	/**
 	 * 状态：默认（待发送）
 	 */
@@ -35,7 +45,7 @@ public class UserVerifyLog {
 	 * 状态：发送成功
 	 */
 	public static final int FLAG_SUCCESS = 4;
-	
+
 	/**
 	 * 短信验证超时时间：分钟
 	 */
@@ -48,7 +58,7 @@ public class UserVerifyLog {
 	private Long id;
 	private String userid;
 	private int type; // 发送方式
-	private int verifyType; // 验证类型 1 密码重置
+	private int verifyType; // 验证类型 1 密码重置 2 注册成功
 	private String dest;
 	private String code;
 	private int status; // 状态

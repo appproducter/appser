@@ -5,14 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.ruiliang.appsrv.dao.UserInfoDAO;
 import com.ruiliang.appsrv.dao.UserTokenDAO;
+import com.ruiliang.appsrv.dao.UserVerifyLogDAO;
 import com.ruiliang.appsrv.exception.LoginFailureException;
+import com.ruiliang.appsrv.exception.SendCodeFailureException;
+import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.UserInfo;
 import com.ruiliang.appsrv.pojo.UserToken;
+import com.ruiliang.appsrv.pojo.UserVerifyLog;
+import com.ruiliang.appsrv.service.CustomerService;
+import com.ruiliang.appsrv.service.SmsService;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.util.MD5Util;
 import com.ruiliang.appsrv.util.RandomUtil;
@@ -31,6 +38,16 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 	@Autowired
 	private UserTokenDAO userTokenDao;
+
+	@Autowired
+	@Qualifier("tencentSmsService")
+	private SmsService smsService;
+
+	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
+	private UserVerifyLogDAO userVerifyLogDao;
 
 	@Override
 	public UserInfo login(String deviceid, String name, String password) throws LoginFailureException {
@@ -131,6 +148,33 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		uDao.insert(userInfo);
 
+		String cuName = "";
+		Customer cu = customerService.selectCustomerByCid(userInfo.getCid());
+		if (cu != null) {
+			cuName = cu.getName();
+		}
+
+		// 添加成功 发送短信
+		try {
+			UserVerifyLog verifyLog = new UserVerifyLog();
+			verifyLog.setCode(RandomUtil.getRandomNum(6));
+			verifyLog.setSendTime(new Date());
+			verifyLog.setDest(userInfo.getMobile());
+			verifyLog.setStatus(UserVerifyLog.FLAG_DEFAULT);
+			verifyLog.setType(UserVerifyLog.TYPE_SMS);
+			verifyLog.setVerifyType(UserVerifyLog.VERIFY_TYPE_REGNOTIFY);
+			verifyLog.setUserid(userInfo.getUId());
+			verifyLog.setUseFlag(1);
+
+			this.userVerifyLogDao.create(verifyLog);
+
+			this.smsService.send(UserVerifyLog.VERIFY_TYPE_REGNOTIFY, userInfo.getMobile(),
+					new String[] { userInfo.getMobile(), cuName });
+		} catch (Exception e) {
+			e.printStackTrace();
+			// throw new SendCodeFailureException("发送出错");
+		}
+
 		return userInfo;
 	}
 
@@ -140,18 +184,18 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return uDao.updateUserAvatar(token, avatar);
 	}
 
-	public Integer updateUpTimePim(Long pimtime,String uid) {
-		return uDao.updateUpTimePim(pimtime,uid);
+	public Integer updateUpTimePim(Long pimtime, String uid) {
+		return uDao.updateUpTimePim(pimtime, uid);
 	}
 
 	@Override
-	public Integer updateUpTimeSms(Long smstime,String uid) {
-		return uDao.updateUpTimeSms(smstime,uid);
+	public Integer updateUpTimeSms(Long smstime, String uid) {
+		return uDao.updateUpTimeSms(smstime, uid);
 	}
 
 	@Override
-	public Integer updateUpTimeCall(Long calltime,String uid) {
-		return uDao.updateUpTimeCall(calltime,uid);
+	public Integer updateUpTimeCall(Long calltime, String uid) {
+		return uDao.updateUpTimeCall(calltime, uid);
 	}
 
 	@Override
@@ -175,8 +219,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public int updateUserType(Byte type,String uid, String cid) {
-		return uDao.updateUserType(type,uid, cid);
+	public int updateUserType(Byte type, String uid, String cid) {
+		return uDao.updateUserType(type, uid, cid);
 	}
 
 	@Override
