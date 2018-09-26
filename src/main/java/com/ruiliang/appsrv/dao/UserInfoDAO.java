@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +15,8 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 @Mapper
 public interface UserInfoDAO {
 
+	Map<String,String> selectAvatar(String id);
+	
 	/**
 	 * 赋予管理员权限
 	 * @param type

@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ruiliang.appsrv.exception.LoginFailureException;
 import com.ruiliang.appsrv.pojo.UserInfo;
@@ -10,6 +11,7 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  * 
  */
 public interface UserInfoService {
+	Map<String,String> selectAvatar(String id);
 	
 	List<UserInfo> selectUByIds(List<String> Ids);
 

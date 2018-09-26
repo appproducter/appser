@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -139,6 +140,69 @@ public class UserController {
 		reslut.put("msg", "图像更新成功");
 		reslut.put("data", data);
 		return reslut;
+	}
+	
+	@RequestMapping("getAvatarById")
+	public JSONObject getAvatarById(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		UserToken userToken = utService.findByToken(token);
+		if(null == userToken){
+			reslut.put("state", -1);
+			reslut.put("msg", "无效的token");
+			reslut.put("data", data);
+			return reslut;
+		}
+		UserInfo userInfo = uService.selectUserInfoByUid(userToken.getuId());
+		
+		if(null == userInfo){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//
+		String id = JSONObject.parseObject(da).getString("uid");
+		
+		if(StringUtils.isBlank(id)){
+			reslut.put("state", -1);
+			reslut.put("msg", "获取图像失败");
+			reslut.put("data", data);
+			return reslut;
+		}else{
+			Map<String,String> m = uService.selectAvatar(id);
+			if(null == m || m.isEmpty()){
+				reslut.put("state", -1);
+				reslut.put("msg", "图像为空");
+				reslut.put("data", data);
+				return reslut;
+			}
+			data.put("imgurl", m.get("avatar"));
+			data.put("result", 0);
+			data.put("msg", "success");
+			reslut.put("state", 0);
+			reslut.put("msg", "获取图像成功");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
 	}
 	
 	/*@RequestMapping("setavatar")
