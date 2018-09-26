@@ -43,9 +43,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 	private SmsService smsService;
 
 	@Autowired
-	private CustomerService customerService;
-
-	@Autowired
 	private UserVerifyLogDAO userVerifyLogDao;
 
 	@Override
@@ -147,12 +144,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		uDao.insert(userInfo);
 
-		String cuName = "";
-		Customer cu = customerService.selectCustomerByCid(userInfo.getCid());
-		if (cu != null) {
-			cuName = cu.getName();
-		}
-
 		// 添加成功 发送短信
 		try {
 			UserVerifyLog verifyLog = new UserVerifyLog();
@@ -168,7 +159,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			this.userVerifyLogDao.create(verifyLog);
 
 			this.smsService.send(UserVerifyLog.VERIFY_TYPE_REGNOTIFY, userInfo.getMobile(),
-					new String[] { userInfo.getMobile(), cuName });
+					new String[] { userInfo.getMobile() });
 		} catch (Exception e) {
 			e.printStackTrace();
 			// throw new SendCodeFailureException("发送出错");
