@@ -93,7 +93,7 @@ public class ManagerAuthController {
 		}
 		UserInfo ui = new UserInfo();
 		ui.setName(name);
-		ui.setPassword(MD5Util.MD5Encode("123456"));
+		ui.setPassword(MD5Util.MD5Encode("000000"));
 		ui.setMobile(mobile);
 		ui.setIdCard(idcard);
 		if(StringUtils.isBlank(sex)){

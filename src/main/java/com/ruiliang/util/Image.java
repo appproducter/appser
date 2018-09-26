@@ -13,7 +13,7 @@ public class Image {
 	    	System.out.println(1721/1024);
 	    	String id = MD5Util.MD5Encode("123456");
 	    	System.out.println(id);
-	    	System.out.println(getImageStr(""));
+	    	//System.out.println(getImageStr(""));
 	    }
 
 	    public static String getImageStr(String filePath) {

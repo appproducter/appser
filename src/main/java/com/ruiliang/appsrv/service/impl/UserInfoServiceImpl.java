@@ -49,14 +49,21 @@ public class UserInfoServiceImpl implements UserInfoService {
 	@Override
 	public UserInfo login(String deviceid, String name, String password) throws LoginFailureException {
 		UserInfo uinfo = null;
-		if (Validator.isMobile(name)) {
+		//if (Validator.isMobile(name)) {
+		//	uinfo = uDao.selectByMobile(name);
+		//} else if (Validator.isIdcard(name)) {
+		//	uinfo = uDao.selectByIdcard(name);
+		//} else {
+		//	throw new LoginFailureException("非法的登录用户名");
+		//}
+		if(org.apache.commons.lang3.StringUtils.isNotBlank(name)){
 			uinfo = uDao.selectByMobile(name);
-		} else if (Validator.isIdcard(name)) {
-			uinfo = uDao.selectByIdcard(name);
-		} else {
+		}else{
 			throw new LoginFailureException("非法的登录用户名");
 		}
-
+		if(null == uinfo){
+			uinfo = uDao.selectByIdcard(name);
+		}
 		if (null == uinfo)
 			throw new LoginFailureException("用户不存在");
 
