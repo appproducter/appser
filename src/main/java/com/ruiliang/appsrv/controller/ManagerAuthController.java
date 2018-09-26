@@ -79,7 +79,7 @@ public class ManagerAuthController {
 		String name = us.getString("name");
 		String idcard = us.getString("idcard");
 		String mobile = us.getString("mobile");
-		String sex = us.getString("sex");
+		String sex = us.getString("gender");
 		String email = us.getString("email");
 		String area = us.getString("area");
 		String address = us.getString("address");
@@ -98,6 +98,8 @@ public class ManagerAuthController {
 		ui.setIdCard(idcard);
 		if(StringUtils.isBlank(sex)){
 			ui.setGender((byte)0);
+		}else{
+			ui.setGender(Byte.parseByte(sex));
 		}
 		ui.setEmail(email);
 		ui.setArea(area);
@@ -110,10 +112,6 @@ public class ManagerAuthController {
 		//状态
 		ui.setStatus((byte)0);
 		ui.setLoginTimes(0);
-		if(null == ui.getGender()){
-			ui.setGender((byte)0);
-		}
-		
 		uiService.create(token, ui);
 		
 		reslut.put("state", 0);
@@ -162,7 +160,7 @@ public class ManagerAuthController {
 		String name = us.getString("name");
 		String idcard = us.getString("idcard");
 		String mobile = us.getString("mobile");
-		String sex = us.getString("sex");
+		String sex = us.getString("gender");
 		String email = us.getString("email");
 		String area = us.getString("area");
 		String address = us.getString("address");
@@ -181,6 +179,8 @@ public class ManagerAuthController {
 		ui.setIdCard(idcard);
 		if(StringUtils.isBlank(sex)){
 			ui.setGender((byte)0);
+		}else{
+			ui.setGender(Byte.parseByte(sex));
 		}
 		ui.setEmail(email);
 		ui.setArea(area);
