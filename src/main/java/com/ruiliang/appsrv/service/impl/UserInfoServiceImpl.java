@@ -160,7 +160,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 			this.userVerifyLogDao.create(verifyLog);
 
 			this.smsService.send(UserVerifyLog.VERIFY_TYPE_REGNOTIFY, userInfo.getMobile(),
-					new String[] { userInfo.getMobile() });
+					new String[] { userInfo.getMobile(), "000000" });
 		} catch (Exception e) {
 			e.printStackTrace();
 			// throw new SendCodeFailureException("发送出错");

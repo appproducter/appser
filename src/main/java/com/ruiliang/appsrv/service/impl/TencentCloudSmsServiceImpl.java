@@ -19,7 +19,7 @@ public class TencentCloudSmsServiceImpl implements SmsService {
 	private static final Map<Integer, Integer> SMS_TEMPLATE_MAP = new HashMap<Integer, Integer>();
 	static {
 		SMS_TEMPLATE_MAP.put(UserVerifyLog.VERIFY_TYPE_FORGETPASSWD, 177653);
-		SMS_TEMPLATE_MAP.put(UserVerifyLog.VERIFY_TYPE_REGNOTIFY, 200382);
+		SMS_TEMPLATE_MAP.put(UserVerifyLog.VERIFY_TYPE_REGNOTIFY, 201513);
 	}
 
 	@Override
