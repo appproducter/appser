@@ -53,6 +53,8 @@ public class Version implements Serializable{
 	 * 是否强更 1 否 2是
 	 */
 	private Byte forceflag;
+	
+	private String cid;
 
 	public Integer getId() {
 		return id;

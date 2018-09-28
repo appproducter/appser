@@ -12,5 +12,5 @@ public interface VersionService {
 	 * 查询版本
 	 * @return
 	 */
-	Version selectVersion();
+	Version selectVersion(String channel);
 }

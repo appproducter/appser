@@ -15,5 +15,5 @@ public interface VersionDAO {
 	 * 查询版本
 	 * @return
 	 */
-	Version selectVersion();
+	Version selectVersion(String channel);
 }

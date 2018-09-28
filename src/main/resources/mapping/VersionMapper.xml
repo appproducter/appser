@@ -10,11 +10,12 @@
     <result column="updateinfo" jdbcType="VARCHAR" property="updateInfo" />
     <result column="ctime" jdbcType="DATE" property="cTime" />
     <result column="forceflag" jdbcType="TINYINT" property="forceflag" />
+	<result column="cid" jdbcType="VARCHAR" property="cid" />
   </resultMap>
   
   <!-- 根据版本号查询 -->
   <select id="selectVersion" resultMap="BaseResultMap" parameterType="java.lang.String">
-  	SELECT platform,code,info,downurl,updateinfo,forceflag,ctime FROM version WHERE code 
+  	SELECT platform,code,info,downurl,updateinfo,forceflag,ctime,cid FROM version WHERE cid=#{channel} and code 
   	IN (SELECT max(code) FROM version ) ORDER BY ctime desc limit 1
   </select>
 </mapper>

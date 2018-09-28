@@ -187,7 +187,7 @@ public class ActiveAppController {
 			reslut.put("data", data);
 		}
 		//查询更新信息
-		Version version = vService.selectVersion();
+		Version version = vService.selectVersion(channel);
 		//没有更新内容
 		if(null == version || null == version.getCode() || version.getCode() <= vercode){
 			reslut.put("state", 0);

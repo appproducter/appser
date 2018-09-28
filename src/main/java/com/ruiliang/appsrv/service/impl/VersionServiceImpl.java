@@ -21,8 +21,8 @@ public class VersionServiceImpl implements VersionService{
 	 * @see com.ruiliang.appsrv.service.VersionService#selectVersion()
 	 */
 	@Override
-	public Version selectVersion() {
-		return vDao.selectVersion();
+	public Version selectVersion(String channel) {
+		return vDao.selectVersion(channel);
 	}
 
 }
