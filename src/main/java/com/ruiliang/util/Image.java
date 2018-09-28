@@ -11,7 +11,7 @@ public class Image {
 
 	    public static void main(String[] args) {
 	    	System.out.println(1721/1024);
-	    	String id = MD5Util.MD5Encode("123456");
+	    	String id = MD5Util.MD5Encode("000000");
 	    	System.out.println(id);
 	    	//System.out.println(getImageStr(""));
 	    }

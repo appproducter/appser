@@ -15,6 +15,8 @@ import com.ruiliang.appsrv.pojo.UserInfo;
 @Mapper
 public interface UserInfoDAO {
 
+	void deleteUser(@Param("ids") String[] ids,@Param("cid") String cid);
+	
 	Map<String,String> selectAvatar(String id);
 	
 	/**

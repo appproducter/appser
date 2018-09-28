@@ -507,4 +507,84 @@ public class ManagerAuthController {
 		reslut.put("data", data);
 		return reslut;
 	}
+	
+	/**
+	 * 删除用户
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("deleteUser")
+	public JSONObject deleteUser(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();//结果集
+		JSONObject data = new JSONObject();//数据
+		
+		String req = (String)request.getAttribute("params");
+		
+		JSONObject object = JSONObject.parseObject(req);
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		//根据TOKEN查询UID
+		UserToken userToken = uService.findByToken(token);
+				
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "token失效");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		JSONObject us = JSONObject.parseObject(da);
+		
+		String channel = (String) us.get("channel");
+		String uid = (String) us.get("uid");
+		Customer cm = cService.selectCustomerByCid(channel);
+		
+		if(null == cm){
+			reslut.put("state", -1);
+			reslut.put("msg", "公司编码错误");
+			reslut.put("data", data);
+			return reslut;
+		}
+		UserInfo ui = uiService.selectUserInfoByUid(userToken.getuId());
+		if(null == ui || ui.getType() != 2){
+			reslut.put("state", -1);
+			reslut.put("msg", "用户没有权限");
+			reslut.put("data", data);
+			return reslut;
+		}
+		if(!StringUtils.isBlank(uid)){
+			String[] split = uid.split(",");
+			try{
+				uiService.deleteUser(split,channel);
+			}catch(Exception e){
+				e.printStackTrace();
+				reslut.put("state", -1);
+				reslut.put("msg", "删除失败");
+				reslut.put("data", data);
+				return reslut;
+			}
+			
+			
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			data.put("result", 0);
+			data.put("msg", "删除成功");
+			reslut.put("data", data);
+			return reslut;
+		}
+		reslut.put("state", -1);
+		reslut.put("msg", "删除失败");
+		reslut.put("data", data);
+		return reslut;
+	}
 }

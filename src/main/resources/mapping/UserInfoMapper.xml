@@ -25,6 +25,15 @@
 		<result column="up_time_pim" property="upTimePim" />
 	</resultMap>
 	
+	
+	
+
+	<delete id="deleteUser" parameterType="String">
+        delete from user_info where cid = #{cid} and uid in
+        <foreach item="cs" collection="ids" open="(" separator="," close=")">
+            #{cs}
+        </foreach>
+    </delete>
 	<update id="updateUserType">
 		update user_info set type = #{type} where uid = #{uid} and cid = #{cid}
 	</update>

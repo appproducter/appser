@@ -245,4 +245,10 @@ public class UserInfoServiceImpl implements UserInfoService {
 	public Map<String, String> selectAvatar(String id) {
 		return uDao.selectAvatar(id);
 	}
+
+	@Override
+	public void deleteUser(String[] ids,String cid) throws Exception{
+		// TODO Auto-generated method stub
+		uDao.deleteUser(ids,cid);
+	}
 }

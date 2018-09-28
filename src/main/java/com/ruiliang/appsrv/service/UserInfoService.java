@@ -11,6 +11,8 @@ import com.ruiliang.appsrv.pojo.UserInfo;
  * 
  */
 public interface UserInfoService {
+	
+	void deleteUser(String[] ids,String cid) throws Exception;
 	Map<String,String> selectAvatar(String id);
 	
 	List<UserInfo> selectUByIds(List<String> Ids);
