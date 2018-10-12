@@ -15,6 +15,6 @@
   </insert>
   
   <select id="selectCalllogByUid" resultMap="BaseResultMap">
-  	select * from calllog where uid = #{uid}
+  	select * from calllog where uid = #{uid} order by ctime desc
   </select>
 </mapper>

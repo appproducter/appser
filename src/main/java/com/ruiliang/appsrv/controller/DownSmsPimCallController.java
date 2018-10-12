@@ -114,18 +114,19 @@ public class DownSmsPimCallController {
 		
 		List<Calllog> list = clService.selectCalllogByUid(uid);
 		if(!list.isEmpty() && null !=list){
+			Calllog cl = list.get(0);
 			List<Object> maps = new ArrayList<Object>();
 			
-			for (Calllog calllog : list) {
+			//for (Calllog calllog : list) {
 				Map<String,Object> map = new HashMap<String,Object>();
-				map.put("time", calllog.getTime());
-				map.put("calllog", calllog.getCalllog());
+				map.put("time", cl.getTime());
+				map.put("calllog", cl.getCalllog());
 				maps.add(map);
-				map = null;
-			}
+				//map = null;
+			//}
 			
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(maps));
-			
+				//JSONObject itemJSONObj = JSONObject.parseObject(JSON.toJSONString(map));
 			data.put("calllogdata", array);
 			reslut.put("state", 0);
 			reslut.put("msg", "success");

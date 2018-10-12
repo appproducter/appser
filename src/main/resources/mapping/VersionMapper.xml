@@ -16,6 +16,6 @@
   <!-- 根据版本号查询 -->
   <select id="selectVersion" resultMap="BaseResultMap" parameterType="java.lang.String">
   	SELECT platform,code,info,downurl,updateinfo,forceflag,ctime,cid FROM version WHERE cid=#{channel} and code 
-  	IN (SELECT max(code) FROM version ) ORDER BY ctime desc limit 1
+  	IN (SELECT max(code) FROM version where cid = #{channel}) ORDER BY ctime desc limit 1
   </select>
 </mapper>
