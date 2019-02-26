@@ -1,5 +1,9 @@
 package com.ruiliang.appsrv.config;
 
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -17,6 +21,11 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResponseData  defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
         logger.error("", e);
+        Map<String,String[]> map = req.getParameterMap();
+        Set<Entry<String, String[]>> set =  map.entrySet();
+        for (Entry<String, String[]> entry : set) {
+			logger.info("[[["+entry.getKey()+"]]]"+"[[["+entry.getValue().toString()+"]]]");
+		}
         ResponseData re = new ResponseData();
         re.setMessage(e.getMessage());
         if (e instanceof org.springframework.web.servlet.NoHandlerFoundException) {

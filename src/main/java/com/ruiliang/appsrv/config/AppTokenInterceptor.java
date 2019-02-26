@@ -1,6 +1,7 @@
 package com.ruiliang.appsrv.config;
 
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +38,11 @@ public class AppTokenInterceptor extends HandlerInterceptorAdapter{
     @Override  
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {  
     	String name = (String)httpServletRequest.getAttribute("params");
+        System.out.println("name========"+name);
+        Enumeration<String> hdn = httpServletRequest.getHeaderNames();
+    	while(hdn.hasMoreElements()){
+    		System.out.println("hn=====>"+httpServletRequest.getHeader(hdn.nextElement()));
+    	}
         httpServletResponse.setCharacterEncoding("utf-8");
         httpServletResponse.setContentType("text/html; charset=utf-8");
         JSONObject parseObject = JSONObject.parseObject(name);

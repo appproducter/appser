@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +40,8 @@ public class AppLoginController {
 	@Autowired
 	private UserVerifyService uvService;
 	
+	@Autowired
+	private StringRedisTemplate redis ;
 	/**
 	 * 登录接口
 	 * @param request
@@ -87,6 +90,7 @@ public class AppLoginController {
 			return reslut;
 		}
 		if(null != login.getToken()){
+			redis.opsForValue().set(username, deviceid);
 			data.put("token", login.getToken());
 			data.put("userinfo", JSONObject.toJSON(login));
 			reslut.put("state", 0);
@@ -98,6 +102,40 @@ public class AppLoginController {
 		data.put("userinfo", "");
 		reslut.put("state", -1);
 		reslut.put("msg", "登录失败");
+		reslut.put("data", data);
+		return reslut;
+		
+	}
+	
+	
+	/**
+	 * 登录接口
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("loginout")
+	public JSONObject loginout(HttpServletRequest request){
+		
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String deviceid = object.getString("deviceid");
+		String username = object.getString("username");
+		if(StringUtils.isBlank(deviceid) || StringUtils.isBlank(username)){
+			
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		redis.delete(username);
+		reslut.put("state", 1);
+		reslut.put("msg", "退出成功");
 		reslut.put("data", data);
 		return reslut;
 		

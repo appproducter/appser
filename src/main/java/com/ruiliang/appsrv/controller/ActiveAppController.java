@@ -85,9 +85,8 @@ public class ActiveAppController {
 		String imei = object.getString("imei");
 		String imsi = object.getString("imsi");
 		
-		if(StringUtils.isBlank(deviceid) || null == vercode || StringUtils.isBlank(verinfo)
-				|| StringUtils.isBlank(model) || StringUtils.isBlank(os) || null == hpi || null == wpi
-				|| null == sysversion || StringUtils.isBlank(channel)
+		if(StringUtils.isBlank(deviceid)
+				|| StringUtils.isBlank(channel)
 				){
 			reslut.put("state", -1);
 			data.put("flag", 0);

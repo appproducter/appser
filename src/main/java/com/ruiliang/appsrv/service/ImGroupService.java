@@ -3,13 +3,16 @@ package com.ruiliang.appsrv.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ruiliang.appsrv.pojo.ImGroup;
 
 public interface ImGroupService {
+	int dismissGroup(String git);
 	int getGroupNum(String gid);
-	
+	ImGroup getGroupUser(String uid);
 	List<ImGroup> listGroup(String uid);
-	
+	int deleteGroup(String gid,String uid);
 	List<Map<String,Object>> listGroupUser(String uid);
 	
 	ImGroup selectGroupById(Integer id);

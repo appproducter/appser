@@ -99,4 +99,22 @@ public class ImGroupServiceImpl implements ImGroupService {
 		return imGroupDao.getGroupNum(gid);
 	}
 
+	@Override
+	public ImGroup getGroupUser(String uid) {
+		// TODO Auto-generated method stub
+		return imGroupDao.getGroupUser(uid);
+	}
+
+	@Override
+	public int dismissGroup(String git) {
+		// TODO Auto-generated method stub
+		return imGroupDao.dismissGroup(git);
+	}
+
+	@Override
+	public int deleteGroup(String gid, String uid) {
+		// TODO Auto-generated method stub
+		return imGroupDao.deleteGroup(gid, uid);
+	}
+
 }

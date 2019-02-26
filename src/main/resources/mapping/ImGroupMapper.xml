@@ -46,12 +46,22 @@
 		select * from im_group_user where group_id = #{uid}
 	</select>
 	
+	<select id="getGroupUser" parameterType="String" resultMap="BaseResultMap">
+		select * from im_group where group_id = #{uid}
+	</select>
+	
 	<insert id="addGroupUser">
 		insert into im_group_user (group_id, uid) values (#{groupId}, #{uid})
 	</insert>
 	
 	<delete id="removeGroupUser">
 		delete from im_group_user where group_id = #{groupId} and uid = #{uid}
+	</delete>
+	<delete id="dismissGroup">
+		delete from im_group_user where group_id = #{gid}
+	</delete>
+	<delete id="deleteGroup">
+		delete from im_group where group_id = #{gid} and creator=#{uid}
 	</delete>
 	
 	<select id="getGroupNum" resultType="int">

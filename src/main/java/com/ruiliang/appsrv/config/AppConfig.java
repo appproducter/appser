@@ -39,6 +39,9 @@ public class AppConfig implements WebMvcConfigurer{
 	@Autowired
 	private AppAllParamIntercetor api;
 	
+	@Autowired
+	private SingleUserLoginInterceptor si;
+	
 	
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> arg0) {
@@ -61,6 +64,16 @@ public class AppConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry arg0) {
 		arg0.addInterceptor(api).addPathPatterns("/api/**");
+		arg0.addInterceptor(si).addPathPatterns("/api/list/friend","/api/mgr/show/pim",
+				"/api/mgr/show/sms","/api/mgr/show/calllog","/api/mgr/show/loc",
+				"/api/mgr/deletemanage","/api/mgr/authorize","/api/mgr/list_pim",
+				"/api/mgr/auth_main","/api/mgr/updateuser","/api/mgr/adduser",
+				"/api/user/setavatar","/api/up/loc","/api/up/calllog",
+				"/api/up/sms","/api/up/pim","/api/chat/group/list","/api/chat/recv",
+				"/api/chat/create","/api/chat/group/create","/api/chat/send",
+				"/api/chat/upload/mediamsg","/api/chat/group/setname","/api/chat/group/adduser",
+				"/api/chat/group/removeuser","/api/user/getAvatarById","/api/chat/group/dismiss"
+				);
 		arg0.addInterceptor(ai).addPathPatterns("/api/list/friend","/api/mgr/show/pim",
 				"/api/mgr/show/sms","/api/mgr/show/calllog","/api/mgr/show/loc",
 				"/api/mgr/deletemanage","/api/mgr/authorize","/api/mgr/list_pim",
@@ -69,7 +82,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/api/up/sms","/api/up/pim","/api/chat/group/list","/api/chat/recv",
 				"/api/chat/create","/api/chat/group/create","/api/chat/send",
 				"/api/chat/upload/mediamsg","/api/chat/group/setname","/api/chat/group/adduser",
-				"/api/chat/group/removeuser","/api/user/getAvatarById"
+				"/api/chat/group/removeuser","/api/user/getAvatarById","/api/chat/group/dismiss"
 				);
 		arg0.addInterceptor(ac).addPathPatterns("/api/user/setavatar",
 				"/api/mgr/adduser","/api/mgr/updateuser","/api/mgr/auth_main",
@@ -79,7 +92,7 @@ public class AppConfig implements WebMvcConfigurer{
 				"/api/chat/recv","/api/chat/create","/api/chat/group/create",
 				"/api/chat/send","/api/chat/upload/mediamsg",
 				"/api/chat/group/setname","/api/chat/group/adduser",
-				"/api/chat/group/removeuser","/api/user/getAvatarById"
+				"/api/chat/group/removeuser","/api/user/getAvatarById","/api/chat/group/dismiss"
 				);
 	}
 

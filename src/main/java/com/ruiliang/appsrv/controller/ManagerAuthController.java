@@ -45,17 +45,18 @@ public class ManagerAuthController {
 	
 	@RequestMapping("adduser")
 	public JSONObject addUser(HttpServletRequest request){
+		LOG.info("进入添加方法");
 		JSONObject reslut = new JSONObject();//结果集
 		JSONObject data = new JSONObject();//数据
 		
 		String req = (String)request.getAttribute("params");
-		
+		System.out.println("添加用户-----》"+req);
 		JSONObject object = JSONObject.parseObject(req);
 		
 		String da = object.getString("data");
 		String token = object.getString("token");
 		String sign = object.getString("sign");
-		
+		System.out.println("data----->"+da);
 		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
 			
 			reslut.put("state", -1);
@@ -262,7 +263,7 @@ public class ManagerAuthController {
 		List<UserInfo> bycid = uiService.selectMgrBycid(channel);
 		//扩充管理员数量
 		Customer customer = cService.selectCustomerByCid(channel);
-		
+		System.out.println("管理员数量====》"+customer.getMgrQua());
 		if(null == bycid || null == customer){
 			reslut.put("state", -1);
 			reslut.put("msg", "获取管理员列表失败");

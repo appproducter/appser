@@ -1,5 +1,6 @@
 package com.ruiliang.appsrv.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.ruiliang.appsrv.contants.ImageContants;
 import com.ruiliang.appsrv.pojo.Customer;
 import com.ruiliang.appsrv.pojo.ImGroup;
 import com.ruiliang.appsrv.pojo.UserInfo;
@@ -25,11 +29,12 @@ import com.ruiliang.appsrv.service.CustomerService;
 import com.ruiliang.appsrv.service.ImGroupService;
 import com.ruiliang.appsrv.service.UserInfoService;
 import com.ruiliang.appsrv.service.UserTokenService;
+import com.ruiliang.util.ImageUtil;
 
 @RestController
 @RequestMapping("api/chat")
 public class GroupCreateController {
-
+	private final Logger LOG = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private UserInfoService uService;
 	
@@ -75,7 +80,7 @@ public class GroupCreateController {
 			return reslut;
 		}
 		JSONObject user = JSONObject.parseObject(da);
-		String userid = (String)user.get("userid");
+		String userid = (String)user.get("uid");
 		String[] split = userid.split(",");
 		List<String> list = new ArrayList<String>();
 		for (String string : split) {
@@ -93,6 +98,17 @@ public class GroupCreateController {
 			return reslut;
 		}
 		if(null != create){
+			List<UserInfo> lu = create.getUsers();
+			List<String> ss = new ArrayList<String>();
+			for (UserInfo userInfo : lu) {
+				ss.add(userInfo.getAvatar());
+			}
+			try {
+				ImageUtil.getCombinationOfhead(ss, ImageContants.AVATAR_URL+"/"+create.getGroupId()+".jpg");
+			} catch (IOException e) {
+				LOG.error("群聊图像生成失败");
+				e.printStackTrace();
+			}
 			data.put("result", 0);
 			data.put("msg", "创建成功");
 			data.put("groupdata", create);
@@ -106,6 +122,68 @@ public class GroupCreateController {
 		reslut.put("data", data);
 		return reslut;
 	}
+	
+	/**
+	 * 创建群聊
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("group/dismiss")
+	public JSONObject dismiss(HttpServletRequest request){
+		JSONObject reslut = new JSONObject();
+		JSONObject data = new JSONObject();
+		
+		String req = (String)request.getAttribute("params");
+		JSONObject object = JSONObject.parseObject(req);
+		
+		String da = object.getString("data");
+		String token = object.getString("token");
+		String sign = object.getString("sign");
+		
+		if(StringUtils.isBlank(da) || StringUtils.isBlank(token) || StringUtils.isBlank(sign)){
+			reslut.put("state", -1);
+			reslut.put("msg", "参数不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		UserToken userToken = utService.findByToken(token);
+		if(null == userToken || userToken.getuId() == null){
+			reslut.put("state", -1);
+			reslut.put("msg", "token失效");
+			reslut.put("data", data);
+			return reslut;
+		}
+		JSONObject user = JSONObject.parseObject(da);
+		String userid = (String)user.get("uid");
+		String gid = (String)user.get("gid");
+		if(StringUtils.isBlank(userid)||StringUtils.isBlank(gid)){
+			reslut.put("state", -1);
+			reslut.put("msg", "ID不能为空");
+			reslut.put("data", data);
+			return reslut;
+		}
+		ImGroup ig = igService.getGroupUser(gid);
+		
+		if(null != ig && ig.getCreator().equals(userid)){
+			igService.dismissGroup(ig.getGroupId());
+			igService.deleteGroup(gid, userid);
+			data.put("result", 0);
+			data.put("msg", "解散成功");
+			reslut.put("state", 0);
+			reslut.put("msg", "success");
+			reslut.put("data", data);
+			return reslut;
+		}else{
+			reslut.put("state", -1);
+			reslut.put("msg", "群不存在");
+			reslut.put("data", data);
+			return reslut;
+		}
+		
+		
+	}
+	
 	
 	/**
 	 * 移除群组用户
@@ -141,8 +219,11 @@ public class GroupCreateController {
 		JSONObject user = JSONObject.parseObject(da);
 		String grpid = (String)user.get("group_id");
 		String uid = (String)user.get("uid");
+		String[] st = uid.split(",");
+		for (String string : st) {
+			igService.removeGroupUser(grpid, string);
+		}
 		
-		igService.removeGroupUser(grpid, uid);
 		
 		data.put("result", 0);
 		data.put("msg", "移除群组用户成功");
@@ -186,8 +267,11 @@ public class GroupCreateController {
 		JSONObject user = JSONObject.parseObject(da);
 		String grpid = (String)user.get("group_id");
 		String uid = (String)user.get("uid");
+		String[] st = uid.split(",");
+		for (String string : st) {
+			igService.addGroupUser(grpid, string);
+		}
 		
-		igService.addGroupUser(grpid, uid);
 		
 		data.put("result", 0);
 		data.put("msg", "添加群组成员成功");
@@ -289,10 +373,12 @@ public class GroupCreateController {
 		}
 		
 		List<ImGroup> group = igService.listGroup(grpid);
-		List<String> uids = new ArrayList<String>();
+		
 		List<Map<String,Object>> maps = new ArrayList<Map<String,Object>>();
 		if(null != group && group.size() > 0){
+			
 			for (ImGroup im : group) {
+				List<String> uids = new ArrayList<String>();
 				Map<String,Object> m = new HashMap<String,Object>();
 				List<Map<String, Object>> list = igService.listGroupUser(im.getGroupId());
 				if(null != list && list.size() > 0){
@@ -306,6 +392,7 @@ public class GroupCreateController {
 				m.put("chatusernum", igService.getGroupNum(im.getGroupId()));
 				m.put("users", ids);
 				maps.add(m);
+				uids = null;
 				//JSONArray ja = JSONArray.parseArray(JSON.toJSONString(ids));
 				m = null;
 			}

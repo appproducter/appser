@@ -50,7 +50,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer selectCustomerByCid(String cid) {
-		if (CUSTOMER_CACHE.containsKey(cid))
+		/*if (CUSTOMER_CACHE.containsKey(cid))
 			return CUSTOMER_CACHE.get(cid);
 		else {
 			Customer cus = customerDao.selectCustomerByCid(cid);
@@ -63,8 +63,14 @@ public class CustomerServiceImpl implements CustomerService {
 			}
 
 			return null;
+		}*/
+		Customer cus = customerDao.selectCustomerByCid(cid);
+		if (cus != null) {
+			
+			return cus;
 		}
 
+		return null;
 	}
 
 }

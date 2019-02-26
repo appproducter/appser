@@ -10,9 +10,10 @@ import com.ruiliang.appsrv.pojo.ImGroup;
 
 @Mapper
 public interface ImGroupDAO {
-
+	int dismissGroup(String gid);
+	ImGroup getGroupUser(String uid);
 	int getGroupNum(String gid);
-	
+	int deleteGroup(@Param("gid") String gid,@Param("uid") String uid);
 	/**
 	 * 创建聊天群组
 	 * @param group

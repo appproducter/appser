@@ -75,8 +75,10 @@ private static final Logger log = LoggerFactory.getLogger(AppTokenInterceptor.cl
         if(!Objects.equals(csign, ssign)){
         	PrintWriter printWriter = httpServletResponse.getWriter();
         	printWriter.write("{state:-1,message:\"签名错误\"}");  
-            return false;
+            log.info("签名错误");
+        	return false;
         }
+        log.info("进入下一步");
         return super.preHandle(httpServletRequest, httpServletResponse, o);
         
     }  

@@ -40,4 +40,8 @@ public class MD5Util {
 		}
 		return resultString;
 	}
+	public static void main(String[] args) {
+		String s = MD5Util.MD5Encode("670b14728ad9902aecba32e22fa4f6bd");
+		System.out.println(s);
+	}
 }

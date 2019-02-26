@@ -108,7 +108,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		return userToken.getToken();
 	}
-
+	
 	private String generateUserid() {
 		String uid = null;
 		while (true) {

@@ -144,7 +144,7 @@
 	</select>
 	
 	<select id="selectUByIds" resultMap="BaseResultMap">
-	SELECT uid, password, name,idcard, mobile, gender, email, area, address, creator, type, status, ctime from user_info
+	SELECT uid, password,avatar, name,idcard, mobile, gender, email, area, address, creator, type, status, ctime from user_info
         WHERE uid in
         <foreach collection="Ids" item="dramaId" open="(" close=")" separator=",">
             #{dramaId}
